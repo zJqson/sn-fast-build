@@ -167,13 +167,31 @@ jobs:
           } 2>&1 | tee -a "$BUILD_LOG"
 
       - id: bundle
-        name: Build the web app, install pods, bundle (yarn build:mobile)
+        name: Build the web app and the workspace packages (upstream's yarn build:mobile, without its silent pod step)
         working-directory: upstream
+        timeout-minutes: 25
         run: |
           {
             echo "=== yarn build:mobile ($(date -u +%H:%M:%SZ)) ==="
+            # Run 1 sat 25 minutes in silence after the web build (2m38s): upstream's mobile `build` script is `yarn bundle:web && yarn install:pods && yarn android:bundle`
+            # and `pod-install` prints nothing until it is done. So the pods get their own step below (full output with time stamps); the Android bundle is not needed for iOS.
+            python3 -c 'import json; p="packages/mobile/package.json"; d=json.load(open(p, encoding="utf-8")); print("mobile build script was:", d["scripts"]["build"]); d["scripts"]["build"]="yarn bundle:web"; open(p, "w", encoding="utf-8").write(json.dumps(d, indent=2) + "\n"); print("mobile build script is now:", d["scripts"]["build"])'
             yarn build:mobile
             echo "=== yarn build:mobile finished ($(date -u +%H:%M:%SZ)) ==="
+          } 2>&1 | tee -a "$BUILD_LOG"
+
+      - id: pods
+        name: CocoaPods install, full output with time stamps
+        working-directory: upstream/packages/mobile/ios
+        timeout-minutes: 30
+        run: |
+          {
+            echo "=== pod install ($(date -u +%H:%M:%SZ)) ==="
+            if bundle exec pod --version > /dev/null 2>&1; then POD="bundle exec pod"; else POD="pod"; fi
+            echo "using: $POD"
+            $POD --version
+            $POD install --verbose 2>&1 | while IFS= read -r line; do printf '%s %s\n' "$(date -u +%H:%M:%S)" "$line"; done
+            echo "=== pod install finished ($(date -u +%H:%M:%SZ)) ==="
           } 2>&1 | tee -a "$BUILD_LOG"
 
       - id: archive
@@ -304,6 +322,7 @@ jobs:
             yarn=${{ steps.yarn.conclusion }}
             bundler=${{ steps.bundler.conclusion }}
             bundle=${{ steps.bundle.conclusion }}
+            pods=${{ steps.pods.conclusion }}
             archive=${{ steps.archive.conclusion }}
             package=${{ steps.package.conclusion }}
             probe=${{ steps.probe.conclusion }}
