@@ -194,6 +194,20 @@ jobs:
             echo "=== pod install finished ($(date -u +%H:%M:%SZ)) ==="
           } 2>&1 | tee -a "$BUILD_LOG"
 
+      - id: fmt_guard
+        name: fmt - switch its consteval off (Apple clang 17 and newer reject it inside the fmt pod; harmless otherwise; soft step)
+        continue-on-error: true
+        working-directory: upstream/packages/mobile/ios
+        run: |
+          {
+            FMT="Pods/fmt/include/fmt/base.h"
+            if [ -f "$FMT" ]; then
+              python3 -c 'import sys; p=sys.argv[1]; s=open(p, encoding="utf-8").read(); a="#if !defined(__cpp_lib_is_constant_evaluated)"+chr(10); assert a in s, "pattern not found"; s=s.replace(a, "#if 1  // snfast: consteval off, Apple clang 17 and newer reject it in fmt"+chr(10), 1); open(p, "w", encoding="utf-8").write(s); print("fmt: consteval switched off in", p)' "$FMT"
+            else
+              echo "no $FMT in this pod layout: nothing changed"
+            fi
+          } 2>&1 | tee -a "$BUILD_LOG"
+
       - id: archive
         name: xcodebuild archive, unsigned
         working-directory: upstream/packages/mobile
@@ -323,6 +337,7 @@ jobs:
             bundler=${{ steps.bundler.conclusion }}
             bundle=${{ steps.bundle.conclusion }}
             pods=${{ steps.pods.conclusion }}
+            fmt_guard=${{ steps.fmt_guard.conclusion }}
             archive=${{ steps.archive.conclusion }}
             package=${{ steps.package.conclusion }}
             probe=${{ steps.probe.conclusion }}
