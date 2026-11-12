@@ -349,3 +349,429 @@ Fetching httpclient 2.8.3
 Installing httpclient 2.8.3
 Fetching json 2.7.2
 Installing json 2.7.2 with native extensions
+Fetching artifactory 3.0.17
+Installing artifactory 3.0.17
+Fetching atomos 0.1.3
+Installing atomos 0.1.3
+Fetching aws-eventstream 1.3.0
+Installing aws-eventstream 1.3.0
+Fetching aws-partitions 1.989.0
+Installing aws-partitions 1.989.0
+Fetching jmespath 1.6.2
+Installing jmespath 1.6.2
+Fetching babosa 1.0.4
+Installing babosa 1.0.4
+Using bundler 2.3.25
+Fetching claide 1.1.0
+Installing claide 1.1.0
+Fetching fuzzy_match 2.0.4
+Installing fuzzy_match 2.0.4
+Fetching nap 1.1.0
+Installing nap 1.1.0
+Fetching netrc 0.11.0
+Installing netrc 0.11.0
+Fetching ffi 1.16.3
+Installing ffi 1.16.3 with native extensions
+Fetching cocoapods-deintegrate 1.0.5
+Installing cocoapods-deintegrate 1.0.5
+Fetching cocoapods-downloader 2.1
+Installing cocoapods-downloader 2.1
+Fetching cocoapods-search 1.0.1
+Installing cocoapods-search 1.0.1
+Fetching cocoapods-try 1.2.0
+Installing cocoapods-try 1.2.0
+Fetching colored2 3.1.2
+Installing colored2 3.1.2
+Fetching escape 0.0.4
+Installing escape 0.0.4
+Fetching fourflusher 2.3.1
+Installing fourflusher 2.3.1
+Fetching gh_inspector 1.1.3
+Installing gh_inspector 1.1.3
+Fetching molinillo 0.8.0
+Installing molinillo 0.8.0
+Fetching ruby-macho 2.5.1
+Installing ruby-macho 2.5.1
+Fetching nanaimo 0.3.0
+Installing nanaimo 0.3.0
+Fetching colored 1.2
+Installing colored 1.2
+Fetching highline 2.0.3
+Installing highline 2.0.3
+Fetching declarative 0.0.20
+Installing declarative 0.0.20
+Fetching digest-crc 0.6.5
+Installing digest-crc 0.6.5 with native extensions
+Fetching domain_name 0.6.20240107
+Installing domain_name 0.6.20240107
+Fetching dotenv 2.8.1
+Installing dotenv 2.8.1
+Fetching emoji_regex 3.2.3
+Installing emoji_regex 3.2.3
+Fetching excon 0.112.0
+Installing excon 0.112.0
+Fetching faraday-em_http 1.0.0
+Installing faraday-em_http 1.0.0
+Fetching faraday-em_synchrony 1.0.0
+Installing faraday-em_synchrony 1.0.0
+Fetching faraday-excon 1.1.0
+Installing faraday-excon 1.1.0
+Fetching faraday-httpclient 1.0.1
+Installing faraday-httpclient 1.0.1
+Fetching multipart-post 2.4.1
+Installing multipart-post 2.4.1
+Fetching faraday-net_http 1.0.2
+Installing faraday-net_http 1.0.2
+Fetching faraday-net_http_persistent 1.2.0
+Installing faraday-net_http_persistent 1.2.0
+Fetching faraday-patron 1.0.0
+Installing faraday-patron 1.0.0
+Fetching faraday-rack 1.0.0
+Installing faraday-rack 1.0.0
+Fetching faraday-retry 1.0.3
+Installing faraday-retry 1.0.3
+Fetching fastimage 2.3.1
+Installing fastimage 2.3.1
+Fetching multi_json 1.15.0
+Installing multi_json 1.15.0
+Fetching os 1.1.4
+Installing os 1.1.4
+Fetching mini_mime 1.1.5
+Installing mini_mime 1.1.5
+Fetching trailblazer-option 0.1.2
+Installing trailblazer-option 0.1.2
+Fetching uber 0.1.0
+Installing uber 0.1.0
+Fetching retriable 3.1.2
+Installing retriable 3.1.2
+Fetching google-cloud-errors 1.4.0
+Fetching mini_magick 4.13.2
+Installing google-cloud-errors 1.4.0
+Fetching naturally 2.2.1
+Installing mini_magick 4.13.2
+Installing naturally 2.2.1
+Fetching optparse 0.5.0
+Fetching plist 3.7.1
+Installing plist 3.7.1
+Installing optparse 0.5.0
+Fetching rubyzip 2.3.2
+Installing rubyzip 2.3.2
+Fetching security 0.1.5
+Fetching terminal-notifier 2.0.0
+Installing terminal-notifier 2.0.0
+Installing security 0.1.5
+Fetching unicode-display_width 2.6.0
+Installing unicode-display_width 2.6.0
+Fetching tty-screen 0.8.2
+Fetching tty-cursor 0.7.1
+Installing tty-screen 0.8.2
+Fetching word_wrap 1.0.0
+Installing tty-cursor 0.7.1
+Fetching rouge 2.0.7
+Installing word_wrap 1.0.0
+Fetching fastlane-plugin-bundletool 1.0.12
+Installing fastlane-plugin-bundletool 1.0.12
+Fetching jwt 2.9.3
+Installing rouge 2.0.7
+Installing jwt 2.9.3
+Fetching i18n 1.14.1
+Installing i18n 1.14.1
+Fetching tzinfo 2.0.6
+Installing tzinfo 2.0.6
+Fetching drb 2.2.0
+Fetching addressable 2.8.7
+Installing drb 2.2.0
+Installing addressable 2.8.7
+Fetching aws-sigv4 1.10.0
+Fetching cocoapods-plugins 1.0.0
+Installing aws-sigv4 1.10.0
+Installing cocoapods-plugins 1.0.0
+Fetching cocoapods-trunk 1.6.0
+Fetching CFPropertyList 3.0.7
+Installing cocoapods-trunk 1.6.0
+Fetching commander 4.6.0
+Installing CFPropertyList 3.0.7
+Fetching ethon 0.16.0
+Installing ethon 0.16.0
+Installing commander 4.6.0
+Fetching http-cookie 1.0.7
+Fetching faraday-multipart 1.0.4
+Installing http-cookie 1.0.7
+Installing faraday-multipart 1.0.4
+Fetching representable 3.2.0
+Fetching algoliasearch 1.27.5
+Installing representable 3.2.0
+Installing algoliasearch 1.27.5
+Fetching terminal-table 3.0.2
+Installing terminal-table 3.0.2
+Fetching tty-spinner 0.9.3
+Fetching xcpretty 0.3.0
+Installing tty-spinner 0.9.3
+Fetching activesupport 7.1.3
+Installing xcpretty 0.3.0
+Installing activesupport 7.1.3
+Fetching aws-sdk-core 3.209.1
+Installing aws-sdk-core 3.209.1
+Fetching xcodeproj 1.25.1
+Installing xcodeproj 1.25.1
+Fetching simctl 1.6.10
+Fetching typhoeus 1.4.1
+Installing simctl 1.6.10
+Installing typhoeus 1.4.1
+Fetching faraday 1.10.4
+Installing faraday 1.10.4
+Fetching xcpretty-travis-formatter 1.0.1
+Fetching aws-sdk-kms 1.94.0
+Installing xcpretty-travis-formatter 1.0.1
+Fetching cocoapods-core 1.14.3
+Installing aws-sdk-kms 1.94.0
+Fetching faraday-cookie_jar 0.0.7
+Installing faraday-cookie_jar 0.0.7
+Installing cocoapods-core 1.14.3
+Fetching faraday_middleware 1.2.1
+Installing faraday_middleware 1.2.1
+Fetching signet 0.19.0
+Fetching google-cloud-env 1.6.0
+Installing signet 0.19.0
+Installing google-cloud-env 1.6.0
+Fetching aws-sdk-s3 1.167.0
+Fetching cocoapods 1.14.3
+Installing cocoapods 1.14.3
+Installing aws-sdk-s3 1.167.0
+Fetching google-cloud-core 1.7.1
+Fetching googleauth 1.8.1
+Installing google-cloud-core 1.7.1
+Installing googleauth 1.8.1
+Fetching google-apis-core 0.11.3
+Installing google-apis-core 0.11.3
+Fetching google-apis-androidpublisher_v3 0.54.0
+Fetching google-apis-playcustomapp_v1 0.13.0
+Installing google-apis-playcustomapp_v1 0.13.0
+Installing google-apis-androidpublisher_v3 0.54.0
+Fetching google-apis-iamcredentials_v1 0.17.0
+Fetching google-apis-storage_v1 0.31.0
+Installing google-apis-iamcredentials_v1 0.17.0
+Installing google-apis-storage_v1 0.31.0
+Fetching google-cloud-storage 1.47.0
+Installing google-cloud-storage 1.47.0
+Fetching fastlane 2.224.0
+Installing fastlane 2.224.0
+Fetching xcode-install 2.8.1
+Installing xcode-install 2.8.1
+Bundle complete! 7 Gemfile dependencies, 118 gems now installed.
+Use `bundle info [gemname]` to see where a bundled gem is installed.
+Post-install message from algoliasearch:
+A new major version is available for Algolia! Please now use the https://rubygems.org/gems/algolia gem to get the latest features.
+Post-install message from rubyzip:
+RubyZip 3.0 is coming!
+**********************
+
+The public API of some Rubyzip classes has been modernized to use named
+parameters for optional arguments. Please check your usage of the
+following classes:
+  * `Zip::File`
+  * `Zip::Entry`
+  * `Zip::InputStream`
+  * `Zip::OutputStream`
+
+Please ensure that your Gemfiles and .gemspecs are suitably restrictive
+to avoid an unexpected breakage when 3.0 is released (e.g. ~> 2.3.0).
+See https://github.com/rubyzip/rubyzip for details. The Changelog also
+lists other enhancements and bugfixes that have been implemented since
+version 2.3.0.
+=== yarn build:mobile (01:16:21Z) ===
+mobile build script was: yarn bundle:web && yarn install:pods && yarn android:bundle
+mobile build script is now: yarn bundle:web
+[94m➤[39m [90mYN0000[39m: [38;5;132m[@standardnotes/features]:[39m Process started
+[94m➤[39m [90mYN0000[39m: [38;5;214m[@standardnotes/sncrypto-common]:[39m Process started
+[94m➤[39m [90mYN0000[39m: [38;5;214m[@standardnotes/sncrypto-common]:[39m Process exited (exit code 0), completed in 3s 669ms
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/utils]:[39m Process started
+[94m➤[39m [90mYN0000[39m: [38;5;132m[@standardnotes/features]:[39m Process exited (exit code 0), completed in 4s 183ms
+[94m➤[39m [90mYN0000[39m: [38;5;187m[@standardnotes/i18n]:[39m Process started
+[94m➤[39m [90mYN0000[39m: [38;5;187m[@standardnotes/i18n]:[39m Process exited (exit code 0), completed in 2s 833ms
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/icons]:[39m Process started
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/utils]:[39m Process exited (exit code 0), completed in 3s 559ms
+[94m➤[39m [90mYN0000[39m: [38;5;132m[@standardnotes/styles]:[39m Process started
+[94m➤[39m [90mYN0000[39m: [38;5;132m[@standardnotes/styles]:[39m asset [1m[32mstylekit.css[39m[22m 105 KiB [1m[32m[emitted][39m[22m (name: styles) (id hint: styles)
+[94m➤[39m [90mYN0000[39m: [38;5;132m[@standardnotes/styles]:[39m asset [1m[32mstyles.js[39m[22m 148 bytes [1m[32m[emitted][39m[22m (name: styles) (id hint: styles)
+[94m➤[39m [90mYN0000[39m: [38;5;132m[@standardnotes/styles]:[39m Entrypoint [1mstyles[39m[22m 105 KiB = [1m[32mstylekit.css[39m[22m 105 KiB [1m[32mstyles.js[39m[22m 148 bytes
+[94m➤[39m [90mYN0000[39m: [38;5;132m[@standardnotes/styles]:[39m orphan modules 107 KiB (javascript) 937 bytes (runtime) [1m[33m[orphan][39m[22m 7 modules
+[94m➤[39m [90mYN0000[39m: [38;5;132m[@standardnotes/styles]:[39m cacheable modules 50 bytes (javascript) 105 KiB (css/mini-extract)
+[94m➤[39m [90mYN0000[39m: [38;5;132m[@standardnotes/styles]:[39m   [1m./src/Styles/main.scss[39m[22m 50 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;132m[@standardnotes/styles]:[39m   css ../../node_modules/css-loader/dist/cjs.js!../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].use[2]![1m./src/Styles/main.scss[39m[22m 105 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;132m[@standardnotes/styles]:[39m webpack 5.88.2 compiled [1m[32msuccessfully[39m[22m in 1305 ms
+[94m➤[39m [90mYN0000[39m: [38;5;132m[@standardnotes/styles]:[39m Process exited (exit code 0), completed in 6s 413ms
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/icons]:[39m asset [1m[33mindex.js[39m[22m [1m[33m329 KiB[39m[22m [1m[32m[emitted][39m[22m [1m[33m[big][39m[22m (name: main) 1 related asset
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/icons]:[39m orphan modules 291 KiB [1m[33m[orphan][39m[22m 250 modules
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/icons]:[39m runtime modules 670 bytes 3 modules
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/icons]:[39m cacheable modules 300 KiB
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/icons]:[39m   [1m./src/index.ts + 250 modules[39m[22m 291 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/icons]:[39m   [1m../../node_modules/react/index.js[39m[22m 189 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/icons]:[39m   [1m../../node_modules/react/cjs/react.production.min.js[39m[22m 9.18 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/icons]:[39m 
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/icons]:[39m [1m[33mWARNING[39m[22m in [1masset size limit: The following asset(s) exceed the recommended size limit (244 KiB).
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/icons]:[39m This can impact web performance.
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/icons]:[39m Assets: 
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/icons]:[39m   index.js (329 KiB)[39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/icons]:[39m 
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/icons]:[39m [1m[33mWARNING[39m[22m in [1mentrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit (244 KiB). This can impact web performance.
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/icons]:[39m Entrypoints:
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/icons]:[39m   main (329 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/icons]:[39m       index.js
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/icons]:[39m [39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/icons]:[39m 
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/icons]:[39m [1m[33mWARNING[39m[22m in [1mwebpack performance recommendations: 
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/icons]:[39m You can limit the size of your bundles by using import() or require.ensure to lazy load some parts of your application.
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/icons]:[39m For more info visit https://webpack.js.org/guides/code-splitting/[39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/icons]:[39m 
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/icons]:[39m webpack 5.88.2 compiled with [1m[33m3 warnings[39m[22m in 6805 ms
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/icons]:[39m (node:13790) [DEP0180] DeprecationWarning: fs.Stats constructor is deprecated.
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/icons]:[39m (Use `node --trace-deprecation ...` to show where the warning was created)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/icons]:[39m Process exited (exit code 0), completed in 11s 42ms
+[94m➤[39m [90mYN0000[39m: [38;5;214m[@standardnotes/responses]:[39m Process started
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m Process started
+[94m➤[39m [90mYN0000[39m: [38;5;214m[@standardnotes/responses]:[39m Process exited (exit code 0), completed in 3s 346ms
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m asset [1m[33m./sncrypto-web.js[39m[22m [1m[33m872 KiB[39m[22m [1m[32m[emitted][39m[22m [1m[33m[big][39m[22m (name: sncrypto-web.js) 1 related asset
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m asset [1m[32mcrypto.d.ts[39m[22m 4.91 KiB [1m[32m[emitted][39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m asset [1m[32mutils.d.ts[39m[22m 3.16 KiB [1m[32m[emitted][39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m asset [1m[32mlibsodium.d.ts[39m[22m 756 bytes [1m[32m[emitted][39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m asset [1m[32mindex.d.ts[39m[22m 127 bytes [1m[32m[emitted][39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m orphan modules 65.5 KiB [1m[33m[orphan][39m[22m 19 modules
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m runtime modules 891 bytes 4 modules
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m cacheable modules 865 KiB
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m   modules by path [1m../sncrypto-common/dist/[39m[22m 8.65 KiB 25 modules
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m   modules by path [1m../../node_modules/[39m[22m 807 KiB
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m     [1m../../node_modules/libsodium-wrappers/dist/modules/libsodium-wrappers.js[39m[22m 112 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m     [1m../../node_modules/libsodium/dist/modules/libsodium.js[39m[22m 695 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m   [1m./src/index.ts + 7 modules[39m[22m 49.4 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m   [1mpath (ignored)[39m[22m 15 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m   [1mfs (ignored)[39m[22m 15 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m   [1mcrypto (ignored)[39m[22m 15 bytes [1m[33m[optional][39m[22m [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m 
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m [1m[33mWARNING[39m[22m in [1masset size limit: The following asset(s) exceed the recommended size limit (244 KiB).
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m This can impact web performance.
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m Assets: 
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m   ./sncrypto-web.js (872 KiB)[39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m 
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m [1m[33mWARNING[39m[22m in [1mentrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit (244 KiB). This can impact web performance.
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m Entrypoints:
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m   sncrypto-web.js (872 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m       ./sncrypto-web.js
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m [39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m 
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m [1m[33mWARNING[39m[22m in [1mwebpack performance recommendations: 
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m You can limit the size of your bundles by using import() or require.ensure to lazy load some parts of your application.
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m For more info visit https://webpack.js.org/guides/code-splitting/[39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m 
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m webpack 5.88.2 compiled with [1m[33m3 warnings[39m[22m in 6830 ms
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m (node:13967) [DEP0180] DeprecationWarning: fs.Stats constructor is deprecated.
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m (Use `node --trace-deprecation ...` to show where the warning was created)
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/sncrypto-web]:[39m Process exited (exit code 0), completed in 11s 154ms
+[94m➤[39m [90mYN0000[39m: [38;5;187m[@standardnotes/models]:[39m Process started
+[94m➤[39m [90mYN0000[39m: [38;5;187m[@standardnotes/models]:[39m Process exited (exit code 0), completed in 4s 474ms
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/api]:[39m Process started
+[94m➤[39m [90mYN0000[39m: [38;5;132m[@standardnotes/encryption]:[39m Process started
+[94m➤[39m [90mYN0000[39m: [38;5;132m[@standardnotes/encryption]:[39m Empty build script required for yarn topological install
+[94m➤[39m [90mYN0000[39m: [38;5;132m[@standardnotes/encryption]:[39m Process exited (exit code 0), completed in 0s 712ms
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/api]:[39m Process exited (exit code 0), completed in 3s 577ms
+[94m➤[39m [90mYN0000[39m: [38;5;214m[@standardnotes/files]:[39m Process started
+[94m➤[39m [90mYN0000[39m: [38;5;214m[@standardnotes/files]:[39m Empty build script required for yarn topological install
+[94m➤[39m [90mYN0000[39m: [38;5;214m[@standardnotes/files]:[39m Process exited (exit code 0), completed in 0s 674ms
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m Process started
+[94m➤[39m [90mYN0000[39m: [38;5;187m[@standardnotes/filepicker]:[39m Process started
+[94m➤[39m [90mYN0000[39m: [38;5;187m[@standardnotes/filepicker]:[39m Empty build script required for yarn topological install
+[94m➤[39m [90mYN0000[39m: [38;5;187m[@standardnotes/filepicker]:[39m Process exited (exit code 0), completed in 0s 833ms
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m tscpaths --project /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/lib/tsconfig.json --src /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/lib --out /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Application/Application.d.ts: replaced 11 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Migrations/Base.d.ts: replaced 1 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Migrations/MigrationServices.d.ts: replaced 2 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Migrations/Applicators/TagsToFolders.d.ts: replaced 1 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Migrations/Versions/2_0_15.d.ts: replaced 1 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Migrations/Versions/2_167_6.d.ts: replaced 1 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Migrations/Versions/2_168_6.d.ts: replaced 1 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Migrations/Versions/2_202_1.d.ts: replaced 1 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Migrations/Versions/2_208_0.d.ts: replaced 1 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Migrations/Versions/2_209_0.d.ts: replaced 1 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Migrations/Versions/2_20_0.d.ts: replaced 1 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Migrations/Versions/2_36_0.d.ts: replaced 1 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Migrations/Versions/2_42_0.d.ts: replaced 1 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Migrations/Versions/2_7_0.d.ts: replaced 1 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Services/Actions/ActionsService.d.ts: replaced 1 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Services/ComponentManager/ComponentManager.d.ts: replaced 1 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Services/ComponentManager/ComponentViewer.d.ts: replaced 1 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Services/ComponentManager/Types.d.ts: replaced 1 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Services/History/HistoryManager.d.ts: replaced 2 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Services/KeyRecovery/KeyRecoveryService.d.ts: replaced 1 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Services/KeyRecovery/Types.d.ts: replaced 1 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Services/Listed/ListedService.d.ts: replaced 2 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Services/Protection/ProtectionService.d.ts: replaced 1 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Services/Session/SessionManager.d.ts: replaced 1 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Services/Settings/SettingsServerInterface.d.ts: replaced 1 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Services/Singleton/SingletonManager.d.ts: replaced 1 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Services/Sync/Signals.d.ts: replaced 1 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Services/Sync/SyncService.d.ts: replaced 1 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Domain/UseCase/GetRecoveryCodes/GetRecoveryCodes.d.ts: replaced 1 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Services/Features/UseCase/MigrateFeatureRepoToUserSetting.d.ts: replaced 1 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Services/Sync/Account/Operation.d.ts: replaced 2 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/snjs/dist/@types/Services/Sync/Offline/Operation.d.ts: replaced 1 paths
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m Replaced 46 paths in 32 files
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m asset [1m[33m./snjs.js[39m[22m [1m[33m2.6 MiB[39m[22m [1m[32m[emitted][39m[22m [1m[33m[big][39m[22m (name: snjs.js)
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m orphan modules 753 KiB [1m[33m[orphan][39m[22m 452 modules
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m runtime modules 1.25 KiB 6 modules
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m modules by path [1m../[39m[22m 1.79 MiB 675 modules
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m modules by path [1m./lib/[39m[22m 591 KiB
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m   modules by path [1m./lib/Services/[39m[22m 417 KiB 34 modules
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m   modules by path [1m./lib/Domain/[39m[22m 23.9 KiB 11 modules
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m   modules by path [1m./lib/Migrations/[39m[22m 40.7 KiB 5 modules
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m   modules by path [1m./lib/*.ts[39m[22m 1.81 KiB 3 modules
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m   modules by path [1m./lib/Application/[39m[22m 95 KiB
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m     [1m./lib/Application/index.ts + 8 modules[39m[22m 84.4 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m     + 2 modules
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m   + 4 modules
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m 
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m [1m[33mWARNING[39m[22m in [1mCircular dependency detected:
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m ../features/dist/Domain/Component/NoteType.js -> ../features/dist/Domain/Feature/Features.js -> ../features/dist/Domain/Lists/DeprecatedFeatures.js -> ../features/dist/Domain/Component/NoteType.js[39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m 
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m [1m[33mWARNING[39m[22m in [1mCircular dependency detected:
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m ../features/dist/Domain/Feature/Features.js -> ../features/dist/Domain/Lists/DeprecatedFeatures.js -> ../features/dist/Domain/Component/NoteType.js -> ../features/dist/Domain/Feature/Features.js[39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m 
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m [1m[33mWARNING[39m[22m in [1mCircular dependency detected:
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m ../features/dist/Domain/Lists/DeprecatedFeatures.js -> ../features/dist/Domain/Component/NoteType.js -> ../features/dist/Domain/Feature/Features.js -> ../features/dist/Domain/Lists/DeprecatedFeatures.js[39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m 
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m [1m[33mWARNING[39m[22m in [1mCircular dependency detected:
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m ../features/dist/Domain/Lists/IframeEditors.js -> ../features/dist/Domain/Component/NoteType.js -> ../features/dist/Domain/Feature/Features.js -> ../features/dist/Domain/Lists/IframeEditors.js[39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m 
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m [1m[33mWARNING[39m[22m in [1mCircular dependency detected:
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m ../features/dist/Domain/Lists/NativeEditors.js -> ../features/dist/Domain/Component/NoteType.js -> ../features/dist/Domain/Feature/Features.js -> ../features/dist/Domain/Lists/NativeEditors.js[39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m 
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m [1m[33mWARNING[39m[22m in [1mCircular dependency detected:
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m ../models/dist/Domain/Runtime/Display/DisplayOptionsToFilters.js -> ../models/dist/Domain/Runtime/Display/Search/SearchUtilities.js -> ../models/dist/Domain/Runtime/Display/DisplayOptionsToFilters.js[39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m 
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m [1m[33mWARNING[39m[22m in [1mCircular dependency detected:
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m ../models/dist/Domain/Runtime/Display/Search/SearchUtilities.js -> ../models/dist/Domain/Runtime/Display/DisplayOptionsToFilters.js -> ../models/dist/Domain/Runtime/Display/Search/SearchUtilities.js[39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m 
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m [1m[33mWARNING[39m[22m in [1masset size limit: The following asset(s) exceed the recommended size limit (244 KiB).
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m This can impact web performance.
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m Assets: 
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m   ./snjs.js (2.6 MiB)[39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m 
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m [1m[33mWARNING[39m[22m in [1mentrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit (244 KiB). This can impact web performance.
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m Entrypoints:
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m   snjs.js (2.6 MiB)
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m       ./snjs.js
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m [39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m 
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m [1m[33mWARNING[39m[22m in [1mwebpack performance recommendations: 
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m You can limit the size of your bundles by using import() or require.ensure to lazy load some parts of your application.
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m For more info visit https://webpack.js.org/guides/code-splitting/[39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m 
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m webpack 5.88.2 compiled with [1m[33m10 warnings[39m[22m in 17023 ms
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m Browserslist: caniuse-lite is outdated. Please run:
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m   npx update-browserslist-db@latest
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m   Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m (node:14401) [DEP0060] DeprecationWarning: The `util._extend` API is deprecated. Please use Object.assign() instead.
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m (Use `node --trace-deprecation ...` to show where the warning was created)
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m (node:14401) [DEP0180] DeprecationWarning: fs.Stats constructor is deprecated.
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m [BABEL] Note: The code generator has deoptimised the styling of /Users/runner/work/sn-fast-build/sn-fast-build/upstream/node_modules/lodash/lodash.js as it exceeds the max of 500KB.
+[94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m Process exited (exit code 0), completed in 27s 384ms
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m Process started
