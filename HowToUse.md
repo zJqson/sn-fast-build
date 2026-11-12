@@ -23,6 +23,7 @@ Everything you may want to change is in **`config.ini`** (read once per run by `
   `https://github.com/<owner>/<repo>/releases` ; direct file: `https://github.com/<owner>/<repo>/releases/download/ios-<N>/SN-Fast.ipa`
 * **Log branch** `build-logs`: `LATEST.txt` = outcome of the newest run + the first 40 error lines (read this first), `run-<N>.log` = the full output.
   `curl -s https://raw.githubusercontent.com/<owner>/<repo>/build-logs/LATEST.txt`
+* While a run is still going: the branch **`build-logs-live`** holds a snapshot of the log (`LATEST.txt` says RUNNING, `run-<N>.log` is the log so far), refreshed every 4 minutes. `curl -s https://raw.githubusercontent.com/<owner>/<repo>/build-logs-live/LATEST.txt` (the page itself is cached for a few minutes).
 * Check the download: `shasum -a 256 SN-Fast.ipa` (macOS) or `certutil -hashfile SN-Fast.ipa SHA256` (Windows) must equal the line in `SN-Fast.ipa.sha256`.
 
 Example of a successful `LATEST.txt` head:

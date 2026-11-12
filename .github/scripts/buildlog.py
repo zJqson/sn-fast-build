@@ -107,6 +107,8 @@ def compose(a, text, errs, capped, log_name):
         head = "SUCCESS"
     elif status == "cancelled":
         head = "CANCELLED"
+    elif status == "running":
+        head = "RUNNING (a snapshot of the log while the job is still going)"
     else:
         head = "FAILURE" + (" at step '%s'" % failed if failed else "")
     stamp = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
@@ -222,7 +224,7 @@ def main():
     p.add_argument("--log", required=True)
     p.add_argument("--run-number", required=True)
     p.add_argument("--run-attempt", default="1")
-    p.add_argument("--status", required=True, choices=["success", "failure", "cancelled", "skipped"])
+    p.add_argument("--status", required=True, choices=["success", "failure", "cancelled", "skipped", "running"])
     p.add_argument("--sha", default="")
     p.add_argument("--run-url", default="")
     p.add_argument("--steps", default="")

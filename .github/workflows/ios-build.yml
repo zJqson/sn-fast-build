@@ -9,6 +9,7 @@
 #   1. release  ios-<run_number> (pre-release): SN-Fast.ipa, SN-Fast.ipa.sha256, INFO.txt  (only when the build succeeded)
 #   2. branch   build-logs : run-<N>.log (full output) + LATEST.txt (outcome + the first 40 error lines); written on success AND failure
 #   3. the same outcome in this run's job summary
+#   4. while the job runs: branch build-logs-live, a snapshot of the log every 4 minutes (LATEST.txt says RUNNING)
 # Read them without any login:  https://raw.githubusercontent.com/<owner>/<repo>/build-logs/LATEST.txt  and  https://github.com/<owner>/<repo>/releases
 #
 # Build steps are upstream's own (their mobile.release.prod.yml, ios job): yarn install --immutable, bundler / CocoaPods, yarn build:mobile, then
@@ -57,6 +58,19 @@ jobs:
         run: |
           echo "BUILD_LOG=$RUNNER_TEMP/build.log" >> "$GITHUB_ENV"
           { echo "ios build log of run $GITHUB_RUN_NUMBER (attempt $GITHUB_RUN_ATTEMPT), commit $GITHUB_SHA, Xcode $XCODE_MAJOR on ${{ inputs.runner }}"; date -u +"started %Y-%m-%dT%H:%M:%SZ"; } > "$RUNNER_TEMP/build.log"
+
+      - id: live_log
+        name: Live log (soft) - every 4 minutes a snapshot of the build log goes to the branch build-logs-live, so a long step can be watched
+        continue-on-error: true
+        run: |
+          nohup bash -c '
+            while true; do
+              sleep 240
+              python3 .github/scripts/buildlog.py publish --log "$BUILD_LOG" --branch build-logs-live --keep 2 --summary-file "" --tries 2 \
+                --run-number "$GITHUB_RUN_NUMBER" --run-attempt "$GITHUB_RUN_ATTEMPT" --status running --sha "$GITHUB_SHA" \
+                --run-url "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" > /dev/null 2>&1 || true
+            done' > /dev/null 2>&1 &
+          echo "live log started: snapshots of $BUILD_LOG every 240 s while this job runs (the runner ends the loop with the job)"
 
       - id: setup_xcode
         name: Select Xcode (the marketplace action upstream uses; soft step, the next step checks)
