@@ -1,11 +1,11 @@
-run 1: CANCELLED - b65be16 - 2026-11-12T01:05:02Z
+run 2: CANCELLED - 3f347e9 - 2026-11-12T01:08:24Z
 
-Run:      https://github.com/zJqson/sn-fast-build/actions/runs/43128301918 (attempt 1)
-Commit:   b65be167aa10d03d702562cfcf6cfa4c2d87bda2
+Run:      https://github.com/zJqson/sn-fast-build/actions/runs/43131946190 (attempt 1)
+Commit:   3f347e9d0ba3c2d9c2fa695e8ab47dfd32b02209
 Status:   CANCELLED
-Steps:    checkout=success setup_xcode=success xcode=success prepare=success node=success ruby=success yarn=success bundler=success bundle=cancelled archive=skipped package=skipped probe=skipped release=skipped
+Steps:    checkout=success setup_xcode=success xcode=success prepare=success node=success ruby=success yarn=cancelled bundler=skipped bundle=skipped archive=skipped package=skipped probe=skipped release=skipped
 Release:  (none)
 IPA:      (none)
-Log:      run-1.log (864 lines)
+Log:      run-2.log (322 lines)
 
 No error lines found in the build output. (Look at the end of the log.)
