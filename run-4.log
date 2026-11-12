@@ -763,3 +763,943 @@ mobile build script is now: yarn bundle:web
 [94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m [BABEL] Note: The code generator has deoptimised the styling of /Users/runner/work/sn-fast-build/sn-fast-build/upstream/node_modules/lodash/lodash.js as it exceeds the max of 500KB.
 [94m➤[39m [90mYN0000[39m: [38;5;167m[@standardnotes/snjs]:[39m Process exited (exit code 0), completed in 30s 54ms
 [94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m Process started
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m assets by path [1m[32mcomponents/assets/[39m[22m 37.4 MiB 505 assets
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m assets by path [1m[32m./[39m[22m 8.34 MiB 15 assets
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m assets by path [1m[32mfavicon/[39m[22m 23.2 KiB 9 assets
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m assets by path [1m[32mlocales/[39m[22m 1.58 MiB 8 assets
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m assets by path [1m[32m*.html[39m[22m 7 KiB
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   asset [1m[32mindex.html[39m[22m 2.51 KiB [1m[32m[emitted][39m[22m [from: src/index.html] [1m[32m[copied][39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   + 3 assets
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m assets by path [1m[32mdist/*.js[39m[22m 861 KiB
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   asset [1m[33mdist/vendors~libsodium.bundle.js[39m[22m [1m[33m860 KiB[39m[22m [1m[32m[emitted][39m[22m [from: src/vendor/vendors~libsodium.bundle.js] [1m[32m[copied][39m[22m [1m[32m[minimized][39m[22m [1m[33m[big][39m[22m 1 related asset
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   asset [1m[32mdist/libsodium.bundle.js[39m[22m 812 bytes [1m[32m[emitted][39m[22m [from: src/vendor/libsodium.bundle.js] [1m[32m[copied][39m[22m [1m[32m[minimized][39m[22m 1 related asset
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m assets by path [1m[32m.well-known/[39m[22m 737 bytes
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   asset [1m[32m.well-known/assetlinks.json[39m[22m 584 bytes [1m[32m[emitted][39m[22m [from: src/.well-known/assetlinks.json] [1m[32m[copied][39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   asset [1m[32m.well-known/apple-app-site-association[39m[22m 153 bytes [1m[32m[emitted][39m[22m [from: src/.well-known/apple-app-site-association] [1m[32m[copied][39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m asset [1m[32mmanifest.webmanifest[39m[22m 809 bytes [1m[32m[emitted][39m[22m [from: src/manifest.webmanifest] [1m[32m[copied][39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m asset [1m[32mrobots.txt[39m[22m 30 bytes [1m[32m[emitted][39m[22m [from: src/robots.txt] [1m[32m[copied][39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m Entrypoint [1mmain[39m[22m [1m[33m[big][39m[22m 3.93 MiB (11.6 MiB) = [1m[32m./app.css[39m[22m 120 KiB [1m[32m./app.js[39m[22m 3.81 MiB 2 auxiliary assets
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m orphan modules 8.3 MiB (javascript) 1.87 KiB (runtime) [1m[33m[orphan][39m[22m 1623 modules
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m runtime modules 8.47 KiB 15 modules
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m built modules 12.3 MiB (javascript) 120 KiB (css/mini-extract) [1m[33m[built][39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   modules by path [1m../[39m[22m 8.24 MiB 891 modules
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   modules by path [1m./src/[39m[22m 4.1 MiB (javascript) 120 KiB (css/mini-extract) 143 modules
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   optional modules 30 bytes [1m[33m[optional][39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m     [1mcrypto (ignored)[39m[22m 15 bytes [1m[33m[optional][39m[22m [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m     [1mcrypto (ignored)[39m[22m 15 bytes [1m[33m[optional][39m[22m [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   [1mdata:image/svg+xml,%3Csvg%20viewBox..[39m[22m 311 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m [1m[32m[build time executed][39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   [1mcrypto (ignored)[39m[22m 15 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   [1mbuffer (ignored)[39m[22m 15 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   [1mpath (ignored)[39m[22m 15 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   [1mfs (ignored)[39m[22m 15 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m 
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m [1m[33mWARNING[39m[22m in [1masset size limit: The following asset(s) exceed the recommended size limit (244 KiB).
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m This can impact web performance.
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m Assets: 
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   ./app.worker.js (1.41 MiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   ./app.js (3.81 MiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   ./473.app.js (1.42 MiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   ./901.app.js (1.39 MiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   locales/ja_JP.json (250 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   dist/vendors~libsodium.bundle.js (860 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.bold-editor/dist/dist.min.js (462 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.bold-editor/dist/vendor.js (283 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.advanced-markdown-editor/dist/dist.js.map (267 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.fancy-markdown-editor/dist/dist.js (399 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.fancy-markdown-editor/dist/lib.js (402 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.plus-editor/dist/vendor.js (312 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.simple-markdown-editor/dist/dist.js (1.12 MiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.token-vault/dist/dist.js (552 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.advanced-markdown-editor/dist/fonts/fontawesome-webfont.svg (434 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.advanced-markdown-editor/dist/vendor/easymd/easymd.js (316 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.advanced-markdown-editor/dist/vendor/highlightjs/highlightjs.js (732 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.markdown-visual-editor/build/static/js/main.js (2.71 MiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.markdown-visual-editor/build/static/js/main.js.map (9.99 MiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.standard-sheets/dist/vendor/js/kendo.spreadsheet.min.js (1.36 MiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.standard-sheets/dist/vendor/styles/kendo.common-fiori.min.css (845 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.standard-sheets/dist/vendor/styles/kendo.common-fiori.min.css.map (683 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.standard-sheets/dist/vendor/styles/kendo.fiori.min.css (324 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.standard-sheets/dist/vendor/styles/kendo.fiori.mobile.min.css (267 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.markdown-visual-editor/build/static/media/material-icons-two-tone..woff (332 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.standard-sheets/dist/vendor/styles/fonts/DejaVu/DejaVuSans-Bold.ttf (688 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.standard-sheets/dist/vendor/styles/fonts/DejaVu/DejaVuSans-BoldOblique.ttf (627 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.standard-sheets/dist/vendor/styles/fonts/DejaVu/DejaVuSans-ExtraLight.ttf (347 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.standard-sheets/dist/vendor/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf (619 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.standard-sheets/dist/vendor/styles/fonts/DejaVu/DejaVuSans.ttf (738 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.standard-sheets/dist/vendor/styles/fonts/DejaVu/DejaVuSansMono-Bold.ttf (324 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.standard-sheets/dist/vendor/styles/fonts/DejaVu/DejaVuSansMono-BoldOblique.ttf (247 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.standard-sheets/dist/vendor/styles/fonts/DejaVu/DejaVuSansMono-Oblique.ttf (246 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.standard-sheets/dist/vendor/styles/fonts/DejaVu/DejaVuSansMono.ttf (332 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.standard-sheets/dist/vendor/styles/fonts/DejaVu/DejaVuSerif-Bold.ttf (347 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.standard-sheets/dist/vendor/styles/fonts/DejaVu/DejaVuSerif-BoldItalic.ttf (339 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.standard-sheets/dist/vendor/styles/fonts/DejaVu/DejaVuSerif-Italic.ttf (338 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.standard-sheets/dist/vendor/styles/fonts/DejaVu/DejaVuSerif.ttf (371 KiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   components/assets/org.standardnotes.standard-sheets/dist/vendor/styles/fonts/glyphs/WebComponentsIcons.svg (637 KiB)[39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m 
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m [1m[33mWARNING[39m[22m in [1mentrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit (244 KiB). This can impact web performance.
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m Entrypoints:
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   main (3.93 MiB)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m       ./app.css
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m       ./app.js
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m [39m[22m
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m 
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m webpack 5.88.2 compiled with [1m[33m2 warnings[39m[22m in 170555 ms
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m Browserslist: caniuse-lite is outdated. Please run:
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   npx update-browserslist-db@latest
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m   Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m (node:16511) [DEP0060] DeprecationWarning: The `util._extend` API is deprecated. Please use Object.assign() instead.
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m (Use `node --trace-deprecation ...` to show where the warning was created)
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m (node:16511) [DEP0180] DeprecationWarning: fs.Stats constructor is deprecated.
+[94m➤[39m [90mYN0000[39m: [38;5;73m[@standardnotes/web]:[39m Process exited (exit code 0), completed in 3m 24s
+[94m➤[39m [90mYN0000[39m: [38;5;132m[@standardnotes/mobile]:[39m Process started
+[94m➤[39m [90mYN0000[39m: [38;5;132m[@standardnotes/mobile]:[39m Process exited (exit code 0), completed in 2s 878ms
+[94m➤[39m YN0000: Done in 4m 43s
+=== yarn build:mobile finished (02:00:12Z) ===
+=== pod install (02:00:13Z) ===
+using: bundle exec pod
+1.14.3
+02:00:17   $ /Users/runner/hostedtoolcache/node/22.14.0/arm64/bin/node -p require.resolve(     "react-native/scripts/react_native_pods.rb",     {paths: [process.argv[1]]},   ) /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/ios
+02:00:17   /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native/scripts/react_native_pods.rb
+02:00:21 [react-native-mmkv] Thank you for using react-native-mmkv ❤️
+02:00:21 [react-native-mmkv] If you enjoy using react-native-mmkv, please consider sponsoring this project: https://github.com/sponsors/mrousavy
+02:00:21 Found 15 modules for target `StandardNotes`
+02:00:21 link_native_modules! {:ios_packages=>[{:configurations=>[], :name=>"react-native-iap", :root=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-iap", :path=>"../node_modules/react-native-iap", :podspec_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-iap/RNIap.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"@notifee/react-native", :root=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/@notifee/react-native", :path=>"../node_modules/@notifee/react-native", :podspec_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/@notifee/react-native/RNNotifee.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"react-native-safe-area-context", :root=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-safe-area-context", :path=>"../node_modules/react-native-safe-area-context", :podspec_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-safe-area-context/react-native-safe-area-context.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"react-native-store-review", :root=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-store-review", :path=>"../node_modules/react-native-store-review", :podspec_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-store-review/RNStoreReview.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"@react-native-async-storage/async-storage", :root=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/@react-native-async-storage/async-storage", :path=>"../node_modules/@react-native-async-storage/async-storage", :podspec_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/@react-native-async-storage/async-storage/RNCAsyncStorage.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"@standardnotes/react-native-utils", :root=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/@standardnotes/react-native-utils", :path=>"../node_modules/@standardnotes/react-native-utils", :podspec_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/@standardnotes/react-native-utils/SNReactNative.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"react-native-file-viewer", :root=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-file-viewer", :path=>"../node_modules/react-native-file-viewer", :podspec_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-file-viewer/RNFileViewer.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"react-native-fingerprint-scanner", :root=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-fingerprint-scanner", :path=>"../node_modules/react-native-fingerprint-scanner", :podspec_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-fingerprint-scanner/react-native-fingerprint-scanner.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"react-native-fs", :root=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-fs", :path=>"../node_modules/react-native-fs", :podspec_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-fs/RNFS.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"react-native-keychain", :root=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-keychain", :path=>"../node_modules/react-native-keychain", :podspec_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-keychain/RNKeychain.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"react-native-mmkv", :root=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-mmkv", :path=>"../node_modules/react-native-mmkv", :podspec_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-mmkv/react-native-mmkv.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"react-native-privacy-snapshot", :root=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-privacy-snapshot", :path=>"../node_modules/react-native-privacy-snapshot", :podspec_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-privacy-snapshot/RNPrivacySnapshot.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"react-native-share", :root=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-share", :path=>"../node_modules/react-native-share", :podspec_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-share/RNShare.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"react-native-version-info", :root=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-version-info", :path=>"../node_modules/react-native-version-info", :podspec_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-version-info/react-native-version-info.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"react-native-webview", :root=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-webview", :path=>"../node_modules/react-native-webview", :podspec_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-webview/react-native-webview.podspec", :script_phases=>[]}], :ios_project_root_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/ios", :react_native_path=>"../node_modules/react-native"}
+02:00:21 [react-native-mmkv] Thank you for using react-native-mmkv ❤️
+02:00:21 [react-native-mmkv] If you enjoy using react-native-mmkv, please consider sponsoring this project: https://github.com/sponsors/mrousavy
+02:00:21 Auto-linking React Native modules for target `StandardNotes`: RNCAsyncStorage, RNFS, RNFileViewer, RNIap, RNKeychain, RNNotifee, RNPrivacySnapshot, RNShare, RNStoreReview, SNReactNative, react-native-fingerprint-scanner, react-native-mmkv, react-native-safe-area-context, react-native-version-info, and react-native-webview
+02:00:24 Framework build type is static library
+02:00:24 [36m[1m[Codegen][0m [33mwarn: using experimental new codegen integration[0m
+02:00:24 [36m[1m[Codegen][0m Adding script_phases to ReactCodegen.
+02:00:24   $ /bin/mkdir -p ./build/generated/ios
+02:00:24 [36m[1m[Codegen][0m Generating ./build/generated/ios/ReactCodegen.podspec.json
+02:00:24   $ /Users/runner/hostedtoolcache/node/22.14.0/arm64/bin/node ./../node_modules/react-native/scripts/generate-codegen-artifacts.js -p /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/ios/.. -o /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/ios -t ios
+02:00:25   No modules to process in combine-js-to-schema-cli. If this is unexpected, please check if you set up your NativeComponent correctly. See combine-js-to-schema.js for how codegen finds modules.
+02:00:25   [36m[1m[Codegen][0m Analyzing /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/package.json[0m
+02:00:25   [36m[1m[Codegen][0m [33mSearching for codegen-enabled libraries in the app.[0m
+02:00:25   [36m[1m[Codegen][0m [33mThe "codegenConfig" field is not defined in package.json. Assuming there is nothing to generate at the app level.[0m
+02:00:25   [36m[1m[Codegen][0m [33mSearching for codegen-enabled libraries in the project dependencies.[0m
+02:00:25   [36m[1m[Codegen][0m Found react-native-safe-area-context[0m
+02:00:25   [36m[1m[Codegen][0m Found react-native-store-review[0m
+02:00:25   [36m[1m[Codegen][0m Found @react-native-async-storage/async-storage[0m
+02:00:25   [36m[1m[Codegen][0m Found react-native[0m
+02:00:25   [36m[1m[Codegen][0m Found react-native-keychain[0m
+02:00:25   [36m[1m[Codegen][0m Found react-native-mmkv[0m
+02:00:25   [36m[1m[Codegen][0m Found react-native-share[0m
+02:00:25   [36m[1m[Codegen][0m Found react-native-webview[0m
+02:00:25   [36m[1m[Codegen][0m [33mSearching for codegen-enabled libraries in react-native.config.js[0m
+02:00:26   [36m[1m[Codegen][0m Processing safeareacontext[0m
+02:00:26   [36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+02:00:26   [36m[1m[Codegen][0m Supported Apple platforms: ios, macos, tvos, visionos for safeareacontext[0m
+02:00:26   [36m[1m[Codegen][0m Processing RNStoreReviewSpec[0m
+02:00:26   [36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+02:00:26   [36m[1m[Codegen][0m Supported Apple platforms: ios for RNStoreReviewSpec[0m
+02:00:26   [36m[1m[Codegen][0m Processing rnasyncstorage[0m
+02:00:26   [36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+02:00:26   [36m[1m[Codegen][0m Supported Apple platforms: ios, macos, tvos, visionos for rnasyncstorage[0m
+02:00:26   [36m[1m[Codegen][0m Processing FBReactNativeSpec[0m
+02:00:26   [36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+02:00:26   [36m[1m[Codegen][0m Processing rncore[0m
+02:00:26   [36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+02:00:26   [36m[1m[Codegen][0m Processing RNKeychainSpec[0m
+02:00:26   [36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+02:00:26   [36m[1m[Codegen][0m Supported Apple platforms: ios, macos, tvos, visionos for RNKeychainSpec[0m
+02:00:26   [36m[1m[Codegen][0m Processing RNMmkvSpec[0m
+02:00:26   [36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+02:00:26   [36m[1m[Codegen][0m Supported Apple platforms: ios, macos, tvos for RNMmkvSpec[0m
+02:00:26   [36m[1m[Codegen][0m Processing RNShareSpec[0m
+02:00:26   [36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+02:00:26   [36m[1m[Codegen][0m Supported Apple platforms: ios for RNShareSpec[0m
+02:00:26   [36m[1m[Codegen][0m Processing RNCWebViewSpec[0m
+02:00:26   [36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+02:00:26   [36m[1m[Codegen][0m Supported Apple platforms: ios, macos, visionos for RNCWebViewSpec[0m
+02:00:26   [36m[1m[Codegen][0m Generating Native Code for safeareacontext - ios[0m
+02:00:26   [36m[1m[Codegen][0m Generated artifacts: /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/ios/build/generated/ios[0m
+02:00:26   [36m[1m[Codegen][0m Generating Native Code for RNStoreReviewSpec - ios[0m
+02:00:26   [36m[1m[Codegen][0m Generated artifacts: /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/ios/build/generated/ios[0m
+02:00:26   [36m[1m[Codegen][0m Generating Native Code for rnasyncstorage - ios[0m
+02:00:26   [36m[1m[Codegen][0m Generated artifacts: /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/ios/build/generated/ios[0m
+02:00:26   [36m[1m[Codegen][0m [33m[Codegen - FBReactNativeSpec] Skipping iOS code generation for FBReactNativeSpec as it has been generated already.[0m
+02:00:26   [36m[1m[Codegen][0m [33m[Codegen - rncore] Skipping iOS code generation for rncore as it has been generated already.[0m
+02:00:26   [36m[1m[Codegen][0m Generating Native Code for RNKeychainSpec - ios[0m
+02:00:26   [36m[1m[Codegen][0m Generated artifacts: /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/ios/build/generated/ios[0m
+02:00:26   [36m[1m[Codegen][0m Generating Native Code for RNMmkvSpec - ios[0m
+02:00:26   [36m[1m[Codegen][0m Generated artifacts: /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/ios/build/generated/ios[0m
+02:00:26   [36m[1m[Codegen][0m Generating Native Code for RNShareSpec - ios[0m
+02:00:26   [36m[1m[Codegen][0m Generated artifacts: /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/ios/build/generated/ios[0m
+02:00:26   [36m[1m[Codegen][0m Generating Native Code for RNCWebViewSpec - ios[0m
+02:00:26   [36m[1m[Codegen][0m Generated artifacts: /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/ios/build/generated/ios[0m
+02:00:26   [36m[1m[Codegen][0m Generating RCTThirdPartyComponentsProvider.h[0m
+02:00:26   [36m[1m[Codegen][0m Generated artifact: /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/ios/build/generated/ios/RCTThirdPartyComponentsProvider.h[0m
+02:00:26   [36m[1m[Codegen][0m Generating RCTThirdPartyComponentsProvider.mm[0m
+02:00:26   [36m[1m[Codegen][0m Crawling react-native-webview library for components[0m
+02:00:26   [36m[1m[Codegen][0m Match found RNCWebView -> RNCWebView[0m
+02:00:26   [36m[1m[Codegen][0m [33m[DEPRECATED] react-native-webview should add the 'ios.componentProvider' property in their codegenConfig[0m
+02:00:26   [36m[1m[Codegen][0m Generated artifact: /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/ios/build/generated/ios/RCTThirdPartyComponentsProvider.mm[0m
+02:00:26   [36m[1m[Codegen][0m Generating RCTAppDependencyProvider[0m
+02:00:26   [36m[1m[Codegen][0m Generated artifact: /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/ios/build/generated/ios/RCTAppDependencyProvider.h[0m
+02:00:26   [36m[1m[Codegen][0m Generated artifact: /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/ios/build/generated/ios/RCTAppDependencyProvider.mm[0m
+02:00:26   [36m[1m[Codegen][0m Generated podspec: /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/ios/build/generated/ios/ReactAppDependencyProvider.podspec[0m
+02:00:26   [36m[1m[Codegen][0m [33mDone.[0m
+02:00:26 [36m[1m[Codegen][0m Analyzing /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/package.json[0m
+02:00:26 [36m[1m[Codegen][0m [33mSearching for codegen-enabled libraries in the app.[0m
+02:00:26 [36m[1m[Codegen][0m [33mThe "codegenConfig" field is not defined in package.json. Assuming there is nothing to generate at the app level.[0m
+02:00:26 [36m[1m[Codegen][0m [33mSearching for codegen-enabled libraries in the project dependencies.[0m
+02:00:26 [36m[1m[Codegen][0m Found react-native-safe-area-context[0m
+02:00:26 [36m[1m[Codegen][0m Found react-native-store-review[0m
+02:00:26 [36m[1m[Codegen][0m Found @react-native-async-storage/async-storage[0m
+02:00:26 [36m[1m[Codegen][0m Found react-native[0m
+02:00:26 [36m[1m[Codegen][0m Found react-native-keychain[0m
+02:00:26 [36m[1m[Codegen][0m Found react-native-mmkv[0m
+02:00:26 [36m[1m[Codegen][0m Found react-native-share[0m
+02:00:26 [36m[1m[Codegen][0m Found react-native-webview[0m
+02:00:26 [36m[1m[Codegen][0m [33mSearching for codegen-enabled libraries in react-native.config.js[0m
+02:00:26 [36m[1m[Codegen][0m Processing safeareacontext[0m
+02:00:26 [36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+02:00:26 [36m[1m[Codegen][0m Supported Apple platforms: ios, macos, tvos, visionos for safeareacontext[0m
+02:00:26 [36m[1m[Codegen][0m Processing RNStoreReviewSpec[0m
+02:00:26 [36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+02:00:26 [36m[1m[Codegen][0m Supported Apple platforms: ios for RNStoreReviewSpec[0m
+02:00:26 [36m[1m[Codegen][0m Processing rnasyncstorage[0m
+02:00:26 [36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+02:00:26 [36m[1m[Codegen][0m Supported Apple platforms: ios, macos, tvos, visionos for rnasyncstorage[0m
+02:00:26 [36m[1m[Codegen][0m Processing FBReactNativeSpec[0m
+02:00:26 [36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+02:00:26 [36m[1m[Codegen][0m Processing rncore[0m
+02:00:26 [36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+02:00:26 [36m[1m[Codegen][0m Processing RNKeychainSpec[0m
+02:00:26 [36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+02:00:26 [36m[1m[Codegen][0m Supported Apple platforms: ios, macos, tvos, visionos for RNKeychainSpec[0m
+02:00:26 [36m[1m[Codegen][0m Processing RNMmkvSpec[0m
+02:00:26 [36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+02:00:26 [36m[1m[Codegen][0m Supported Apple platforms: ios, macos, tvos for RNMmkvSpec[0m
+02:00:26 [36m[1m[Codegen][0m Processing RNShareSpec[0m
+02:00:26 [36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+02:00:26 [36m[1m[Codegen][0m Supported Apple platforms: ios for RNShareSpec[0m
+02:00:26 [36m[1m[Codegen][0m Processing RNCWebViewSpec[0m
+02:00:26 [36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+02:00:26 [36m[1m[Codegen][0m Supported Apple platforms: ios, macos, visionos for RNCWebViewSpec[0m
+02:00:26 [36m[1m[Codegen][0m Generating Native Code for safeareacontext - ios[0m
+02:00:26 [36m[1m[Codegen][0m Generated artifacts: /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/ios/build/generated/ios[0m
+02:00:26 [36m[1m[Codegen][0m Generating Native Code for RNStoreReviewSpec - ios[0m
+02:00:26 [36m[1m[Codegen][0m Generated artifacts: /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/ios/build/generated/ios[0m
+02:00:26 [36m[1m[Codegen][0m Generating Native Code for rnasyncstorage - ios[0m
+02:00:26 [36m[1m[Codegen][0m Generated artifacts: /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/ios/build/generated/ios[0m
+02:00:26 [36m[1m[Codegen][0m [33m[Codegen - FBReactNativeSpec] Skipping iOS code generation for FBReactNativeSpec as it has been generated already.[0m
+02:00:26 [36m[1m[Codegen][0m [33m[Codegen - rncore] Skipping iOS code generation for rncore as it has been generated already.[0m
+02:00:26 [36m[1m[Codegen][0m Generating Native Code for RNKeychainSpec - ios[0m
+02:00:26 [36m[1m[Codegen][0m Generated artifacts: /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/ios/build/generated/ios[0m
+02:00:27 [36m[1m[Codegen][0m Generating Native Code for RNMmkvSpec - ios[0m
+02:00:27 [36m[1m[Codegen][0m Generated artifacts: /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/ios/build/generated/ios[0m
+02:00:27 [36m[1m[Codegen][0m Generating Native Code for RNShareSpec - ios[0m
+02:00:27 [36m[1m[Codegen][0m Generated artifacts: /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/ios/build/generated/ios[0m
+02:00:27 [36m[1m[Codegen][0m Generating Native Code for RNCWebViewSpec - ios[0m
+02:00:27 [36m[1m[Codegen][0m Generated artifacts: /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/ios/build/generated/ios[0m
+02:00:27 [36m[1m[Codegen][0m Generating RCTThirdPartyComponentsProvider.h[0m
+02:00:27 [36m[1m[Codegen][0m Generated artifact: /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/ios/build/generated/ios/RCTThirdPartyComponentsProvider.h[0m
+02:00:27 [36m[1m[Codegen][0m Generating RCTThirdPartyComponentsProvider.mm[0m
+02:00:27 [36m[1m[Codegen][0m Crawling react-native-webview library for components[0m
+02:00:27 [36m[1m[Codegen][0m Match found RNCWebView -> RNCWebView[0m
+02:00:27 [36m[1m[Codegen][0m [33m[DEPRECATED] react-native-webview should add the 'ios.componentProvider' property in their codegenConfig[0m
+02:00:27 [36m[1m[Codegen][0m Generated artifact: /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/ios/build/generated/ios/RCTThirdPartyComponentsProvider.mm[0m
+02:00:27 [36m[1m[Codegen][0m Generating RCTAppDependencyProvider[0m
+02:00:27 [36m[1m[Codegen][0m Generated artifact: /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/ios/build/generated/ios/RCTAppDependencyProvider.h[0m
+02:00:27 [36m[1m[Codegen][0m Generated artifact: /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/ios/build/generated/ios/RCTAppDependencyProvider.mm[0m
+02:00:27 [36m[1m[Codegen][0m Generated podspec: /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/ios/build/generated/ios/ReactAppDependencyProvider.podspec[0m
+02:00:27 [36m[1m[Codegen][0m [33mDone.[0m
+02:00:27 No modules to process in combine-js-to-schema-cli. If this is unexpected, please check if you set up your NativeComponent correctly. See combine-js-to-schema.js for how codegen finds modules.
+02:00:28 [react-native-mmkv] Thank you for using react-native-mmkv ❤️
+02:00:28 [react-native-mmkv] If you enjoy using react-native-mmkv, please consider sponsoring this project: https://github.com/sponsors/mrousavy
+02:00:28 Found 15 modules for target `StandardNotesDev`
+02:00:28 link_native_modules! {:ios_packages=>[{:configurations=>[], :name=>"react-native-iap", :root=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-iap", :path=>"../node_modules/react-native-iap", :podspec_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-iap/RNIap.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"@notifee/react-native", :root=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/@notifee/react-native", :path=>"../node_modules/@notifee/react-native", :podspec_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/@notifee/react-native/RNNotifee.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"react-native-safe-area-context", :root=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-safe-area-context", :path=>"../node_modules/react-native-safe-area-context", :podspec_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-safe-area-context/react-native-safe-area-context.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"react-native-store-review", :root=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-store-review", :path=>"../node_modules/react-native-store-review", :podspec_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-store-review/RNStoreReview.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"@react-native-async-storage/async-storage", :root=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/@react-native-async-storage/async-storage", :path=>"../node_modules/@react-native-async-storage/async-storage", :podspec_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/@react-native-async-storage/async-storage/RNCAsyncStorage.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"@standardnotes/react-native-utils", :root=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/@standardnotes/react-native-utils", :path=>"../node_modules/@standardnotes/react-native-utils", :podspec_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/@standardnotes/react-native-utils/SNReactNative.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"react-native-file-viewer", :root=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-file-viewer", :path=>"../node_modules/react-native-file-viewer", :podspec_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-file-viewer/RNFileViewer.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"react-native-fingerprint-scanner", :root=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-fingerprint-scanner", :path=>"../node_modules/react-native-fingerprint-scanner", :podspec_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-fingerprint-scanner/react-native-fingerprint-scanner.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"react-native-fs", :root=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-fs", :path=>"../node_modules/react-native-fs", :podspec_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-fs/RNFS.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"react-native-keychain", :root=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-keychain", :path=>"../node_modules/react-native-keychain", :podspec_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-keychain/RNKeychain.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"react-native-mmkv", :root=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-mmkv", :path=>"../node_modules/react-native-mmkv", :podspec_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-mmkv/react-native-mmkv.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"react-native-privacy-snapshot", :root=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-privacy-snapshot", :path=>"../node_modules/react-native-privacy-snapshot", :podspec_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-privacy-snapshot/RNPrivacySnapshot.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"react-native-share", :root=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-share", :path=>"../node_modules/react-native-share", :podspec_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-share/RNShare.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"react-native-version-info", :root=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-version-info", :path=>"../node_modules/react-native-version-info", :podspec_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-version-info/react-native-version-info.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"react-native-webview", :root=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-webview", :path=>"../node_modules/react-native-webview", :podspec_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native-webview/react-native-webview.podspec", :script_phases=>[]}], :ios_project_root_path=>"/Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/ios", :react_native_path=>"../node_modules/react-native"}
+02:00:28 [react-native-mmkv] Thank you for using react-native-mmkv ❤️
+02:00:28 [react-native-mmkv] If you enjoy using react-native-mmkv, please consider sponsoring this project: https://github.com/sponsors/mrousavy
+02:00:28 Auto-linking React Native modules for target `StandardNotesDev`: RNCAsyncStorage, RNFS, RNFileViewer, RNIap, RNKeychain, RNNotifee, RNPrivacySnapshot, RNShare, RNStoreReview, SNReactNative, react-native-fingerprint-scanner, react-native-mmkv, react-native-safe-area-context, react-native-version-info, and react-native-webview
+02:00:28 Framework build type is static library
+02:00:28 [!] The version of CocoaPods used to generate the lockfile (1.16.2) is higher than the version of the current executable (1.14.3). Incompatibility issues may arise.
+02:00:28 [36m[1m[Codegen][0m Skipping use_react_native_codegen_discovery.
+02:00:28   Preparing
+02:00:28 
+02:00:28 Analyzing dependencies
+02:00:28 
+02:00:28 Inspecting targets to integrate
+02:00:28   Using `ARCHS` setting to build architectures of target `Pods-StandardNotes`: (``)
+02:00:28   Using `ARCHS` setting to build architectures of target `Pods-StandardNotesDev`: (``)
+02:00:28   Using `ARCHS` setting to build architectures of target `Pods-StandardNotes-StandardNotesTests`: (``)
+02:00:28 
+02:00:28 Finding Podfile changes
+02:00:28   - DoubleConversion
+02:00:28   - FBLazyVector
+02:00:28   - RCT-Folly
+02:00:28   - RCTDeprecation
+02:00:28   - RCTRequired
+02:00:28   - RCTTypeSafety
+02:00:28   - RNCAsyncStorage
+02:00:28   - RNFS
+02:00:28   - RNFileViewer
+02:00:28   - RNIap
+02:00:28   - RNKeychain
+02:00:28   - RNNotifee
+02:00:28   - RNPrivacySnapshot
+02:00:28   - RNShare
+02:00:28   - RNStoreReview
+02:00:28   - React
+02:00:28   - React-Core
+02:00:28   - React-CoreModules
+02:00:28   - React-Fabric
+02:00:28   - React-FabricComponents
+02:00:28   - React-FabricImage
+02:00:28   - React-ImageManager
+02:00:28   - React-Mapbuffer
+02:00:29   - React-NativeModulesApple
+02:00:29   - React-RCTActionSheet
+02:00:29   - React-RCTAnimation
+02:00:29   - React-RCTAppDelegate
+02:00:29   - React-RCTBlob
+02:00:29   - React-RCTFBReactNativeSpec
+02:00:29   - React-RCTFabric
+02:00:29   - React-RCTImage
+02:00:29   - React-RCTLinking
+02:00:29   - React-RCTNetwork
+02:00:29   - React-RCTSettings
+02:00:29   - React-RCTText
+02:00:29   - React-RCTVibration
+02:00:29   - React-RuntimeApple
+02:00:29   - React-RuntimeCore
+02:00:29   - React-RuntimeHermes
+02:00:29   - React-callinvoker
+02:00:29   - React-cxxreact
+02:00:29   - React-debug
+02:00:29   - React-defaultsnativemodule
+02:00:29   - React-domnativemodule
+02:00:29   - React-featureflags
+02:00:29   - React-featureflagsnativemodule
+02:00:29   - React-graphics
+02:00:29   - React-hermes
+02:00:29   - React-idlecallbacksnativemodule
+02:00:29   - React-jserrorhandler
+02:00:29   - React-jsi
+02:00:29   - React-jsiexecutor
+02:00:29   - React-jsinspector
+02:00:29   - React-jsinspectortracing
+02:00:29   - React-jsitracing
+02:00:29   - React-logger
+02:00:29   - React-microtasksnativemodule
+02:00:29   - React-perflogger
+02:00:29   - React-performancetimeline
+02:00:29   - React-rendererconsistency
+02:00:29   - React-rendererdebug
+02:00:29   - React-rncore
+02:00:29   - React-runtimeexecutor
+02:00:29   - React-runtimescheduler
+02:00:29   - React-timing
+02:00:29   - React-utils
+02:00:29   - ReactAppDependencyProvider
+02:00:29   - ReactCodegen
+02:00:29   - ReactCommon
+02:00:29   - SNReactNative
+02:00:29   - TrustKit
+02:00:29   - Yoga
+02:00:29   - boost
+02:00:29   - fast_float
+02:00:29   - fmt
+02:00:29   - glog
+02:00:29   - hermes-engine
+02:00:29   - react-native-fingerprint-scanner
+02:00:29   - react-native-mmkv
+02:00:29   - react-native-safe-area-context
+02:00:29   - react-native-version-info
+02:00:29   - react-native-webview
+02:00:29 
+02:00:29 Fetching external sources
+02:00:29 -> Fetching podspec for `DoubleConversion` from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`
+02:00:29 -> Fetching podspec for `FBLazyVector` from `../node_modules/react-native/Libraries/FBLazyVector`
+02:00:29 -> Fetching podspec for `RCT-Folly` from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`
+02:00:29 -> Fetching podspec for `RCTDeprecation` from `../node_modules/react-native/ReactApple/Libraries/RCTFoundation/RCTDeprecation`
+02:00:29 -> Fetching podspec for `RCTRequired` from `../node_modules/react-native/Libraries/Required`
+02:00:29 -> Fetching podspec for `RCTTypeSafety` from `../node_modules/react-native/Libraries/TypeSafety`
+02:00:29 -> Fetching podspec for `RNCAsyncStorage` from `../node_modules/@react-native-async-storage/async-storage`
+02:00:29 -> Fetching podspec for `RNFS` from `../node_modules/react-native-fs`
+02:00:29 -> Fetching podspec for `RNFileViewer` from `../node_modules/react-native-file-viewer`
+02:00:29 -> Fetching podspec for `RNIap` from `../node_modules/react-native-iap`
+02:00:29 -> Fetching podspec for `RNKeychain` from `../node_modules/react-native-keychain`
+02:00:29 -> Fetching podspec for `RNNotifee` from `../node_modules/@notifee/react-native`
+02:00:29 -> Fetching podspec for `RNPrivacySnapshot` from `../node_modules/react-native-privacy-snapshot`
+02:00:29 -> Fetching podspec for `RNShare` from `../node_modules/react-native-share`
+02:00:29 -> Fetching podspec for `RNStoreReview` from `../node_modules/react-native-store-review`
+02:00:29 -> Fetching podspec for `React` from `../node_modules/react-native/`
+02:00:29 -> Fetching podspec for `React-Core` from `../node_modules/react-native/`
+02:00:29 -> Fetching podspec for `React-CoreModules` from `../node_modules/react-native/React/CoreModules`
+02:00:29 -> Fetching podspec for `React-Fabric` from `../node_modules/react-native/ReactCommon`
+02:00:29 -> Fetching podspec for `React-FabricComponents` from `../node_modules/react-native/ReactCommon`
+02:00:29 -> Fetching podspec for `React-FabricImage` from `../node_modules/react-native/ReactCommon`
+02:00:29 -> Fetching podspec for `React-ImageManager` from `../node_modules/react-native/ReactCommon/react/renderer/imagemanager/platform/ios`
+02:00:29 -> Fetching podspec for `React-Mapbuffer` from `../node_modules/react-native/ReactCommon`
+02:00:29 -> Fetching podspec for `React-NativeModulesApple` from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`
+02:00:29 -> Fetching podspec for `React-RCTActionSheet` from `../node_modules/react-native/Libraries/ActionSheetIOS`
+02:00:29 -> Fetching podspec for `React-RCTAnimation` from `../node_modules/react-native/Libraries/NativeAnimation`
+02:00:29 -> Fetching podspec for `React-RCTAppDelegate` from `../node_modules/react-native/Libraries/AppDelegate`
+02:00:29 -> Fetching podspec for `React-RCTBlob` from `../node_modules/react-native/Libraries/Blob`
+02:00:29 -> Fetching podspec for `React-RCTFBReactNativeSpec` from `../node_modules/react-native/React`
+02:00:29 -> Fetching podspec for `React-RCTFabric` from `../node_modules/react-native/React`
+02:00:29 -> Fetching podspec for `React-RCTImage` from `../node_modules/react-native/Libraries/Image`
+02:00:29 -> Fetching podspec for `React-RCTLinking` from `../node_modules/react-native/Libraries/LinkingIOS`
+02:00:29 -> Fetching podspec for `React-RCTNetwork` from `../node_modules/react-native/Libraries/Network`
+02:00:29 -> Fetching podspec for `React-RCTSettings` from `../node_modules/react-native/Libraries/Settings`
+02:00:29 -> Fetching podspec for `React-RCTText` from `../node_modules/react-native/Libraries/Text`
+02:00:29 -> Fetching podspec for `React-RCTVibration` from `../node_modules/react-native/Libraries/Vibration`
+02:00:29 -> Fetching podspec for `React-RuntimeApple` from `../node_modules/react-native/ReactCommon/react/runtime/platform/ios`
+02:00:29 -> Fetching podspec for `React-RuntimeCore` from `../node_modules/react-native/ReactCommon/react/runtime`
+02:00:29 -> Fetching podspec for `React-RuntimeHermes` from `../node_modules/react-native/ReactCommon/react/runtime`
+02:00:29 -> Fetching podspec for `React-callinvoker` from `../node_modules/react-native/ReactCommon/callinvoker`
+02:00:29 -> Fetching podspec for `React-cxxreact` from `../node_modules/react-native/ReactCommon/cxxreact`
+02:00:29 -> Fetching podspec for `React-debug` from `../node_modules/react-native/ReactCommon/react/debug`
+02:00:29 -> Fetching podspec for `React-defaultsnativemodule` from `../node_modules/react-native/ReactCommon/react/nativemodule/defaults`
+02:00:29 -> Fetching podspec for `React-domnativemodule` from `../node_modules/react-native/ReactCommon/react/nativemodule/dom`
+02:00:29 -> Fetching podspec for `React-featureflags` from `../node_modules/react-native/ReactCommon/react/featureflags`
+02:00:29 -> Fetching podspec for `React-featureflagsnativemodule` from `../node_modules/react-native/ReactCommon/react/nativemodule/featureflags`
+02:00:29 -> Fetching podspec for `React-graphics` from `../node_modules/react-native/ReactCommon/react/renderer/graphics`
+02:00:29 -> Fetching podspec for `React-hermes` from `../node_modules/react-native/ReactCommon/hermes`
+02:00:29 -> Fetching podspec for `React-idlecallbacksnativemodule` from `../node_modules/react-native/ReactCommon/react/nativemodule/idlecallbacks`
+02:00:29 -> Fetching podspec for `React-jserrorhandler` from `../node_modules/react-native/ReactCommon/jserrorhandler`
+02:00:29 -> Fetching podspec for `React-jsi` from `../node_modules/react-native/ReactCommon/jsi`
+02:00:29 -> Fetching podspec for `React-jsiexecutor` from `../node_modules/react-native/ReactCommon/jsiexecutor`
+02:00:29 -> Fetching podspec for `React-jsinspector` from `../node_modules/react-native/ReactCommon/jsinspector-modern`
+02:00:29 -> Fetching podspec for `React-jsinspectortracing` from `../node_modules/react-native/ReactCommon/jsinspector-modern/tracing`
+02:00:29 -> Fetching podspec for `React-jsitracing` from `../node_modules/react-native/ReactCommon/hermes/executor/`
+02:00:29 -> Fetching podspec for `React-logger` from `../node_modules/react-native/ReactCommon/logger`
+02:00:29 -> Fetching podspec for `React-microtasksnativemodule` from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`
+02:00:29 -> Fetching podspec for `React-perflogger` from `../node_modules/react-native/ReactCommon/reactperflogger`
+02:00:29 -> Fetching podspec for `React-performancetimeline` from `../node_modules/react-native/ReactCommon/react/performance/timeline`
+02:00:29 -> Fetching podspec for `React-rendererconsistency` from `../node_modules/react-native/ReactCommon/react/renderer/consistency`
+02:00:29 -> Fetching podspec for `React-rendererdebug` from `../node_modules/react-native/ReactCommon/react/renderer/debug`
+02:00:29 -> Fetching podspec for `React-rncore` from `../node_modules/react-native/ReactCommon`
+02:00:29 -> Fetching podspec for `React-runtimeexecutor` from `../node_modules/react-native/ReactCommon/runtimeexecutor`
+02:00:29 -> Fetching podspec for `React-runtimescheduler` from `../node_modules/react-native/ReactCommon/react/renderer/runtimescheduler`
+02:00:30 -> Fetching podspec for `React-timing` from `../node_modules/react-native/ReactCommon/react/timing`
+02:00:30 -> Fetching podspec for `React-utils` from `../node_modules/react-native/ReactCommon/react/utils`
+02:00:30 -> Fetching podspec for `ReactAppDependencyProvider` from `build/generated/ios`
+02:00:30 -> Fetching podspec for `ReactCodegen` from `build/generated/ios`
+02:00:30 -> Fetching podspec for `ReactCommon` from `../node_modules/react-native/ReactCommon`
+02:00:30 -> Fetching podspec for `SNReactNative` from `../node_modules/@standardnotes/react-native-utils`
+02:00:30 -> Fetching podspec for `Yoga` from `../node_modules/react-native/ReactCommon/yoga`
+02:00:30 -> Fetching podspec for `boost` from `../node_modules/react-native/third-party-podspecs/boost.podspec`
+02:00:30 -> Fetching podspec for `fast_float` from `../node_modules/react-native/third-party-podspecs/fast_float.podspec`
+02:00:30 -> Fetching podspec for `fmt` from `../node_modules/react-native/third-party-podspecs/fmt.podspec`
+02:00:30 -> Fetching podspec for `glog` from `../node_modules/react-native/third-party-podspecs/glog.podspec`
+02:00:30 -> Fetching podspec for `hermes-engine` from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`
+02:00:30   $ /Users/runner/hostedtoolcache/node/22.14.0/arm64/bin/node -p require.resolve(     "react-native",     {paths: [process.argv[1]]},     ) /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native/sdks/hermes-engine
+02:00:30   /Users/runner/work/sn-fast-build/sn-fast-build/upstream/packages/mobile/node_modules/react-native/index.js
+02:00:30 [Hermes] Using release tarball from URL: https://repo1.maven.org/maven2/com/facebook/react/react-native-artifacts/0.78.1/react-native-artifacts-0.78.1-hermes-ios-debug.tar.gz
+02:00:30   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+02:00:30                                  Dload  Upload   Total   Spent    Left  Speed
+02:00:30   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   167    0   167    0     0   5791      0 --:--:-- --:--:-- --:--:--  5964
+02:00:30 100 28.9M  100 28.9M    0     0  68.6M      0 --:--:-- --:--:-- --:--:-- 68.6M
+02:00:30   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+02:00:30                                  Dload  Upload   Total   Spent    Left  Speed
+02:00:30   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   167    0   167    0     0   5383      0 --:--:-- --:--:-- --:--:--  5566
+02:00:30 100 20.0M  100 20.0M    0     0  59.1M      0 --:--:-- --:--:-- --:--:-- 59.1M
+02:00:30 -> Fetching podspec for `react-native-fingerprint-scanner` from `../node_modules/react-native-fingerprint-scanner`
+02:00:30 -> Fetching podspec for `react-native-mmkv` from `../node_modules/react-native-mmkv`
+02:00:30 [react-native-mmkv] Thank you for using react-native-mmkv ❤️
+02:00:30 [react-native-mmkv] If you enjoy using react-native-mmkv, please consider sponsoring this project: https://github.com/sponsors/mrousavy
+02:00:30 -> Fetching podspec for `react-native-safe-area-context` from `../node_modules/react-native-safe-area-context`
+02:00:30 -> Fetching podspec for `react-native-version-info` from `../node_modules/react-native-version-info`
+02:00:30 -> Fetching podspec for `react-native-webview` from `../node_modules/react-native-webview`
+02:00:31 
+02:00:31 Resolving dependencies of `Podfile`
+02:00:31 
+02:00:31 Adding spec repo `trunk` with CDN `https://cdn.cocoapods.org/`
+02:00:31   CDN: trunk Relative path downloaded: CocoaPods-version.yml, save ETag: "6af51ce1-38"
+02:00:31 
+02:00:31 CocoaPods 1.16.1 is available.
+02:00:31 To update use: `gem install cocoapods`
+02:00:31 
+02:00:31 For more information, see https://blog.cocoapods.org and the CHANGELOG for this version at https://github.com/CocoaPods/CocoaPods/releases/tag/1.16.1
+02:00:31 
+02:00:31   CDN: trunk Relative path: CocoaPods-version.yml exists! Returning local because checking is only performed in repo update
+02:00:31   CDN: trunk Relative path downloaded: all_pods_versions_d_2_4.txt, save ETag: W/"6af51ce1-870"
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/1.1.2/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/1.1.2/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/1.1.3/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/1.1.3/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/1.2.0/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/1.2.0/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/1.2.1/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/1.2.1/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/1.2.2/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/1.2.2/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/1.2.3/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/1.2.3/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/1.2.4/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/1.2.4/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/1.2.5/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/1.2.5/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/1.3.1/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/1.3.1/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/1.3.2/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/1.3.2/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/1.4.0/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/1.4.0/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/1.4.1/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/1.4.1/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/1.4.2/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/1.4.2/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/1.5.0/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/1.5.0/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/1.5.3/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/1.5.3/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/1.6.1/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/1.6.1/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/1.5.1/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/1.5.1/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/1.5.2/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/1.5.2/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/1.6.0/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/1.6.0/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/1.6.2/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/1.6.2/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/1.6.3/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/1.6.3/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/1.6.4/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/1.6.4/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/1.3.0/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/1.3.0/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/1.6.5/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/1.6.5/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/1.7.0/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/1.7.0/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/2.0.0/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/2.0.0/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/2.0.1/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/2.0.1/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/3.0.0/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/3.0.0/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/3.0.1/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/3.0.1/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/3.0.2/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/3.0.2/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/3.0.3/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/3.0.3/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/3.0.4/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/3.0.4/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/3.0.7/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/3.0.7/TrustKit.podspec.json
+02:00:31   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/d/2/4/TrustKit/3.0.8/TrustKit.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/3.0.8/TrustKit.podspec.json
+02:00:31   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/1.2.0/TrustKit.podspec.json, save ETag: W/"400-5f9d52ccf8276f89"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/1.2.2/TrustKit.podspec.json, save ETag: W/"43f-5042222dfaa40f60"
+02:00:32   CDN: trunk Redirecting from https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/1.1.3/TrustKit.podspec.json to https://raw.githubusercontent.com/CocoaPods/Specs/master/Specs/d/2/4/TrustKit/1.1.3/TrustKit.podspec.json
+02:00:32   CDN: trunk Redirecting from https://cdn.jsdelivr.net/cocoa/Specs/d/2/4/TrustKit/1.1.2/TrustKit.podspec.json to https://raw.githubusercontent.com/CocoaPods/Specs/master/Specs/d/2/4/TrustKit/1.1.2/TrustKit.podspec.json
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/1.2.1/TrustKit.podspec.json, save ETag: W/"400-321ee9c1f52a5ddf"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/1.2.5/TrustKit.podspec.json, save ETag: W/"43f-d789c1192bf9dcc7"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/1.2.3/TrustKit.podspec.json, save ETag: W/"43f-4935bbde43cd50fd"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/1.2.4/TrustKit.podspec.json, save ETag: W/"43f-f4bd6ea4dbc3e798"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/1.3.1/TrustKit.podspec.json, save ETag: W/"43f-7c1e93ef4f4e74fa"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/1.3.2/TrustKit.podspec.json, save ETag: W/"43f-7e58d9e023c81889"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/1.4.0/TrustKit.podspec.json, save ETag: W/"388-de450fe8a717751b"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/1.4.1/TrustKit.podspec.json, save ETag: W/"3a5-c6a50f0a08752cc3"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/1.4.2/TrustKit.podspec.json, save ETag: W/"3a5-5aaa62ac11b4c69c"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/1.5.0/TrustKit.podspec.json, save ETag: W/"422-cb84208162ec0235"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/1.5.3/TrustKit.podspec.json, save ETag: W/"422-1ece20cb24fe4854"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/1.6.1/TrustKit.podspec.json, save ETag: W/"423-36b1a99bf1f80179"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/1.6.2/TrustKit.podspec.json, save ETag: W/"45f-506c8452f9ff0958"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/1.6.4/TrustKit.podspec.json, save ETag: W/"45f-6c01edc99867d118"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/1.5.2/TrustKit.podspec.json, save ETag: W/"422-abd1eb93ebeef423"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/1.6.0/TrustKit.podspec.json, save ETag: W/"423-fa1c44c167d89ead"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/1.3.0/TrustKit.podspec.json, save ETag: W/"43f-0f05f6578bde0c43"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/1.6.5/TrustKit.podspec.json, save ETag: W/"489-cb4149642bc5d92e"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/1.7.0/TrustKit.podspec.json, save ETag: W/"489-bf7e60748a64c2e5"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/2.0.0/TrustKit.podspec.json, save ETag: W/"489-84f5b2c79f90d451"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/2.0.1/TrustKit.podspec.json, save ETag: W/"489-220ddb064cc67480"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/3.0.2/TrustKit.podspec.json, save ETag: W/"489-db9467f3bddaf958"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/3.0.3/TrustKit.podspec.json, save ETag: W/"489-493b76a2260f0077"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/3.0.4/TrustKit.podspec.json, save ETag: W/"3dc-1cced6307ca3b3dd"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/3.0.7/TrustKit.podspec.json, save ETag: W/"3dc-5b79bc9efc271254"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/3.0.8/TrustKit.podspec.json, save ETag: W/"3dc-fd0a436590aaacda"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/1.5.1/TrustKit.podspec.json, save ETag: W/"422-ec544bf98b6e45a3"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/3.0.0/TrustKit.podspec.json, save ETag: W/"488-fb282b4357f9b607"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/3.0.1/TrustKit.podspec.json, save ETag: W/"489-f3872bb9a67909c3"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/1.6.3/TrustKit.podspec.json, save ETag: W/"45f-140ec3a575bb2e93"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/1.1.3/TrustKit.podspec.json, save ETag: W/"0dd00ce2636c6cbdbf998ac129cc7891296b3a161989427fd6dcc32f7505b08a"
+02:00:32   CDN: trunk Relative path downloaded: Specs/d/2/4/TrustKit/1.1.2/TrustKit.podspec.json, save ETag: W/"7995f691bd7d0299a119c08068a87e85b64d845d8a40b232efdbd20651f182f6"
+02:00:32   CDN: trunk Relative path: Specs/d/2/4/TrustKit/3.0.8/TrustKit.podspec.json modified during this run! Returning local
+02:00:32   CDN: trunk Relative path downloaded: all_pods_versions_a_9_3.txt, save ETag: W/"6af51ce1-954"
+02:00:32   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/a/9/3/SocketRocket/0.1/SocketRocket.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/a/9/3/SocketRocket/0.1/SocketRocket.podspec.json
+02:00:32   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/a/9/3/SocketRocket/0.3.1-beta2/SocketRocket.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/a/9/3/SocketRocket/0.3.1-beta2/SocketRocket.podspec.json
+02:00:32   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/a/9/3/SocketRocket/0.4.1/SocketRocket.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/a/9/3/SocketRocket/0.4.1/SocketRocket.podspec.json
+02:00:32   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/a/9/3/SocketRocket/0.4/SocketRocket.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/a/9/3/SocketRocket/0.4/SocketRocket.podspec.json
+02:00:32   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/a/9/3/SocketRocket/0.5.1/SocketRocket.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/a/9/3/SocketRocket/0.5.1/SocketRocket.podspec.json
+02:00:32   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/a/9/3/SocketRocket/0.6.0/SocketRocket.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/a/9/3/SocketRocket/0.6.0/SocketRocket.podspec.json
+02:00:32   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/a/9/3/SocketRocket/0.6.1/SocketRocket.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/a/9/3/SocketRocket/0.6.1/SocketRocket.podspec.json
+02:00:32   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/a/9/3/SocketRocket/0.2.0/SocketRocket.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/a/9/3/SocketRocket/0.2.0/SocketRocket.podspec.json
+02:00:32   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/a/9/3/SocketRocket/0.4.2/SocketRocket.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/a/9/3/SocketRocket/0.4.2/SocketRocket.podspec.json
+02:00:32   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/a/9/3/SocketRocket/0.5.0/SocketRocket.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/a/9/3/SocketRocket/0.5.0/SocketRocket.podspec.json
+02:00:32   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/a/9/3/SocketRocket/0.7.1/SocketRocket.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/a/9/3/SocketRocket/0.7.1/SocketRocket.podspec.json
+02:00:32   CDN: trunk Redirecting from https://cdn.cocoapods.org/Specs/a/9/3/SocketRocket/0.7.0/SocketRocket.podspec.json to https://cdn.jsdelivr.net/cocoa/Specs/a/9/3/SocketRocket/0.7.0/SocketRocket.podspec.json
+02:00:32   CDN: trunk Relative path downloaded: Specs/a/9/3/SocketRocket/0.1/SocketRocket.podspec.json, save ETag: W/"270-1c4e4ad5cf8b458a"
+02:00:32   CDN: trunk Relative path downloaded: Specs/a/9/3/SocketRocket/0.3.1-beta2/SocketRocket.podspec.json, save ETag: W/"259-563a0f3d5d04325b"
+02:00:32   CDN: trunk Relative path downloaded: Specs/a/9/3/SocketRocket/0.4.1/SocketRocket.podspec.json, save ETag: W/"284-c60fe23fdd6f0fa5"
+02:00:32   CDN: trunk Relative path downloaded: Specs/a/9/3/SocketRocket/0.5.1/SocketRocket.podspec.json, save ETag: W/"2e6-39bc86f5c4319095"
+02:00:32   CDN: trunk Relative path downloaded: Specs/a/9/3/SocketRocket/0.6.0/SocketRocket.podspec.json, save ETag: W/"39a-309069186841ec97"
+02:00:32   CDN: trunk Relative path downloaded: Specs/a/9/3/SocketRocket/0.6.1/SocketRocket.podspec.json, save ETag: W/"39d-d4160186508e8a74"
+02:00:32   CDN: trunk Relative path downloaded: Specs/a/9/3/SocketRocket/0.4.2/SocketRocket.podspec.json, save ETag: W/"284-f224f5518da3802f"
+02:00:32   CDN: trunk Relative path downloaded: Specs/a/9/3/SocketRocket/0.5.0/SocketRocket.podspec.json, save ETag: W/"2e6-569040ba00a084c0"
+02:00:32   CDN: trunk Relative path downloaded: Specs/a/9/3/SocketRocket/0.4/SocketRocket.podspec.json, save ETag: W/"280-bd2a1d1fc75fb479"
+02:00:32   CDN: trunk Relative path downloaded: Specs/a/9/3/SocketRocket/0.2.0/SocketRocket.podspec.json, save ETag: W/"24d-7079c09f9cf8d8e4"
+02:00:32   CDN: trunk Relative path downloaded: Specs/a/9/3/SocketRocket/0.7.1/SocketRocket.podspec.json, save ETag: W/"3b4-8cce0da7b2d49370"
+02:00:32   CDN: trunk Relative path downloaded: Specs/a/9/3/SocketRocket/0.7.0/SocketRocket.podspec.json, save ETag: W/"39d-44e7b7a90609e0b6"
+02:00:32   CDN: trunk Relative path: Specs/a/9/3/SocketRocket/0.7.1/SocketRocket.podspec.json modified during this run! Returning local
+02:00:32   CDN: trunk Relative path: Specs/d/2/4/TrustKit/1.6.5/TrustKit.podspec.json modified during this run! Returning local
+02:00:32   CDN: trunk Relative path: Specs/a/9/3/SocketRocket/0.7.1/SocketRocket.podspec.json modified during this run! Returning local
+02:00:32 
+02:00:32 Comparing resolved specification to the sandbox manifest
+02:00:32   A DoubleConversion
+02:00:32   A FBLazyVector
+02:00:32   A RCT-Folly
+02:00:32   A RCTDeprecation
+02:00:32   A RCTRequired
+02:00:32   A RCTTypeSafety
+02:00:32   A RNCAsyncStorage
+02:00:32   A RNFS
+02:00:32   A RNFileViewer
+02:00:32   A RNIap
+02:00:32   A RNKeychain
+02:00:32   A RNNotifee
+02:00:32   A RNPrivacySnapshot
+02:00:32   A RNShare
+02:00:32   A RNStoreReview
+02:00:32   A React
+02:00:32   A React-Core
+02:00:32   A React-CoreModules
+02:00:32   A React-Fabric
+02:00:32   A React-FabricComponents
+02:00:32   A React-FabricImage
+02:00:32   A React-ImageManager
+02:00:32   A React-Mapbuffer
+02:00:32   A React-NativeModulesApple
+02:00:32   A React-RCTActionSheet
+02:00:32   A React-RCTAnimation
+02:00:32   A React-RCTAppDelegate
+02:00:32   A React-RCTBlob
+02:00:32   A React-RCTFBReactNativeSpec
+02:00:32   A React-RCTFabric
+02:00:32   A React-RCTImage
+02:00:32   A React-RCTLinking
+02:00:32   A React-RCTNetwork
+02:00:32   A React-RCTSettings
+02:00:32   A React-RCTText
+02:00:32   A React-RCTVibration
+02:00:32   A React-RuntimeApple
+02:00:32   A React-RuntimeCore
+02:00:32   A React-RuntimeHermes
+02:00:32   A React-callinvoker
+02:00:32   A React-cxxreact
+02:00:32   A React-debug
+02:00:32   A React-defaultsnativemodule
+02:00:32   A React-domnativemodule
+02:00:32   A React-featureflags
+02:00:32   A React-featureflagsnativemodule
+02:00:32   A React-graphics
+02:00:32   A React-hermes
+02:00:32   A React-idlecallbacksnativemodule
+02:00:32   A React-jserrorhandler
+02:00:32   A React-jsi
+02:00:32   A React-jsiexecutor
+02:00:32   A React-jsinspector
+02:00:32   A React-jsinspectortracing
+02:00:32   A React-jsitracing
+02:00:32   A React-logger
+02:00:32   A React-microtasksnativemodule
+02:00:32   A React-perflogger
+02:00:32   A React-performancetimeline
+02:00:32   A React-rendererconsistency
+02:00:32   A React-rendererdebug
+02:00:32   A React-rncore
+02:00:32   A React-runtimeexecutor
+02:00:32   A React-runtimescheduler
+02:00:32   A React-timing
+02:00:32   A React-utils
+02:00:32   A ReactAppDependencyProvider
+02:00:33   A ReactCodegen
+02:00:33   A ReactCommon
+02:00:33   A SNReactNative
+02:00:33   A SocketRocket
+02:00:33   A TrustKit
+02:00:33   A Yoga
+02:00:33   A boost
+02:00:33   A fast_float
+02:00:33   A fmt
+02:00:33   A glog
+02:00:33   A hermes-engine
+02:00:33   A react-native-fingerprint-scanner
+02:00:33   A react-native-mmkv
+02:00:33   A react-native-safe-area-context
+02:00:33   A react-native-version-info
+02:00:33   A react-native-webview
+02:00:33 
+02:00:33 Downloading dependencies
+02:00:33 
+02:00:33 -> Installing DoubleConversion (1.1.6)
+02:00:33  > Git download
+02:00:33  > Git download
+02:00:33      $ /opt/homebrew/bin/git clone https://github.com/google/double-conversion.git /var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/d20261112-22970-ldi2ut --template= --single-branch --depth 1 --branch v1.1.6
+02:00:33      Cloning into '/var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/d20261112-22970-ldi2ut'...
+02:00:33  > Running prepare command
+02:00:33    $ /bin/bash -c  set -e mv src double-conversion
+02:00:33   > Copying DoubleConversion from `/Users/runner/Library/Caches/CocoaPods/Pods/External/DoubleConversion/77f51e588bfe0e5c4fa6e9c580da62c6-cb417` to `Pods/DoubleConversion`
+02:00:33 
+02:00:33 -> Installing FBLazyVector (0.78.1)
+02:00:33 
+02:00:33 -> Installing RCT-Folly (2024.11.18.00)
+02:00:33  > Git download
+02:00:33  > Git download
+02:00:33      $ /opt/homebrew/bin/git clone https://github.com/facebook/folly.git /var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/d20261112-22970-1hqhkpv --template= --single-branch --depth 1 --branch v2024.11.18.00
+02:00:33      Cloning into '/var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/d20261112-22970-1hqhkpv'...
+02:00:36      Updating files:  54% (1470/2692)     Updating files:  55% (1481/2692)     Updating files:  56% (1508/2692)     Updating files:  57% (1535/2692)     Updating files:  58% (1562/2692)     Updating files:  59% (1589/2692)     Updating files:  60% (1616/2692)     Updating files:  61% (1643/2692)     Updating files:  62% (1670/2692)     Updating files:  63% (1696/2692)     Updating files:  64% (1723/2692)     Updating files:  65% (1750/2692)     Updating files:  66% (1777/2692)     Updating files:  67% (1804/2692)     Updating files:  68% (1831/2692)     Updating files:  69% (1858/2692)     Updating files:  70% (1885/2692)     Updating files:  71% (1912/2692)     Updating files:  72% (1939/2692)     Updating files:  73% (1966/2692)     Updating files:  74% (1993/2692)     Updating files:  75% (2019/2692)     Updating files:  76% (2046/2692)     Updating files:  77% (2073/2692)     Updating files:  78% (2100/2692)     Updating files:  79% (2127/2692)     Updating files:  80% (2154/2692)     Updating files:  81% (2181/2692)     Updating files:  82% (2208/2692)     Updating files:  83% (2235/2692)     Updating files:  84% (2262/2692)     Updating files:  85% (2289/2692)     Updating files:  86% (2316/2692)     Updating files:  87% (2343/2692)     Updating files:  88% (2369/2692)     Updating files:  89% (2396/2692)     Updating files:  90% (2423/2692)     Updating files:  91% (2450/2692)     Updating files:  92% (2477/2692)     Updating files:  93% (2504/2692)     Updating files:  94% (2531/2692)     Updating files:  95% (2558/2692)     Updating files:  96% (2585/2692)     Updating files:  97% (2612/2692)     Updating files:  98% (2639/2692)     Updating files:  99% (2666/2692)     Updating files: 100% (2692/2692)     Updating files: 100% (2692/2692), done.
+02:00:41   > Copying RCT-Folly from `/Users/runner/Library/Caches/CocoaPods/Pods/External/RCT-Folly/5456eaeed7ed94cba6507f2b03c47dc1-36fe2` to `Pods/RCT-Folly`
+02:00:41 
+02:00:41 -> Installing RCTDeprecation (0.78.1)
+02:00:41 
+02:00:41 -> Installing RCTRequired (0.78.1)
+02:00:41 
+02:00:41 -> Installing RCTTypeSafety (0.78.1)
+02:00:41 
+02:00:41 -> Installing RNCAsyncStorage (2.1.2)
+02:00:41 
+02:00:41 -> Installing RNFS (2.20.0)
+02:00:41 
+02:00:41 -> Installing RNFileViewer (2.1.5)
+02:00:41 
+02:00:41 -> Installing RNIap (12.16.2)
+02:00:41 
+02:00:41 -> Installing RNKeychain (10.0.0)
+02:00:41 
+02:00:41 -> Installing RNNotifee (9.1.8)
+02:00:41 
+02:00:41 -> Installing RNPrivacySnapshot (1.0.0)
+02:00:41 
+02:00:41 -> Installing RNShare (12.0.9)
+02:00:41 
+02:00:41 -> Installing RNStoreReview (0.4.3)
+02:00:41 
+02:00:41 -> Installing React (0.78.1)
+02:00:41 
+02:00:41 -> Installing React-Core (0.78.1)
+02:00:41 
+02:00:41 -> Installing React-CoreModules (0.78.1)
+02:00:41 
+02:00:41 -> Installing React-Fabric (0.78.1)
+02:00:41 
+02:00:41 -> Installing React-FabricComponents (0.78.1)
+02:00:41 
+02:00:41 -> Installing React-FabricImage (0.78.1)
+02:00:41 
+02:00:41 -> Installing React-ImageManager (0.78.1)
+02:00:41 
+02:00:41 -> Installing React-Mapbuffer (0.78.1)
+02:00:41 
+02:00:41 -> Installing React-NativeModulesApple (0.78.1)
+02:00:41 
+02:00:41 -> Installing React-RCTActionSheet (0.78.1)
+02:00:41 
+02:00:41 -> Installing React-RCTAnimation (0.78.1)
+02:00:41 
+02:00:41 -> Installing React-RCTAppDelegate (0.78.1)
+02:00:41 
+02:00:41 -> Installing React-RCTBlob (0.78.1)
+02:00:41 
+02:00:41 -> Installing React-RCTFBReactNativeSpec (0.78.1)
+02:00:41 
+02:00:41 -> Installing React-RCTFabric (0.78.1)
+02:00:41 
+02:00:41 -> Installing React-RCTImage (0.78.1)
+02:00:41 
+02:00:41 -> Installing React-RCTLinking (0.78.1)
+02:00:41 
+02:00:41 -> Installing React-RCTNetwork (0.78.1)
+02:00:41 
+02:00:41 -> Installing React-RCTSettings (0.78.1)
+02:00:41 
+02:00:41 -> Installing React-RCTText (0.78.1)
+02:00:42 
+02:00:42 -> Installing React-RCTVibration (0.78.1)
+02:00:42 
+02:00:42 -> Installing React-RuntimeApple (0.78.1)
+02:00:42 
+02:00:42 -> Installing React-RuntimeCore (0.78.1)
+02:00:42 
+02:00:42 -> Installing React-RuntimeHermes (0.78.1)
+02:00:42 
+02:00:42 -> Installing React-callinvoker (0.78.1)
+02:00:42 
+02:00:42 -> Installing React-cxxreact (0.78.1)
+02:00:42 
+02:00:42 -> Installing React-debug (0.78.1)
+02:00:42 
+02:00:42 -> Installing React-defaultsnativemodule (0.78.1)
+02:00:42 
+02:00:42 -> Installing React-domnativemodule (0.78.1)
+02:00:42 
+02:00:42 -> Installing React-featureflags (0.78.1)
+02:00:42 
+02:00:42 -> Installing React-featureflagsnativemodule (0.78.1)
+02:00:42 
+02:00:42 -> Installing React-graphics (0.78.1)
+02:00:42 
+02:00:42 -> Installing React-hermes (0.78.1)
+02:00:42 
+02:00:42 -> Installing React-idlecallbacksnativemodule (0.78.1)
+02:00:42 
+02:00:42 -> Installing React-jserrorhandler (0.78.1)
+02:00:42 
+02:00:42 -> Installing React-jsi (0.78.1)
+02:00:42 
+02:00:42 -> Installing React-jsiexecutor (0.78.1)
+02:00:42 
+02:00:42 -> Installing React-jsinspector (0.78.1)
+02:00:42 
+02:00:42 -> Installing React-jsinspectortracing (0.78.1)
+02:00:42 
+02:00:42 -> Installing React-jsitracing (0.78.1)
+02:00:42 
+02:00:42 -> Installing React-logger (0.78.1)
+02:00:42 
+02:00:42 -> Installing React-microtasksnativemodule (0.78.1)
+02:00:42 
+02:00:42 -> Installing React-perflogger (0.78.1)
+02:00:42 
+02:00:42 -> Installing React-performancetimeline (0.78.1)
+02:00:42 
+02:00:42 -> Installing React-rendererconsistency (0.78.1)
+02:00:42 
+02:00:42 -> Installing React-rendererdebug (0.78.1)
+02:00:42 
+02:00:42 -> Installing React-rncore (0.78.1)
+02:00:42 
+02:00:42 -> Installing React-runtimeexecutor (0.78.1)
+02:00:42 
+02:00:42 -> Installing React-runtimescheduler (0.78.1)
+02:00:42 
+02:00:42 -> Installing React-timing (0.78.1)
+02:00:42 
+02:00:42 -> Installing React-utils (0.78.1)
+02:00:42 
+02:00:42 -> Installing ReactAppDependencyProvider (0.78.1)
+02:00:42 
+02:00:42 -> Installing ReactCodegen (0.78.1)
+02:00:42 
+02:00:42 -> Installing ReactCommon (0.78.1)
+02:00:42 
+02:00:42 -> Installing SNReactNative (1.0.1)
+02:00:42 
+02:00:42 -> Installing SocketRocket (0.7.1)
+02:00:42  > Git download
+02:00:42  > Git download
+02:00:42      $ /opt/homebrew/bin/git clone https://github.com/facebook/SocketRocket.git /var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/d20261112-22970-1fa1njo --template= --single-branch --depth 1 --branch 0.7.1
+02:00:42      Cloning into '/var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/d20261112-22970-1fa1njo'...
+02:00:42   > Copying SocketRocket from `/Users/runner/Library/Caches/CocoaPods/Pods/Release/SocketRocket/0.7.1-d4aab` to `Pods/SocketRocket`
+02:00:42 
+02:00:42 -> Installing TrustKit (1.6.5)
+02:00:42  > Git download
+02:00:42  > Git download
+02:00:42      $ /opt/homebrew/bin/git clone https://github.com/datatheorem/TrustKit.git /var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/d20261112-22970-ow6dso --template= --single-branch --depth 1 --branch 1.6.5
+02:00:42      Cloning into '/var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/d20261112-22970-ow6dso'...
+02:00:43      warning: refs/tags/1.6.5 2c14a439b937ac13901f4227edac10e4495b7554 is not a commit!
+02:00:43   > Copying TrustKit from `/Users/runner/Library/Caches/CocoaPods/Pods/Release/TrustKit/1.6.5-07385` to `Pods/TrustKit`
+02:00:43 
+02:00:43 -> Installing Yoga (0.0.0)
+02:00:43 
+02:00:43 -> Installing boost (1.84.0)
+02:00:43  > Git download
+02:00:43  > Git download
+02:00:43      $ /opt/homebrew/bin/git clone https://github.com/react-native-community/boost-for-react-native /var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/d20261112-22970-15kic7g --template= --single-branch --depth 1 --branch v1.84.0
+02:00:43      Cloning into '/var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/d20261112-22970-15kic7g'...
+02:00:45   > Copying boost from `/Users/runner/Library/Caches/CocoaPods/Pods/External/boost/5abf4351d19e14b47513e0fede2147e2-7e761` to `Pods/boost`
+02:00:45 
+02:00:45 -> Installing fast_float (6.1.4)
+02:00:45  > Git download
+02:00:45  > Git download
+02:00:45      $ /opt/homebrew/bin/git clone https://github.com/fastfloat/fast_float.git /var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/d20261112-22970-10kt180 --template= --single-branch --depth 1 --branch v6.1.4
+02:00:45      Cloning into '/var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/d20261112-22970-10kt180'...
+02:00:46   > Copying fast_float from `/Users/runner/Library/Caches/CocoaPods/Pods/External/fast_float/ee11b73f22eded627f3e16d9fe9d20a4-06eee` to `Pods/fast_float`
+02:00:46 
+02:00:46 -> Installing fmt (11.0.2)
+02:00:46  > Git download
+02:00:46  > Git download
+02:00:46      $ /opt/homebrew/bin/git clone https://github.com/fmtlib/fmt.git /var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/d20261112-22970-b4o6h1 --template= --single-branch --depth 1 --branch 11.0.2
+02:00:46      Cloning into '/var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/d20261112-22970-b4o6h1'...
+02:00:47   > Copying fmt from `/Users/runner/Library/Caches/CocoaPods/Pods/External/fmt/4ba9726609ff00555176ecfb2faed015-a40bb` to `Pods/fmt`
+02:00:47 
+02:00:47 -> Installing glog (0.3.5)
+02:00:47  > Git download
+02:00:47  > Git download
+02:00:47      $ /opt/homebrew/bin/git clone https://github.com/google/glog.git /var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/d20261112-22970-1ylg19t --template= --single-branch --depth 1 --branch v0.3.5
+02:00:47      Cloning into '/var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/d20261112-22970-1ylg19t'...
+02:00:48  > Running prepare command
+02:00:48    $ /bin/bash -c  set -e #!/bin/bash # Copyright (c) Meta Platforms, Inc. and affiliates. # # This source code is licensed under the MIT license found in the # LICENSE file in the root directory of this source tree.  set -e  PLATFORM_NAME="${PLATFORM_NAME:-iphoneos}" CURRENT_ARCH="${CURRENT_ARCH}"  if [ -z "$CURRENT_ARCH" ] || [ "$CURRENT_ARCH" == "undefined_arch" ]; then     # Xcode 10 beta sets CURRENT_ARCH to "undefined_arch", this leads to incorrect linker arg.     # it's better to rely on platform name as fallback because architecture differs between simulator and device      if [[ "$PLATFORM_NAME" == *"simulator"* ]]; then         CURRENT_ARCH="x86_64"     else         CURRENT_ARCH="arm64"     fi fi  # @lint-ignore-every TXT2 Tab Literal if [ "$CURRENT_ARCH" == "arm64" ]; then     cat <<\EOF >>fix_glog_0.3.5_apple_silicon.patch diff --git a/config.sub b/config.sub index 1761d8b..43fa2e8 100755 --- a/config.sub +++ b/config.sub @@ -1096,6 +1096,9 @@ case $basic_machine in  		basic_machine=z8k-unknown  		os=-sim  		;; +	arm64-*) +		basic_machine=$(echo $basic_machine | sed 's/arm64/aarch64/') +		;;  	none)  		basic_machine=none-none  		os=-none EOF      patch -p1 config.sub fix_glog_0.3.5_apple_silicon.patch fi  XCRUN="$(which xcrun || true)" if [ -n "$XCRUN" ]; then   export CC="$(xcrun -find -sdk $PLATFORM_NAME cc) -arch $CURRENT_ARCH -isysroot $(xcrun -sdk $PLATFORM_NAME --show-sdk-path)"   export CXX="$CC" else   export CC="$CC:-$(which gcc)"   export CXX="$CXX:-$(which g++ || true)" fi export CXX="$CXX:-$CC"  # Remove automake symlink if it exists if [ -h "test-driver" ]; then     rm test-driver fi  # Manually disable gflags include to fix issue https://github.com/facebook/react-native/issues/28446 sed -i.bak -e 's/\@ac_cv_have_libgflags\@/0/' src/glog/logging.h.in && rm src/glog/logging.h.in.bak sed -i.bak -e 's/HAVE_LIB_GFLAGS/HAVE_LIB_GFLAGS_DISABLED/' src/config.h.in && rm src/config.h.in.bak  ./configure --host arm-apple-darwin || true  cat << EOF >> src/config.h /* Add in so we have Apple Target Conditionals */ #ifdef __APPLE__ #include <TargetConditionals.h> #include <Availability.h> #endif  /* Special configuration for ucontext */ #undef HAVE_UCONTEXT_H #undef PC_FROM_UCONTEXT #if defined(__x86_64__) #define PC_FROM_UCONTEXT uc_mcontext->__ss.__rip #elif defined(__i386__) #define PC_FROM_UCONTEXT uc_mcontext->__ss.__eip #endif EOF  # Prepare exported header include EXPORTED_INCLUDE_DIR="exported/glog" mkdir -p exported/glog cp -f src/glog/log_severity.h "$EXPORTED_INCLUDE_DIR/" cp -f src/glog/logging.h "$EXPORTED_INCLUDE_DIR/" cp -f src/glog/raw_logging.h "$EXPORTED_INCLUDE_DIR/" cp -f src/glog/stl_logging.h "$EXPORTED_INCLUDE_DIR/" cp -f src/glog/vlog_is_on.h "$EXPORTED_INCLUDE_DIR/"
+02:00:56    /Users/runner/Library/Caches/CocoaPods/Pods/External/glog/2263bd123499e5b93b5efe24871be317-eb93e/missing: Unknown `--is-lightweight' option
+02:00:56    Try `/Users/runner/Library/Caches/CocoaPods/Pods/External/glog/2263bd123499e5b93b5efe24871be317-eb93e/missing --help' for more information
+02:00:56    configure: WARNING: 'missing' script is too old or missing
+02:01:00    configure: WARNING: using cross tools not prefixed with host triplet
+02:01:08    patching file config.sub
+02:01:08    checking for a BSD-compatible install... /usr/bin/install -c
+02:01:08    checking whether build environment is sane... yes
+02:01:08    checking for arm-apple-darwin-strip... yes
+02:01:08    checking for a thread-safe mkdir -p... ./install-sh -c -d
+02:01:08    checking for gawk... no
+02:01:08    checking for mawk... no
+02:01:08    checking for nawk... no
+02:01:08    checking for awk... awk
+02:01:08    checking whether make sets $(MAKE)... yes
+02:01:08    checking whether make supports nested variables... yes
+02:01:08    checking for arm-apple-darwin-gcc... /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -arch arm64 -isysroot /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk
+02:01:08    checking whether the C compiler works... yes
+02:01:08    checking for C compiler default output file name... a.out
+02:01:08    checking for suffix of executables... 
+02:01:08    checking whether we are cross compiling... yes
+02:01:08    checking for suffix of object files... o
+02:01:08    checking whether we are using the GNU C compiler... yes
+02:01:08    checking whether /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -arch arm64 -isysroot /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk accepts -g... yes
+02:01:08    checking for /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -arch arm64 -isysroot /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk option to accept ISO C89... none needed
+02:01:08    checking whether /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -arch arm64 -isysroot /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk understands -c and -o together... yes
+02:01:08    checking for style of include used by make... GNU
+02:01:08    checking dependency style of /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -arch arm64 -isysroot /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk... gcc3
+02:01:08    checking how to run the C preprocessor... /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -arch arm64 -isysroot /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk -E
+02:01:08    checking whether we are using the GNU C++ compiler... yes
+02:01:08    checking whether /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -arch arm64 -isysroot /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk:-/Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -arch arm64 -isysroot /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk accepts -g... yes
+02:01:08    checking dependency style of /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -arch arm64 -isysroot /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk:-/Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -arch arm64 -isysroot /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk... gcc3
+02:01:08    checking build system type... arm-apple-darwin27.0.0
+02:01:08    checking host system type... arm-apple-darwin
+02:01:08    checking how to print strings... printf
+02:01:08    checking for a sed that does not truncate output... /usr/bin/sed
+02:01:08    checking for grep that handles long lines and -e... /usr/bin/grep
+02:01:08    checking for egrep... /usr/bin/grep -E
+02:01:08    checking for fgrep... /usr/bin/grep -F
+02:01:08    checking for ld used by /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -arch arm64 -isysroot /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk... /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld
+02:01:08    checking if the linker (/Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld) is GNU ld... no
+02:01:08    checking for BSD- or MS-compatible name lister (nm)... no
+02:01:08    checking for arm-apple-darwin-dumpbin... no
+02:01:08    checking for arm-apple-darwin-link... no
+02:01:08    checking for dumpbin... no
+02:01:08    checking for link... link -dump
+02:01:08    checking the name lister (nm) interface... BSD nm
+02:01:08    checking whether ln -s works... yes
+02:01:08    checking the maximum length of command line arguments... 786432
+02:01:08    checking whether the shell understands some XSI constructs... yes
+02:01:08    checking whether the shell understands "+="... yes
+02:01:08    checking how to convert arm-apple-darwin27.0.0 file names to arm-apple-darwin format... func_convert_file_noop
+02:01:08    checking how to convert arm-apple-darwin27.0.0 file names to toolchain format... func_convert_file_noop
+02:01:08    checking for /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld option to reload object files... -r
+02:01:08    checking for arm-apple-darwin-objdump... no
+02:01:08    checking for objdump... objdump
+02:01:08    checking how to recognize dependent libraries... pass_all
+02:01:08    checking for arm-apple-darwin-dlltool... no
+02:01:08    checking for dlltool... no
+02:01:08    checking how to associate runtime and link libraries... printf %s\n
+02:01:08    checking for arm-apple-darwin-ar... no
+02:01:08    checking for ar... ar
+02:01:08    checking for archiver @FILE support... no
+02:01:08    checking for arm-apple-darwin-strip... (cached) yes
+02:01:08    checking for arm-apple-darwin-ranlib... no
+02:01:08    checking for ranlib... ranlib
+02:01:08    checking command to parse nm output from /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -arch arm64 -isysroot /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk object... ok
+02:01:08    checking for sysroot... no
+02:01:08    checking for arm-apple-darwin-mt... no
+02:01:08    checking for mt... no
+02:01:08    checking if : is a manifest tool... no
+02:01:08    checking for arm-apple-darwin-dsymutil... no
+02:01:08    checking for dsymutil... dsymutil
+02:01:08    checking for arm-apple-darwin-nmedit... no
+02:01:08    checking for nmedit... nmedit
+02:01:08    checking for arm-apple-darwin-lipo... no
+02:01:08    checking for lipo... lipo
+02:01:08    checking for arm-apple-darwin-otool... no
+02:01:08    checking for otool... otool
+02:01:08    checking for arm-apple-darwin-otool64... no
+02:01:08    checking for otool64... no
+02:01:08    checking for -single_module linker flag... ld: warning: -single_module is obsolete
+02:01:08    no
+02:01:08    checking for -exported_symbols_list linker flag... yes
+02:01:08    checking for -force_load linker flag... yes
+02:01:09    checking for ANSI C header files... no
+02:01:09    checking for sys/types.h... yes
+02:01:09    checking for sys/stat.h... yes
+02:01:09    checking for stdlib.h... yes
+02:01:09    checking for string.h... yes
+02:01:09    checking for memory.h... yes
+02:01:09    checking for strings.h... yes
+02:01:09    checking for inttypes.h... yes
+02:01:09    checking for stdint.h... yes
+02:01:09    checking for unistd.h... yes
+02:01:09    checking for dlfcn.h... yes
+02:01:09    checking for objdir... .libs
+02:01:09    checking if /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -arch arm64 -isysroot /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk supports -fno-rtti -fno-exceptions... yes
+02:01:09    checking for /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -arch arm64 -isysroot /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk option to produce PIC... -fno-common -DPIC
+02:01:09    checking if /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -arch arm64 -isysroot /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk PIC flag -fno-common -DPIC works... yes
+02:01:09    checking if /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -arch arm64 -isysroot /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk static flag -static works... no
