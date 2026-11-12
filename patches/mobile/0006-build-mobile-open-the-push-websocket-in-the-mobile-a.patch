@@ -1,0 +1,29 @@
+From cd91fe4415e303f771be466caa2f4c96960b1b66 Mon Sep 17 00:00:00 2001
+From: "SN Fast Sync (local)" <snfast@localhost.invalid>
+Date: Wed, 11 Nov 2026 04:36:03 -0700
+Subject: [PATCH] build(mobile): open the push websocket in the mobile app (it
+ never opened one)
+
+The page that the mobile apps load (packages/mobile/html/Web.bundle/src/index.html) sets window.websocketUrl to an
+empty string, while the web app's own page uses wss://sockets.standardnotes.com. With an empty URL
+WebSocketsService.startWebSocketConnection() returns "WebSocket URL is not set" and the Android and iOS apps never
+open a push channel: they only poll every 30 s (the websocket-closed branch of autoSync) and on window focus. Use the
+same URL as the web app, so the server's "items changed" notification reaches the phone while the app is open and the
+fast-sync patches can act on it. Only used for the hosted server; a custom sync server still brings its own URL
+(Advanced options), which is stored and wins.
+---
+ packages/mobile/html/Web.bundle/src/index.html | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/packages/mobile/html/Web.bundle/src/index.html b/packages/mobile/html/Web.bundle/src/index.html
+index 7cf4b31..1ade574 100644
+--- a/packages/mobile/html/Web.bundle/src/index.html
++++ b/packages/mobile/html/Web.bundle/src/index.html
+@@ -13,3 +13,3 @@
+         window.enabledUnfinishedFeatures = "" === 'true';
+-        window.websocketUrl = "";
++        window.websocketUrl = "wss://sockets.standardnotes.com";
+         window.purchaseUrl = "https://standardnotes.com/purchase";
+-- 
+2.49.0.windows.1
+

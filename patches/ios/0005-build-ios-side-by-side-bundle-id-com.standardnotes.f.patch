@@ -1,0 +1,69 @@
+From a8aae03d6851f5e72d29002ddef64100478a9f9f Mon Sep 17 00:00:00 2001
+From: "SN Fast Sync (local)" <snfast@localhost.invalid>
+Date: Wed, 11 Nov 2026 04:25:57 -0700
+Subject: [PATCH] build(ios): side-by-side bundle id com.standardnotes.fastsync
+ and display name "SN Fast"
+
+Lets the patched build live next to the App Store app: new bundle id for the app and its share extension
+(an extension id must start with its parent's id), display name "SN Fast", the app group renamed to a name that
+is ours (app group ids are unique worldwide, a free Apple ID cannot register the original one) and the
+associated-domains entitlement removed (a free Apple ID cannot sign it, and the original domain does not
+belong to this bundle id anyway). The unsigned IPA is signed later on the phone (Sideloadly).
+---
+ .../mobile/ios/StandardNotes.xcodeproj/project.pbxproj    | 8 ++++----
+ packages/mobile/ios/StandardNotes/Info.plist              | 2 +-
+ .../mobile/ios/StandardNotes/StandardNotes.entitlements   | 6 +-----
+ 3 files changed, 6 insertions(+), 10 deletions(-)
+
+diff --git a/packages/mobile/ios/StandardNotes.xcodeproj/project.pbxproj b/packages/mobile/ios/StandardNotes.xcodeproj/project.pbxproj
+index a831cf7..a413f12 100644
+--- a/packages/mobile/ios/StandardNotes.xcodeproj/project.pbxproj
++++ b/packages/mobile/ios/StandardNotes.xcodeproj/project.pbxproj
+@@ -810,3 +810,3 @@
+ 				MTL_FAST_MATH = YES;
+-				PRODUCT_BUNDLE_IDENTIFIER = "com.standardnotes.standardnotes.Share-To-SN";
++				PRODUCT_BUNDLE_IDENTIFIER = "com.standardnotes.fastsync.Share-To-SN";
+ 				PRODUCT_NAME = "$(TARGET_NAME)";
+@@ -851,3 +851,3 @@
+ 				MTL_FAST_MATH = YES;
+-				PRODUCT_BUNDLE_IDENTIFIER = "com.standardnotes.standardnotes.Share-To-SN";
++				PRODUCT_BUNDLE_IDENTIFIER = "com.standardnotes.fastsync.Share-To-SN";
+ 				PRODUCT_NAME = "$(TARGET_NAME)";
+@@ -888,3 +888,3 @@
+ 				);
+-				PRODUCT_BUNDLE_IDENTIFIER = com.standardnotes.standardnotes;
++				PRODUCT_BUNDLE_IDENTIFIER = com.standardnotes.fastsync;
+ 				PRODUCT_NAME = StandardNotes;
+@@ -923,3 +923,3 @@
+ 				);
+-				PRODUCT_BUNDLE_IDENTIFIER = com.standardnotes.standardnotes;
++				PRODUCT_BUNDLE_IDENTIFIER = com.standardnotes.fastsync;
+ 				PRODUCT_NAME = StandardNotes;
+diff --git a/packages/mobile/ios/StandardNotes/Info.plist b/packages/mobile/ios/StandardNotes/Info.plist
+index fc74e87..03133ae 100644
+--- a/packages/mobile/ios/StandardNotes/Info.plist
++++ b/packages/mobile/ios/StandardNotes/Info.plist
+@@ -7,3 +7,3 @@
+ 	<key>CFBundleDisplayName</key>
+-	<string>Standard Notes</string>
++	<string>SN Fast</string>
+ 	<key>CFBundleExecutable</key>
+diff --git a/packages/mobile/ios/StandardNotes/StandardNotes.entitlements b/packages/mobile/ios/StandardNotes/StandardNotes.entitlements
+index 11be759..c19c534 100644
+--- a/packages/mobile/ios/StandardNotes/StandardNotes.entitlements
++++ b/packages/mobile/ios/StandardNotes/StandardNotes.entitlements
+@@ -4,6 +4,2 @@
+ <dict>
+-	<key>com.apple.developer.associated-domains</key>
+-	<array>
+-		<string>webcredentials:app.standardnotes.com</string>
+-	</array>
+ 	<key>com.apple.developer.default-data-protection</key>
+@@ -12,3 +8,3 @@
+ 	<array>
+-		<string>group.com.standardnotes.standardnotes</string>
++		<string>group.com.standardnotes.fastsync</string>
+ 	</array>
+-- 
+2.49.0.windows.1
+

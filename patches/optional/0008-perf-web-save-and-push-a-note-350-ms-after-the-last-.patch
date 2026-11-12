@@ -1,0 +1,31 @@
+From 262856717c3464bdc35cece97a2c2a16b71b2dd3 Mon Sep 17 00:00:00 2001
+From: SN Fast Sync <snfast@localhost.invalid>
+Date: Wed, 11 Nov 2026 05:23:58 -0700
+Subject: [PATCH] perf(web): save and push a note 350 ms after the last
+ keystroke instead of 700 ms (OPTIONAL)
+
+The editor waits EditorSaveTimeoutDebounce.Desktop / NativeMobileWeb = 700 ms after the last keystroke before it encrypts
+the note and syncs it (100 ms for immediate changes such as the title, 60 s for notes over LargeNoteThreshold). That is the
+whole "typing -> push" delay of the sender (measured: the push itself leaves 2-3 ms after the save), and it is more than
+half of the end-to-end time once the receiving side no longer waits for the 30 s timer. Halving it saves 0.35 s per edit.
+Price: while someone types without pausing, a save + sync happens about every 350 ms instead of 700 ms (at most 3 per second,
+below the client's 200 per minute guard). Optional because it doubles the request rate of a typing session on the hosted server.
+---
+ .../NoteView/Controller/EditorSaveTimeoutDebounce.ts          | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/packages/web/src/javascripts/Components/NoteView/Controller/EditorSaveTimeoutDebounce.ts b/packages/web/src/javascripts/Components/NoteView/Controller/EditorSaveTimeoutDebounce.ts
+index e71deaa..d7af555 100644
+--- a/packages/web/src/javascripts/Components/NoteView/Controller/EditorSaveTimeoutDebounce.ts
++++ b/packages/web/src/javascripts/Components/NoteView/Controller/EditorSaveTimeoutDebounce.ts
+@@ -3,5 +3,5 @@ import { MILLISECONDS_IN_A_SECOND } from '@/Constants/Constants'
+ export const EditorSaveTimeoutDebounce = {
+-  Desktop: 700,
++  Desktop: 350,
+   ImmediateChange: 100,
+-  NativeMobileWeb: 700,
++  NativeMobileWeb: 350,
+   LargeNote: 60 * MILLISECONDS_IN_A_SECOND,
+-- 
+2.49.0.windows.1
+

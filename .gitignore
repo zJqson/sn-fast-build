@@ -1,0 +1,13 @@
+# local work, never pushed
+work/
+.scratch/
+logs.txt
+state.json
+state.json.tmp
+__pycache__/
+*.log
+out/
+*.old-*
+*.apk
+*.ipa
+personalize*.ini.local

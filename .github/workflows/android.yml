@@ -1,0 +1,267 @@
+# android.yml - builds a patched Standard Notes for Android (the everyday flavor: no measuring hook, no WebView debugging) into an APK WITHOUT any secret.
+# The APK is signed with a THROWAWAY key that is generated inside the run and thrown away with it: it is only a base. You re-sign it on your own computer with your own key
+# (and write your own server address into it) before you install it; the script for that is not part of this repository. Do not install the base file as it is: nothing
+# could ever update it, because its key does not exist any more.
+#
+# This is an unofficial personal build recipe. It is not affiliated with Standard Notes or Proton. Upstream (standardnotes/app) is AGPL-3.0, so are our patches.
+# Runs on a push that changes THIS file, and by hand (Actions > "Android APK base" > Run workflow): an iPhone-only push does not start it. Free on a public repository.
+#
+# What one run publishes (the run's own GITHUB_TOKEN, permissions: contents: write only):
+#   release android-<run_number> (pre-release): SN-Fast-android-base.apk, .sha256, INFO.txt   |   branch build-logs-android: run-<N>.log + LATEST.txt (always)
+# Build steps are upstream's own (mobile.release.prod.yml, android job): yarn install --immutable, yarn build:mobile, gradle assembleProdRelease.
+
+name: Android APK base (SN Fast, throwaway-signed)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/android.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: android
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: APK base (daily)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 80
+    permissions:
+      contents: write
+    defaults:
+      run:
+        shell: bash
+    env:
+      NODE_OPTIONS: --max-old-space-size=6144
+      YARN_ENABLE_TELEMETRY: "0"
+      YARN_ENABLE_PROGRESS_BARS: "0"
+    steps:
+      - id: checkout
+        name: Check out this repo (our patches, config)
+        uses: actions/checkout@v4
+
+      - id: log_init
+        name: Start the build log
+        run: |
+          echo "BUILD_LOG=$RUNNER_TEMP/build.log" >> "$GITHUB_ENV"
+          { echo "android build log of run $GITHUB_RUN_NUMBER (attempt $GITHUB_RUN_ATTEMPT), commit $GITHUB_SHA"; date -u +"started %Y-%m-%dT%H:%M:%SZ"; } > "$RUNNER_TEMP/build.log"
+
+      - id: prepare
+        name: Fetch upstream and apply our patches (stops loudly if one no longer applies)
+        run: |
+          {
+            echo "=== prepare ($(date -u +%H:%M:%SZ)) ==="
+            python3 build.py prepare --target android --dest "$GITHUB_WORKSPACE/upstream"
+            echo "VER=$(python3 -c "import json;print(json.load(open('upstream/snfast-build-info.json'))['upstream_version'])")" >> "$GITHUB_ENV"
+            echo "SNJS=$(python3 -c "import json;print(json.load(open('upstream/snfast-build-info.json'))['snjs_version'])")" >> "$GITHUB_ENV"
+          } 2>&1 | tee -a "$BUILD_LOG"
+
+      - id: preset
+        name: Preset URLs from config.ini [mobile] (the hosted defaults)
+        run: |
+          {
+            echo "=== preset-mobile ($(date -u +%H:%M:%SZ)) ==="
+            PRESET_LINE="$(python3 build.py preset-mobile --dest "$GITHUB_WORKSPACE/upstream" | tail -n 1)"
+            echo "$PRESET_LINE"
+            echo "PRESET_LINE=$PRESET_LINE" >> "$GITHUB_ENV"
+          } 2>&1 | tee -a "$BUILD_LOG"
+
+      - id: vars
+        name: Settings from config.ini
+        run: |
+          {
+            # the version name feeds X-Application-Version ("Mobile-<version>"); the hosted server refuses anything but a plain x.y.z
+            echo "VERSION_NAME=${VER}" >> "$GITHUB_ENV"
+            echo "APP_ID=$(python3 build.py cfg android application_id)" >> "$GITHUB_ENV"
+            echo "ABIS=$(python3 build.py cfg android abis)" >> "$GITHUB_ENV"
+            echo "SDK_PLATFORM=$(python3 build.py cfg android sdk_platform)" >> "$GITHUB_ENV"
+            echo "BUILD_TOOLS=$(python3 build.py cfg android build_tools)" >> "$GITHUB_ENV"
+            echo "NDK=$(python3 build.py cfg android ndk)" >> "$GITHUB_ENV"
+            echo "CMAKE=$(python3 build.py cfg android cmake)" >> "$GITHUB_ENV"
+            echo "KEEP_RELEASES=$(python3 build.py cfg outputs keep_releases)" >> "$GITHUB_ENV"
+          } 2>&1 | tee -a "$BUILD_LOG"
+
+      - id: node
+        name: Node (version from upstream's .nvmrc)
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: upstream/.nvmrc
+
+      - id: java
+        name: Java 17 (same as upstream's workflow)
+        uses: actions/setup-java@v4
+        with:
+          distribution: zulu
+          java-version: "17"
+
+      - id: sdk
+        name: Android SDK pieces (the runner's own SDK; licences accepted on the runner like upstream does)
+        run: |
+          {
+            echo "=== sdkmanager ($(date -u +%H:%M:%SZ)) ==="
+            echo "y" | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;${SDK_PLATFORM}" "build-tools;${BUILD_TOOLS}" "ndk;${NDK}" "cmake;${CMAKE}"
+            echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+            df -h /
+          } 2>&1 | tee -a "$BUILD_LOG"
+
+      - id: yarn
+        name: yarn install --immutable (upstream's committed .yarn/cache)
+        working-directory: upstream
+        run: |
+          {
+            echo "=== yarn install ($(date -u +%H:%M:%SZ)) ==="
+            yarn install --immutable
+          } 2>&1 | tee -a "$BUILD_LOG"
+
+      - id: bundle
+        name: Build the web app and bundle it into the app (yarn build:mobile)
+        working-directory: upstream
+        run: |
+          {
+            echo "=== yarn build:mobile ($(date -u +%H:%M:%SZ)) ==="
+            yarn build:mobile
+            echo "=== yarn build:mobile finished ($(date -u +%H:%M:%SZ)) ==="
+          } 2>&1 | tee -a "$BUILD_LOG"
+
+      - id: key
+        name: Make a THROWAWAY signing key for this run (upstream's release signingConfig needs one; nothing here is a secret)
+        run: |
+          PW="$(openssl rand -hex 24)"
+          echo "::add-mask::$PW"
+          keytool -genkeypair -keystore upstream/packages/mobile/android/app/keystore.keystore -alias throwaway -keyalg RSA -keysize 2048 -validity 3650 \
+            -storepass "$PW" -keypass "$PW" -dname "CN=throwaway build key, O=none" > /dev/null 2>&1
+          {
+            echo "ANDROID_KEYSTORE_ALIAS=throwaway"
+            echo "ANDROID_KEYSTORE_PASSWORD=$PW"
+            echo "ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD=$PW"
+          } >> "$GITHUB_ENV"
+
+      - id: gradle
+        name: Gradle assembleProdRelease
+        working-directory: upstream/packages/mobile/android
+        run: |
+          {
+            echo "=== gradle assembleProdRelease ($(date -u +%H:%M:%SZ)) version $VERSION_NAME code $GITHUB_RUN_NUMBER abis $ABIS ==="
+            chmod +x ./gradlew
+            ./gradlew assembleProdRelease --no-daemon --stacktrace \
+              -PversionCode="$GITHUB_RUN_NUMBER" -PversionName="$VERSION_NAME" \
+              -PreactNativeArchitectures="$ABIS" \
+              -Dorg.gradle.jvmargs="-Xmx5g -XX:MaxMetaspaceSize=1g"
+            echo "=== gradle finished ($(date -u +%H:%M:%SZ)) ==="
+          } 2>&1 | tee -a "$BUILD_LOG"
+
+      - id: check_apk
+        name: Check the APK (package id, version, our patches inside, no measuring hook, not debuggable)
+        run: |
+          {
+            echo "=== check apk ==="
+            APK=upstream/packages/mobile/android/app/build/outputs/apk/prod/release/app-prod-release.apk
+            ls -l "$APK"
+            BT="$ANDROID_HOME/build-tools/${BUILD_TOOLS}"
+            "$BT/aapt2" dump badging "$APK" | grep -E "^package:|^application-label:|^sdkVersion|^targetSdkVersion|^native-code|application-debuggable" || true
+            GOT="$("$BT/aapt2" dump badging "$APK" | sed -n "s/^package: name='\([^']*\)'.*/\1/p")"
+            echo "package id in the APK: $GOT (must be $APP_ID)"
+            test "$GOT" = "$APP_ID"
+            GOTV="$("$BT/aapt2" dump badging "$APK" | grep -o "versionName='[^']*'" | head -n1 | cut -d"'" -f2)"
+            echo "versionName in the APK: $GOTV (must be exactly $VER: the server refuses anything else)"
+            test "$GOTV" = "$VER"
+            if "$BT/aapt2" dump badging "$APK" | grep -q "application-debuggable"; then echo "ERROR: the APK is debuggable"; exit 1; fi
+            mkdir -p check && cd check && unzip -q -o "../$APK" 'assets/Web.bundle/src/web-src/app.js' 'assets/Web.bundle/src/index.html' && cd ..
+            for m in "Returned to foreground" "Safety Sync (no notification for a while)" "isWebSocketUrlOnHostOf" "guessWebSocketUrl" "WebSocketConnectionReestablished"; do
+              if grep -q -F -- "$m" check/assets/Web.bundle/src/web-src/app.js; then echo "ok: patch marker present: $m"; else echo "ERROR: patch marker MISSING: $m"; exit 1; fi
+            done
+            if grep -q -F -- "snfastApp" check/assets/Web.bundle/src/web-src/app.js; then echo "ERROR: the measuring hook is in the bundle"; exit 1; else echo "ok: no measuring hook"; fi
+            grep -E 'window\.(defaultSyncServer|websocketUrl)' check/assets/Web.bundle/src/index.html || true
+            mkdir -p out && cp "$APK" out/SN-Fast-android-base.apk
+            (cd out && sha256sum SN-Fast-android-base.apk > SN-Fast-android-base.apk.sha256)
+            {
+              echo "SN Fast for Android, BASE (signed with a throwaway key; re-sign it with your own key before installing) - GitHub Actions run $GITHUB_RUN_NUMBER (attempt $GITHUB_RUN_ATTEMPT)"
+              echo "repo commit     : $GITHUB_SHA"
+              echo "upstream tag    : $(python3 build.py cfg upstream tag)"
+              python3 -c "import json;d=json.load(open('upstream/snfast-build-info.json'));print('upstream commit :',d['upstream_commit']);print('upstream version:',d['upstream_version']);print('snjs version    :',d['snjs_version']);[print('patch           :',p['patch'],p['sha256'][:16]) for p in d['patches']]"
+              echo "app id / version: $APP_ID / $VERSION_NAME (versionCode = build number $GITHUB_RUN_NUMBER), ABIs: $ABIS"
+              echo "$PRESET_LINE"
+              echo "apk             : $(cat out/SN-Fast-android-base.apk.sha256)"
+              echo "WebView debugging: OFF, no measuring hook"
+            } > out/INFO.txt
+            echo "apk_info=SN-Fast-android-base.apk $(wc -c < out/SN-Fast-android-base.apk) bytes, sha256 $(cut -d' ' -f1 out/SN-Fast-android-base.apk.sha256)" >> "$GITHUB_OUTPUT"
+          } 2>&1 | tee -a "$BUILD_LOG"
+
+      - id: probe
+        name: Version header probe (one request without any credential; soft)
+        continue-on-error: true
+        run: |
+          python3 build.py probe-version --platform Mobile --version "$VER" --snjs "$SNJS" 2>&1 | tee -a "$BUILD_LOG"
+
+      - id: release
+        name: Publish the APK base as a pre-release
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: android-${{ github.run_number }}
+        run: |
+          {
+            echo "=== release $TAG ($(date -u +%H:%M:%SZ)) ==="
+            printf '%s\n' "Android BASE build of commit $GITHUB_SHA (run $GITHUB_RUN_NUMBER), signed with a throwaway key." "" \
+              "Re-sign it with your own key before you install it (and write your own server address into it). Unofficial personal build, not affiliated with Standard Notes or Proton. AGPL-3.0." \
+              "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" > "$RUNNER_TEMP/notes.md"
+            if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+              gh release upload "$TAG" out/SN-Fast-android-base.apk out/SN-Fast-android-base.apk.sha256 out/INFO.txt --repo "$GITHUB_REPOSITORY" --clobber
+            else
+              gh release create "$TAG" out/SN-Fast-android-base.apk out/SN-Fast-android-base.apk.sha256 out/INFO.txt --repo "$GITHUB_REPOSITORY" --prerelease --target "$GITHUB_SHA" \
+                --title "Android base build $GITHUB_RUN_NUMBER" --notes-file "$RUNNER_TEMP/notes.md"
+            fi
+            echo "url=$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/download/$TAG/SN-Fast-android-base.apk" >> "$GITHUB_OUTPUT"
+          } 2>&1 | tee -a "$BUILD_LOG"
+
+      - id: prune_releases
+        name: Keep only the newest Android releases
+        if: success()
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          OLD="$(gh release list --repo "$GITHUB_REPOSITORY" --limit 100 --json tagName --jq '.[].tagName' | grep '^android-' | sort -t- -k2 -n -r | tail -n +$((KEEP_RELEASES + 1)) || true)"
+          for t in $OLD; do
+            echo "deleting old release $t"
+            gh release delete "$t" --repo "$GITHUB_REPOSITORY" --cleanup-tag --yes
+          done
+
+      - id: publish_log
+        name: Publish the build log (always)
+        if: always()
+        continue-on-error: true
+        env:
+          JOB_STATUS: ${{ job.status }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          RELEASE_URL: ${{ steps.release.outputs.url }}
+          APK_INFO: ${{ steps.check_apk.outputs.apk_info }}
+          STEP_RESULTS: >-
+            checkout=${{ steps.checkout.conclusion }}
+            prepare=${{ steps.prepare.conclusion }}
+            preset=${{ steps.preset.conclusion }}
+            node=${{ steps.node.conclusion }}
+            java=${{ steps.java.conclusion }}
+            sdk=${{ steps.sdk.conclusion }}
+            yarn=${{ steps.yarn.conclusion }}
+            bundle=${{ steps.bundle.conclusion }}
+            key=${{ steps.key.conclusion }}
+            gradle=${{ steps.gradle.conclusion }}
+            check_apk=${{ steps.check_apk.conclusion }}
+            probe=${{ steps.probe.conclusion }}
+            release=${{ steps.release.conclusion }}
+        run: |
+          LOG="${BUILD_LOG:-$RUNNER_TEMP/build.log}"
+          if [ -f .github/scripts/buildlog.py ]; then
+            python3 .github/scripts/buildlog.py publish --log "$LOG" --branch build-logs-android \
+              --run-number "$GITHUB_RUN_NUMBER" --run-attempt "$GITHUB_RUN_ATTEMPT" \
+              --status "$(echo "$JOB_STATUS" | tr 'A-Z' 'a-z')" --sha "$GITHUB_SHA" --run-url "$RUN_URL" \
+              --steps "$STEP_RESULTS" --release-url "$RELEASE_URL" --ipa-info "$APK_INFO" --keep 20
+          else
+            echo "buildlog.py is missing (the checkout failed?): nothing was published"
+          fi

@@ -1,0 +1,275 @@
+From 81349732822987c3d261979c72a4d336008aad02 Mon Sep 17 00:00:00 2001
+From: SN Fast Sync <snfast@localhost.invalid>
+Date: Wed, 11 Nov 2026 06:39:44 -0700
+Subject: [PATCH] feat(snjs,web): optional fast polling, off unless switched on
+ (1 s default, 0.5 to 3 s)
+
+Hosted Standard Notes gives the desktop and mobile apps no push channel, so a change on another device waits for the next
+30 s auto sync tick. With the owner's switch on, the app in front syncs every second instead (configurable 0.5 to 3 s;
+a window that is not focused, a hidden window and the background keep the 30 s tick). The tick stays quiet while a websocket is
+open, while a sync runs, while the sync frequency guard is tripped and for one minute after a failed sync (HTTP 429, no network).
+Switch: localStorage "snfast.fastPolling" = "1" or window.snfastSetFastPolling(true, { intervalMs, unfocused }).
+
+Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01WeT9h5e494m7W6EHMFsEMq
+---
+ .../src/Domain/Sync/SyncServiceInterface.ts   |   1 +
+ .../snjs/lib/Services/Sync/SyncService.ts     |  71 +++++++++++
+ .../Application/FastPollingController.ts      | 111 ++++++++++++++++++
+ .../javascripts/Application/WebApplication.ts |  13 ++
+ 4 files changed, 196 insertions(+)
+ create mode 100644 packages/web/src/javascripts/Application/FastPollingController.ts
+
+diff --git a/packages/services/src/Domain/Sync/SyncServiceInterface.ts b/packages/services/src/Domain/Sync/SyncServiceInterface.ts
+index adaf1f2..128296c 100644
+--- a/packages/services/src/Domain/Sync/SyncServiceInterface.ts
++++ b/packages/services/src/Domain/Sync/SyncServiceInterface.ts
+@@ -19,2 +19,3 @@ export interface SyncServiceInterface extends AbstractService<SyncEvent> {
+   beginAutoSyncTimer(): void
++  setFastPolling(enabled: boolean, intervalMs?: number): void
+   resetSyncState(): void
+diff --git a/packages/snjs/lib/Services/Sync/SyncService.ts b/packages/snjs/lib/Services/Sync/SyncService.ts
+index 4ffaf2b..73ee6c9 100644
+--- a/packages/snjs/lib/Services/Sync/SyncService.ts
++++ b/packages/snjs/lib/Services/Sync/SyncService.ts
+@@ -113,2 +113,11 @@ const SERVER_NOTIFICATION_SYNC_DELAY = 150
+ const SAFETY_SYNC_EVERY_N_TICKS = 4
++/**
++ * Fast polling: while an app is in front and no websocket is open (the hosted server refuses the websocket of the apps,
++ * and a phone app never had one), sync this often. One request without a payload takes about 0.1 s. After a failed sync
++ * (HTTP 429, no network) fast polling pauses for the back-off time so that it never hammers a struggling server.
++ */
++const FAST_POLLING_INTERVAL = 1_000
++const FAST_POLLING_MIN_INTERVAL = 500
++const FAST_POLLING_MAX_INTERVAL = 3_000
++const FAST_POLLING_BACKOFF = 60_000
+ 
+@@ -168,2 +177,5 @@ export class SyncService
+   private autoSyncTicksWithoutNotification = 0
++  private fastPollingTimer?: ReturnType<typeof setInterval>
++  private fastPollingIntervalMs = FAST_POLLING_INTERVAL
++  private fastPollingBackoffUntil = 0
+ 
+@@ -218,2 +230,6 @@ export class SyncService
+     ;(this.serverNotificationSyncTimeout as unknown) = undefined
++    if (this.fastPollingTimer) {
++      clearInterval(this.fastPollingTimer)
++    }
++    ;(this.fastPollingTimer as unknown) = undefined
+     ;(this.sessionManager as unknown) = undefined
+@@ -384,2 +400,57 @@ export class SyncService
+ 
++  /**
++   * Turns fast polling on or off (see FAST_POLLING_INTERVAL); the interval is kept between 0.5 and 3 seconds. The caller decides
++   * when it makes sense: an app that is in front and the owner switched the feature on. The tick does nothing while a
++   * websocket is open: then the server's notifications suffice.
++   */
++  public setFastPolling(enabled: boolean, intervalMs: number = FAST_POLLING_INTERVAL): void {
++    if (this.dealloced) {
++      return
++    }
++
++    const wanted = Math.round(intervalMs) || FAST_POLLING_INTERVAL
++    const interval = Math.min(FAST_POLLING_MAX_INTERVAL, Math.max(FAST_POLLING_MIN_INTERVAL, wanted))
++    const wasRunning = this.fastPollingTimer !== undefined
++
++    if (wasRunning && enabled && interval === this.fastPollingIntervalMs) {
++      return
++    }
++
++    if (wasRunning) {
++      clearInterval(this.fastPollingTimer)
++      this.fastPollingTimer = undefined
++    }
++
++    if (!enabled) {
++      return
++    }
++
++    this.fastPollingIntervalMs = interval
++    this.fastPollingTimer = setInterval(this.fastPollingTick.bind(this), interval)
++
++    if (!wasRunning && this.databaseLoaded) {
++      void this.sync({ sourceDescription: 'Fast polling started' })
++    }
++  }
++
++  private fastPollingTick(): void {
++    if (
++      this.dealloced ||
++      !this.databaseLoaded ||
++      !this.sessionManager.online() ||
++      this.sockets.isWebSocketConnectionOpen() ||
++      Date.now() < this.fastPollingBackoffUntil ||
++      this.opStatus.syncInProgress ||
++      this.syncFrequencyGuard.isSyncCallsThresholdReachedThisMinute()
++    ) {
++      return
++    }
++
++    void this.sync({ sourceDescription: 'Fast Poll' }).then(() => {
++      if (this.opStatus?.hasError()) {
++        this.fastPollingBackoffUntil = Date.now() + FAST_POLLING_BACKOFF
++      }
++    })
++  }
++
+   /**
+diff --git a/packages/web/src/javascripts/Application/FastPollingController.ts b/packages/web/src/javascripts/Application/FastPollingController.ts
+new file mode 100644
+index 0000000..94714ea
+--- /dev/null
++++ b/packages/web/src/javascripts/Application/FastPollingController.ts
+@@ -0,0 +1,111 @@
++import { SyncServiceInterface } from '@standardnotes/snjs'
++
++/**
++ * Fast polling: the app asks the server for changes every second or so while it is in front (see SyncService.setFastPolling).
++ * It is OFF unless the owner switched it on, so a stock-like install behaves exactly like before. The settings live in the
++ * browser storage of the app (they survive restarts):
++ *   snfast.fastPolling            "1" = on, anything else = off (default)
++ *   snfast.fastPollingIntervalMs  500 to 3000 (default 1000)
++ *   snfast.fastPollingUnfocused   "1" = a desktop window that is visible but not focused keeps polling fast (default: only the focused window does)
++ * window.snfastSetFastPolling(true | false, { intervalMs, unfocused }) changes them and applies them at once, and
++ * window.snfastFastPollingStatus() reports the state; the control script uses both over the remote debugging port.
++ */
++const EnabledKey = 'snfast.fastPolling'
++const IntervalKey = 'snfast.fastPollingIntervalMs'
++const UnfocusedKey = 'snfast.fastPollingUnfocused'
++const DefaultIntervalMs = 1000
++
++type Options = { intervalMs?: number; unfocused?: boolean }
++
++type Api = {
++  snfastSetFastPolling?: (enabled: boolean, options?: Options) => void
++  snfastFastPollingStatus?: () => unknown
++}
++
++const read = (key: string): string | null => {
++  try {
++    return localStorage.getItem(key)
++  } catch {
++    return null
++  }
++}
++
++const write = (key: string, value: string): void => {
++  try {
++    localStorage.setItem(key, value)
++  } catch {
++    /* storage not available: the setting stays as it was */
++  }
++}
++
++export class FastPollingController {
++  private inBackground = false
++  private active = false
++
++  /** @param requireFocus a desktop or browser window polls fast only while it has the focus (unless the owner allows otherwise) */
++  constructor(
++    private sync: SyncServiceInterface,
++    private requireFocus: boolean,
++  ) {
++    document.addEventListener('visibilitychange', this.update)
++    window.addEventListener('focus', this.update)
++    window.addEventListener('blur', this.update)
++
++    const api = window as unknown as Api
++    api.snfastSetFastPolling = (enabled: boolean, options?: Options) => {
++      write(EnabledKey, enabled ? '1' : '0')
++      if (options?.intervalMs !== undefined) {
++        write(IntervalKey, String(Math.round(options.intervalMs)))
++      }
++      if (options?.unfocused !== undefined) {
++        write(UnfocusedKey, options.unfocused ? '1' : '0')
++      }
++      this.update()
++    }
++    api.snfastFastPollingStatus = () => ({
++      enabled: this.isEnabled(),
++      intervalMs: this.intervalMs(),
++      unfocused: this.allowsUnfocused(),
++      running: this.active,
++      visible: !document.hidden,
++      focused: document.hasFocus(),
++      inBackground: this.inBackground,
++    })
++
++    this.update()
++  }
++
++  /** Native mobile app events: the page itself may not learn that the app went to the background. */
++  setAppInBackground(inBackground: boolean): void {
++    this.inBackground = inBackground
++    this.update()
++  }
++
++  private isEnabled(): boolean {
++    return read(EnabledKey) === '1'
++  }
++
++  private allowsUnfocused(): boolean {
++    return read(UnfocusedKey) === '1'
++  }
++
++  private intervalMs(): number {
++    const stored = Number(read(IntervalKey))
++    return Number.isFinite(stored) && stored > 0 ? stored : DefaultIntervalMs
++  }
++
++  private update = (): void => {
++    const visible = !document.hidden && !this.inBackground
++    const focused = !this.requireFocus || this.allowsUnfocused() || document.hasFocus()
++
++    this.active = this.isEnabled() && visible && focused
++    this.sync.setFastPolling(this.active, this.intervalMs())
++  }
++
++  deinit(): void {
++    document.removeEventListener('visibilitychange', this.update)
++    window.removeEventListener('focus', this.update)
++    window.removeEventListener('blur', this.update)
++    this.sync.setFastPolling(false)
++  }
++}
+diff --git a/packages/web/src/javascripts/Application/WebApplication.ts b/packages/web/src/javascripts/Application/WebApplication.ts
+index 22f3cd0..06ffab2 100644
+--- a/packages/web/src/javascripts/Application/WebApplication.ts
++++ b/packages/web/src/javascripts/Application/WebApplication.ts
+@@ -55,2 +55,3 @@ import { HeadlessSuperConverter } from '@/Components/SuperEditor/Tools/HeadlessS
+ import { VisibilityObserver } from './VisibilityObserver'
++import { FastPollingController } from './FastPollingController'
+ import { DevMode } from './DevMode'
+@@ -97,2 +98,3 @@ export class WebApplication extends SNApplication implements WebApplicationInter
+   private visibilityObserver?: VisibilityObserver
++  private fastPollingController?: FastPollingController
+   private readonly webEventObservers: WebEventObserver[] = []
+@@ -195,2 +197,5 @@ export class WebApplication extends SNApplication implements WebApplicationInter
+     }
++
++    /** Off unless the owner switched it on (see FastPollingController). Windows of a desktop app only count while focused. */
++    this.fastPollingController = new FastPollingController(this.sync, !this.isNativeMobileWeb())
+   }
+@@ -209,2 +214,5 @@ export class WebApplication extends SNApplication implements WebApplicationInter
+ 
++    this.fastPollingController?.deinit()
++    this.fastPollingController = undefined
++
+     this.deps.deinit()
+@@ -317,2 +325,3 @@ export class WebApplication extends SNApplication implements WebApplicationInter
+   async handleMobileEnteringBackgroundEvent(): Promise<void> {
++    this.fastPollingController?.setAppInBackground(true)
+     await this.lockApplicationAfterMobileEventIfApplicable()
+@@ -321,2 +330,4 @@ export class WebApplication extends SNApplication implements WebApplicationInter
+   async handleMobileGainingFocusEvent(): Promise<void> {
++    this.fastPollingController?.setAppInBackground(false)
++
+     /** Also fired when resuming from the background, where notifications from the server may have been missed. */
+@@ -348,2 +359,4 @@ export class WebApplication extends SNApplication implements WebApplicationInter
+   async handleMobileResumingFromBackgroundEvent(): Promise<void> {
++    this.fastPollingController?.setAppInBackground(false)
++
+     if (this.protections.getMobileScreenshotPrivacyEnabled()) {
+-- 
+2.49.0.windows.1
+

@@ -1,0 +1,46 @@
+# ios.yml - starts the iPhone build on every push to main and by hand (Actions > "iOS IPA (SN Fast, unsigned)" > Run workflow).
+# First try: Xcode 26 on macos-15 (what upstream's own release workflow uses with this React Native version).
+# Fallback, only when that fails: Xcode 27 on the xcode-27 runner (the newest Xcode on GitHub's runners).
+# Standard GitHub-hosted runners are free in a PUBLIC repository (see GitHub's "About billing for GitHub Actions"); this repository is public on purpose.
+# The result is an UNSIGNED .ipa as a pre-release (ios-<run number>) + the build log on the branch build-logs; see README.md and HowToUse.md.
+#
+# This is an unofficial personal build recipe. It is not affiliated with Standard Notes or Proton. Upstream is AGPL-3.0; so are our patches.
+
+name: iOS IPA (SN Fast, unsigned)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      only_xcode:
+        description: "Run only this Xcode major (26 or 27) and skip the fallback logic. Empty = 26, then 27 if 26 fails."
+        required: false
+        default: ""
+
+concurrency:
+  group: ios
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  xcode26:
+    if: ${{ github.event.inputs.only_xcode == '' || github.event.inputs.only_xcode == '26' }}
+    permissions:
+      contents: write
+    uses: ./.github/workflows/ios-build.yml
+    with:
+      runner: macos-15
+      xcode: "26"
+
+  xcode27:
+    needs: xcode26
+    if: ${{ always() && (github.event.inputs.only_xcode == '27' || (github.event.inputs.only_xcode == '' && needs.xcode26.result == 'failure')) }}
+    permissions:
+      contents: write
+    uses: ./.github/workflows/ios-build.yml
+    with:
+      runner: xcode-27
+      xcode: "27"

@@ -1,0 +1,53 @@
+From 3ef6a23f5727a382f23778e01b878ecddd89e861 Mon Sep 17 00:00:00 2001
+From: "SN Fast Sync (local)" <snfast@localhost.invalid>
+Date: Wed, 11 Nov 2026 04:10:25 -0700
+Subject: [PATCH 3/7] fix(web): sync and reconnect the websocket when the
+ mobile app returns to the foreground
+
+On mobile the native resume events (GainingFocus / ResumingFromBackground) were forwarded to the web app, but
+handleMobileGainingFocusEvent was empty and the resume handler only dealt with the screenshot privacy setting, so opening
+the app after a while triggered no sync: changes made elsewhere appeared only when the next 30 s auto sync tick happened
+to run. A websocket is usually dead after the app was in the background and notifications sent meanwhile are lost. Now the
+focus event (which also fires on resume) calls the new Application.syncAfterReturningToForeground(), which replaces the
+websocket (restartWebSocketConnection) and syncs at once. Nothing happens while the app is locked (same rule as the
+desktop focus sync in ApplicationView).
+---
+ packages/snjs/lib/Application/Application.ts        | 13 +++++++++++++
+ .../src/javascripts/Application/WebApplication.ts   |  5 ++++-
+ 2 files changed, 17 insertions(+), 1 deletion(-)
+
+diff --git a/packages/snjs/lib/Application/Application.ts b/packages/snjs/lib/Application/Application.ts
+index fbabb8d..b79895b 100644
+--- a/packages/snjs/lib/Application/Application.ts
++++ b/packages/snjs/lib/Application/Application.ts
+@@ -1142,2 +1142,15 @@ export class SNApplication implements ApplicationInterface, AppGroupManagedAppli
+ 
++  /**
++   * To be called when the app comes back to the foreground (on mobile the websocket is dropped or silently dead
++   * and its notifications are lost while the app is in the background): replace the websocket and sync right
++   * away instead of waiting for the next auto sync tick.
++   */
++  public syncAfterReturningToForeground(): void {
++    if (this.sessions.isSignedIntoFirstPartyServer()) {
++      this.sockets.restartWebSocketConnection()
++    }
++
++    void this.sync.sync({ sourceDescription: 'Returned to foreground' })
++  }
++
+   private get migrations(): MigrationService {
+diff --git a/packages/web/src/javascripts/Application/WebApplication.ts b/packages/web/src/javascripts/Application/WebApplication.ts
+index e0bfe86..22f3cd0 100644
+--- a/packages/web/src/javascripts/Application/WebApplication.ts
++++ b/packages/web/src/javascripts/Application/WebApplication.ts
+@@ -321,3 +321,6 @@ export class WebApplication extends SNApplication implements WebApplicationInter
+   async handleMobileGainingFocusEvent(): Promise<void> {
+-    /** Optional override */
++    /** Also fired when resuming from the background, where notifications from the server may have been missed. */
++    if (!(await this.protections.isLocked())) {
++      this.syncAfterReturningToForeground()
++    }
+   }
+-- 
+2.49.0.windows.1
+

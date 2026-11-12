@@ -1,0 +1,144 @@
+From 61ac9f98384bfef9920c44875cb1ec1864fe14eb Mon Sep 17 00:00:00 2001
+From: SN Fast Sync <snfast@localhost.invalid>
+Date: Wed, 11 Nov 2026 09:36:42 -0700
+Subject: [PATCH] feat(snjs): a custom sync server also gets its websocket on
+ the same host (wss://HOST/ws)
+
+The sign-in screen's custom server setting calls setCustomHost(host) without a websocket URL, which cleared the websocket URL: a
+self-hosted server with push never got its websocket unless the app was built with the URL preset. Now the websocket URL defaults
+to the same host under /ws (wss for https, ws for http) and keeps the path of the server URL in front of /ws (a server that is
+reached under a secret path, https://HOST/p/KEY, gets wss://HOST/p/KEY/ws); nothing is guessed for localhost. With patch 0014 this
+makes the runtime "custom sync server" setting enough to get push from our own server. Applied to every target except the stock
+comparison app (patches/customserver has its own folder, so changing it never starts the iPhone build by itself).
+
+Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01WeT9h5e494m7W6EHMFsEMq
+---
+ .../src/Domain/Api/WebsocketsService.spec.ts  | 65 +++++++++++++++++++
+ .../src/Domain/Api/WebsocketsService.ts       | 21 ++++++
+ packages/snjs/lib/Application/Application.ts  |  2 +-
+ 3 files changed, 87 insertions(+), 1 deletion(-)
+
+diff --git a/packages/services/src/Domain/Api/WebsocketsService.spec.ts b/packages/services/src/Domain/Api/WebsocketsService.spec.ts
+index ce3320e..1cd442c 100644
+--- a/packages/services/src/Domain/Api/WebsocketsService.spec.ts
++++ b/packages/services/src/Domain/Api/WebsocketsService.spec.ts
+@@ -36,4 +36,29 @@ describe('webSocketsService', () => {
+   })
+ 
++  describe('guessWebSocketUrl()', () => {
++    it('puts the websocket on the same host under /ws, secure for https', () => {
++      const service = createService()
++
++      expect(service.guessWebSocketUrl('https://sync.example.com:3443')).toBe('wss://sync.example.com:3443/ws')
++      expect(service.guessWebSocketUrl('http://host.example.org:3140')).toBe('ws://host.example.org:3140/ws')
++    })
++
++    it('keeps the path of the server url in front of /ws, so a server under a secret path gets its websocket under the same path', () => {
++      const service = createService()
++
++      expect(service.guessWebSocketUrl('https://sync.example.com/p/abc_DEF-123')).toBe('wss://sync.example.com/p/abc_DEF-123/ws')
++      expect(service.guessWebSocketUrl('https://sync.example.com/p/abc_DEF-123/')).toBe('wss://sync.example.com/p/abc_DEF-123/ws')
++      expect(service.guessWebSocketUrl('http://host.example.org:3140/p/abc?x=1#y')).toBe('ws://host.example.org:3140/p/abc/ws')
++    })
++
++    it('guesses nothing for localhost or for something that is not a url', () => {
++      const service = createService()
++
++      expect(service.guessWebSocketUrl('http://localhost:3127')).toBeUndefined()
++      expect(service.guessWebSocketUrl('http://127.0.0.1:3127')).toBeUndefined()
++      expect(service.guessWebSocketUrl('not a url')).toBeUndefined()
++    })
++  })
++
+   describe('isWebSocketUrlOnHostOf()', () => {
+     it('is true only when the websocket lives on the same host and port as the sync server', () => {
+@@ -179,4 +204,44 @@ describe('webSocketsService', () => {
+     })
+ 
++    it('keeps two workspaces apart: each has its own websocket url, its own timers and its own failures', async () => {
++      const otherStorage = { setValue: jest.fn() } as unknown as jest.Mocked<StorageServiceInterface>
++      const hostedApi = { createConnectionToken: jest.fn().mockResolvedValue(tokenFailed) } as unknown as jest.Mocked<WebSocketApiServiceInterface>
++      const ownApi = { createConnectionToken: jest.fn().mockResolvedValue(tokenOk) } as unknown as jest.Mocked<WebSocketApiServiceInterface>
++      const hosted = new WebSocketsService(storageService, 'wss://sockets.standardnotes.com', hostedApi, internalEventBus)
++      const own = new WebSocketsService(otherStorage, undefined, ownApi, internalEventBus)
++      jest.spyOn(console, 'warn').mockImplementation(() => undefined)
++      const ownUrl = 'wss://sync.example.com:3443/ws'
++
++      /** the second workspace picks a custom server without a websocket url and gets wss://HOST/ws; the first keeps its own url */
++      own.setWebSocketUrl(own.guessWebSocketUrl('https://sync.example.com:3443'))
++      expect(otherStorage.setValue).toHaveBeenCalledWith(StorageKey.WebSocketUrl, ownUrl)
++      expect(storageService.setValue).not.toHaveBeenCalled()
++      expect(own.isWebSocketUrlOnHostOf('https://sync.example.com:3443')).toBe(true)
++      expect(hosted.isWebSocketUrlOnHostOf('https://sync.example.com:3443')).toBe(false)
++
++      await own.startWebSocketConnection()
++      await hosted.startWebSocketConnection()
++      const ownSockets = () => FakeWebSocket.instances.filter((s) => s.url.startsWith(ownUrl))
++      expect(ownSockets()).toHaveLength(1)
++      ownSockets()[0].open()
++      expect(own.isWebSocketConnectionOpen()).toBe(true)
++      expect(FakeWebSocket.instances.some((s) => s.url.startsWith('wss://sockets.standardnotes.com'))).toBe(false)
++
++      /** the hosted workspace keeps failing (quietly, with long waits); the other one stays connected and is never reconnected because of it */
++      await jest.advanceTimersByTimeAsync(3_600_000)
++      expect(hostedApi.createConnectionToken.mock.calls.length).toBeGreaterThanOrEqual(5)
++      expect(own.isWebSocketConnectionOpen()).toBe(true)
++      expect(ownSockets()).toHaveLength(1)
++
++      /** switching away from the hosted workspace stops all its timers and does not touch the other workspace */
++      const callsBefore = hostedApi.createConnectionToken.mock.calls.length
++      hosted.deinit()
++      await jest.advanceTimersByTimeAsync(3_600_000)
++      expect(hostedApi.createConnectionToken.mock.calls.length).toBe(callsBefore)
++      expect(own.isWebSocketConnectionOpen()).toBe(true)
++
++      own.deinit()
++    })
++
+     it('reconnects with growing delays when the socket closes unexpectedly, then tells listeners to catch up', async () => {
+       const service = await createConnectedService()
+diff --git a/packages/services/src/Domain/Api/WebsocketsService.ts b/packages/services/src/Domain/Api/WebsocketsService.ts
+index cf9c631..177e456 100644
+--- a/packages/services/src/Domain/Api/WebsocketsService.ts
++++ b/packages/services/src/Domain/Api/WebsocketsService.ts
+@@ -66,4 +66,25 @@ export class WebSocketsService extends AbstractService<WebSocketsServiceEvent, D
+   }
+ 
++  /**
++   * The websocket URL to use when a custom sync server is chosen without one: the same host under /ws (wss for https, ws for http),
++   * which is where a self-hosted server with push serves it. The path of the server URL stays in front of /ws, so a server that is reached
++   * under a secret path (https://HOST/p/KEY) has its websocket at wss://HOST/p/KEY/ws.
++   * Nothing is guessed for localhost (the home server inside the desktop app has no websocket).
++   */
++  public guessWebSocketUrl(serverUrl: string): string | undefined {
++    try {
++      const url = new URL(serverUrl)
++      if (['localhost', '127.0.0.1', '[::1]'].includes(url.hostname)) {
++        return undefined
++      }
++
++      const pathPrefix = url.pathname.replace(/\/+$/, '')
++
++      return `${url.protocol === 'https:' ? 'wss' : 'ws'}://${url.host}${pathPrefix}/ws`
++    } catch {
++      return undefined
++    }
++  }
++
+   public loadWebSocketUrl(): void {
+     const storedValue = this.storageService.getValue<string | undefined>(StorageKey.WebSocketUrl)
+diff --git a/packages/snjs/lib/Application/Application.ts b/packages/snjs/lib/Application/Application.ts
+index f747311..1f2d772 100644
+--- a/packages/snjs/lib/Application/Application.ts
++++ b/packages/snjs/lib/Application/Application.ts
+@@ -588,5 +588,5 @@ export class SNApplication implements ApplicationInterface, AppGroupManagedAppli
+     await this.setHost.execute(host)
+ 
+-    this.sockets.setWebSocketUrl(websocketUrl)
++    this.sockets.setWebSocketUrl(websocketUrl ?? this.sockets.guessWebSocketUrl(host))
+   }
+ 
+-- 
+2.49.0.windows.1
+

@@ -1,0 +1,111 @@
+From a50876e8eaeb2940deb971c1afcdb32fb1ca4c98 Mon Sep 17 00:00:00 2001
+From: SN Fast Sync <snfast@localhost.invalid>
+Date: Wed, 11 Nov 2026 07:07:55 -0700
+Subject: [PATCH] feat(snjs): allow the push websocket on the sync server's own
+ host (self-hosted server)
+
+The app starts its websocket only for the first-party server (api.standardnotes.com), so a self-hosted server never got a push
+channel even when a websocket URL was set for it. Now it is also started when the websocket URL points at the same host and port
+as the sync server (for example https://sync.example.com:3123 and wss://sync.example.com:3123/ws). A third-party server with the
+hosted websocket URL still gets none. Used for the planned PC-as-sync-server setup; changes nothing for the hosted server.
+
+Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01WeT9h5e494m7W6EHMFsEMq
+---
+ .../src/Domain/Api/WebsocketsService.spec.ts    | 15 +++++++++++++++
+ .../src/Domain/Api/WebsocketsService.ts         | 17 +++++++++++++++++
+ .../Domain/Session/SessionsClientInterface.ts   |  1 +
+ packages/snjs/lib/Application/Application.ts    |  2 +-
+ .../snjs/lib/Services/Session/SessionManager.ts | 14 +++++++++++++-
+ 5 files changed, 47 insertions(+), 2 deletions(-)
+
+diff --git a/packages/services/src/Domain/Api/WebsocketsService.spec.ts b/packages/services/src/Domain/Api/WebsocketsService.spec.ts
+index e9818f5..2b0ebe5 100644
+--- a/packages/services/src/Domain/Api/WebsocketsService.spec.ts
++++ b/packages/services/src/Domain/Api/WebsocketsService.spec.ts
+@@ -37,2 +37,17 @@ describe('webSocketsService', () => {
+ 
++  describe('isWebSocketUrlOnHostOf()', () => {
++    it('is true only when the websocket lives on the same host and port as the sync server', () => {
++      const service = new WebSocketsService(storageService, 'wss://sync.example.com:3123/ws', webSocketApiService, internalEventBus)
++
++      expect(service.isWebSocketUrlOnHostOf('https://sync.example.com:3123')).toBe(true)
++      expect(service.isWebSocketUrlOnHostOf('https://sync.example.com:3124')).toBe(false)
++      expect(service.isWebSocketUrlOnHostOf('https://api.standardnotes.com')).toBe(false)
++      expect(service.isWebSocketUrlOnHostOf('not a url')).toBe(false)
++    })
++
++    it('is false when no websocket url is set', () => {
++      expect(createService().isWebSocketUrlOnHostOf('https://api.standardnotes.com')).toBe(false)
++    })
++  })
++
+   describe('connection recovery', () => {
+diff --git a/packages/services/src/Domain/Api/WebsocketsService.ts b/packages/services/src/Domain/Api/WebsocketsService.ts
+index cc2bcb1..175dfab 100644
+--- a/packages/services/src/Domain/Api/WebsocketsService.ts
++++ b/packages/services/src/Domain/Api/WebsocketsService.ts
+@@ -41,2 +41,19 @@ export class WebSocketsService extends AbstractService<WebSocketsServiceEvent, D
+ 
++  /**
++   * True when the websocket URL points at the same host (and port) as the given sync server: a self-hosted server that serves its
++   * own websocket. The hosted server's websocket is on another host (sockets.standardnotes.com) and is reached through the
++   * first-party check instead.
++   */
++  public isWebSocketUrlOnHostOf(serverUrl: string): boolean {
++    if (!this.webSocketUrl) {
++      return false
++    }
++
++    try {
++      return new URL(this.webSocketUrl).host === new URL(serverUrl).host
++    } catch {
++      return false
++    }
++  }
++
+   public loadWebSocketUrl(): void {
+diff --git a/packages/services/src/Domain/Session/SessionsClientInterface.ts b/packages/services/src/Domain/Session/SessionsClientInterface.ts
+index 457eea3..ff6be41 100644
+--- a/packages/services/src/Domain/Session/SessionsClientInterface.ts
++++ b/packages/services/src/Domain/Session/SessionsClientInterface.ts
+@@ -25,2 +25,3 @@ export interface SessionsClientInterface {
+   isSignedIntoFirstPartyServer(): boolean
++  mayUseWebSocket(): boolean
+ 
+diff --git a/packages/snjs/lib/Application/Application.ts b/packages/snjs/lib/Application/Application.ts
+index b79895b..f747311 100644
+--- a/packages/snjs/lib/Application/Application.ts
++++ b/packages/snjs/lib/Application/Application.ts
+@@ -1148,3 +1148,3 @@ export class SNApplication implements ApplicationInterface, AppGroupManagedAppli
+   public syncAfterReturningToForeground(): void {
+-    if (this.sessions.isSignedIntoFirstPartyServer()) {
++    if (this.sessions.mayUseWebSocket()) {
+       this.sockets.restartWebSocketConnection()
+diff --git a/packages/snjs/lib/Services/Session/SessionManager.ts b/packages/snjs/lib/Services/Session/SessionManager.ts
+index e8e883b..699bae8 100644
+--- a/packages/snjs/lib/Services/Session/SessionManager.ts
++++ b/packages/snjs/lib/Services/Session/SessionManager.ts
+@@ -196,3 +196,3 @@ export class SessionManager
+ 
+-    if (this.isSignedIntoFirstPartyServer()) {
++    if (this.mayUseWebSocket()) {
+       void this.webSocketsService.startWebSocketConnection()
+@@ -282,2 +282,14 @@ export class SessionManager
+ 
++  /**
++   * The push websocket is for the first-party server and for a server that serves a websocket on its own host (a self-hosted
++   * server with a websocket URL set for it); a third-party server with the hosted websocket URL does not get one.
++   */
++  public mayUseWebSocket(): boolean {
++    if (!this.isSignedIn()) {
++      return false
++    }
++
++    return this.isSignedIntoFirstPartyServer() || this.webSocketsService.isWebSocketUrlOnHostOf(this.apiService.getHost())
++  }
++
+   public isSignedIntoFirstPartyServer(): boolean {
+-- 
+2.49.0.windows.1
+

@@ -1,0 +1,5 @@
+# Everything here uses ONLY the Python standard library (3.8+): there is nothing to pip install.
+# Tools the workflows and scripts drive (installed by their own means, not by pip):
+#   git 2.30+, Node (the version in upstreams .nvmrc), the repos own yarn (upstreams .yarn/releases), CocoaPods + Xcode 26 or 27 (on GitHubs macOS runner only).
+#   personalize_ipa.py: standard library only (zip + plist handling), no Apple tools, nothing is signed.
+#   personalize_apk.py (optional, Android): Android SDK build-tools (zipalign, aapt, apksigner) + a JDK, paths in personalize_apk.ini.

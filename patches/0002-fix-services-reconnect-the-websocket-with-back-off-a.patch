@@ -1,0 +1,449 @@
+From 6171e191b2da9b60a9a944cd6c618022d1491345 Mon Sep 17 00:00:00 2001
+From: "SN Fast Sync (local)" <snfast@localhost.invalid>
+Date: Wed, 11 Nov 2026 04:09:40 -0700
+Subject: [PATCH 02/10] fix(services): reconnect the websocket with back-off,
+ and catch up after it was down
+
+WebSocketsService reconnected at once, with no back-off, when the socket closed (a refused connection made it loop at
+network speed), and if the token request failed during a reconnect the failure was dropped silently: nothing scheduled
+another attempt, so the push channel stayed dead until the app was restarted (SyncService then fell back to the 30 s
+timer). Now a failed token request or connection schedules a retry (immediate, then 1, 2, 5, 10, 20, 30 s, repeating the
+last delay), a second start while a socket is open or connecting is ignored, a close event of an already replaced socket
+is ignored, and closing the connection cancels pending retries. Notifications sent while the socket was down are lost, so
+the service emits a new ConnectionReestablished event on a reconnect and SyncService answers it with one catch-up sync.
+New restartWebSocketConnection() replaces a socket that may be silently dead (used when a phone app returns to the front).
+Two starts can no longer run at the same time (isStartingConnection). Unit tests (jest, fake timers and a fake WebSocket) cover the
+retry after a failed token request, the back-off, the catch-up event and the restart; three of them fail on the previous code.
+---
+ .../src/Domain/Api/WebSocketsServiceEvent.ts  |   1 +
+ .../src/Domain/Api/WebsocketsService.spec.ts  | 223 +++++++++++++++---
+ .../src/Domain/Api/WebsocketsService.ts       | 128 +++++++++-
+ .../Dependencies/DependencyEvents.ts          |   1 +
+ .../snjs/lib/Services/Sync/SyncService.ts     |   5 +
+ 5 files changed, 319 insertions(+), 39 deletions(-)
+
+diff --git a/packages/services/src/Domain/Api/WebSocketsServiceEvent.ts b/packages/services/src/Domain/Api/WebSocketsServiceEvent.ts
+index e9cdf36..5032750 100644
+--- a/packages/services/src/Domain/Api/WebSocketsServiceEvent.ts
++++ b/packages/services/src/Domain/Api/WebSocketsServiceEvent.ts
+@@ -6,2 +6,3 @@ export enum WebSocketsServiceEvent {
+   ItemsChangedOnServer = 'ItemsChangedOnServer',
++  ConnectionReestablished = 'WebSocketConnectionReestablished',
+ }
+diff --git a/packages/services/src/Domain/Api/WebsocketsService.spec.ts b/packages/services/src/Domain/Api/WebsocketsService.spec.ts
+index 9a319f6..240f2a9 100644
+--- a/packages/services/src/Domain/Api/WebsocketsService.spec.ts
++++ b/packages/services/src/Domain/Api/WebsocketsService.spec.ts
+@@ -1,37 +1,186 @@
+-import { WebSocketApiServiceInterface } from '@standardnotes/api'
+-
+-import { WebSocketsService } from './WebsocketsService'
+-import { StorageServiceInterface } from '../Storage/StorageServiceInterface'
+-import { InternalEventBusInterface } from '../Internal/InternalEventBusInterface'
+-import { StorageKey } from '../Storage/StorageKeys'
+-
+-describe('webSocketsService', () => {
+-  const webSocketUrl = ''
+-
+-  let storageService: StorageServiceInterface
+-  let webSocketApiService: WebSocketApiServiceInterface
+-  let internalEventBus: InternalEventBusInterface
+-
+-  const createService = () => {
+-    return new WebSocketsService(storageService, webSocketUrl, webSocketApiService, internalEventBus)
+-  }
+-
+-  beforeEach(() => {
+-    storageService = {} as jest.Mocked<StorageServiceInterface>
+-    storageService.setValue = jest.fn()
+-
+-    internalEventBus = {} as jest.Mocked<InternalEventBusInterface>
+-    internalEventBus.publish = jest.fn()
+-
+-    webSocketApiService = {} as jest.Mocked<WebSocketApiServiceInterface>
+-    webSocketApiService.createConnectionToken = jest.fn().mockReturnValue({ token: 'foobar' })
+-  })
+-
+-  describe('setWebSocketUrl()', () => {
+-    it('saves url in local storage', () => {
+-      const webSocketUrl = 'wss://test-websocket'
+-      createService().setWebSocketUrl(webSocketUrl)
+-      expect(storageService.setValue).toHaveBeenCalledWith(StorageKey.WebSocketUrl, webSocketUrl)
+-    })
+-  })
+-})
++import { WebSocketApiServiceInterface } from '@standardnotes/api'
++
++import { WebSocketsService } from './WebsocketsService'
++import { StorageServiceInterface } from '../Storage/StorageServiceInterface'
++import { InternalEventBusInterface } from '../Internal/InternalEventBusInterface'
++import { StorageKey } from '../Storage/StorageKeys'
++
++describe('webSocketsService', () => {
++  const webSocketUrl = ''
++
++  let storageService: StorageServiceInterface
++  let webSocketApiService: WebSocketApiServiceInterface
++  let internalEventBus: InternalEventBusInterface
++
++  const createService = () => {
++    return new WebSocketsService(storageService, webSocketUrl, webSocketApiService, internalEventBus)
++  }
++
++  beforeEach(() => {
++    storageService = {} as jest.Mocked<StorageServiceInterface>
++    storageService.setValue = jest.fn()
++
++    internalEventBus = {} as jest.Mocked<InternalEventBusInterface>
++    internalEventBus.publish = jest.fn()
++
++    webSocketApiService = {} as jest.Mocked<WebSocketApiServiceInterface>
++    webSocketApiService.createConnectionToken = jest.fn().mockReturnValue({ token: 'foobar' })
++  })
++
++  describe('setWebSocketUrl()', () => {
++    it('saves url in local storage', () => {
++      const webSocketUrl = 'wss://test-websocket'
++      createService().setWebSocketUrl(webSocketUrl)
++      expect(storageService.setValue).toHaveBeenCalledWith(StorageKey.WebSocketUrl, webSocketUrl)
++    })
++  })
++
++  describe('connection recovery', () => {
++    class FakeWebSocket {
++      static CONNECTING = 0
++      static OPEN = 1
++      static CLOSING = 2
++      static CLOSED = 3
++      static instances: FakeWebSocket[] = []
++
++      readyState = FakeWebSocket.CONNECTING
++      onopen?: () => void
++      onclose?: (event: { code: number; target: unknown }) => void
++      onmessage?: (event: { data: string }) => void
++
++      constructor(public url: string) {
++        FakeWebSocket.instances.push(this)
++      }
++
++      send = jest.fn()
++
++      open() {
++        this.readyState = FakeWebSocket.OPEN
++        this.onopen?.()
++      }
++
++      /** The server refused the connection or it dropped without the app asking for it */
++      fail() {
++        this.readyState = FakeWebSocket.CLOSED
++        this.onclose?.({ code: 1006, target: this })
++      }
++
++      close(code?: number) {
++        this.readyState = FakeWebSocket.CLOSED
++        this.onclose?.({ code: code ?? 1000, target: this })
++      }
++    }
++
++    const tokenOk = { status: 200, data: { token: 'a-token' } }
++    const tokenFailed = { status: 500, data: { error: { message: 'boom' } } }
++
++    const createConnectedService = async () => {
++      webSocketApiService.createConnectionToken = jest.fn().mockResolvedValue(tokenOk)
++      const service = new WebSocketsService(storageService, 'wss://test-websocket', webSocketApiService, internalEventBus)
++      await service.startWebSocketConnection()
++      return service
++    }
++
++    beforeEach(() => {
++      jest.useFakeTimers()
++      FakeWebSocket.instances = []
++      ;(global as unknown as { WebSocket: unknown }).WebSocket = FakeWebSocket
++    })
++
++    afterEach(() => {
++      jest.useRealTimers()
++    })
++
++    it('retries with growing delays when the connection token cannot be created, until the connection is closed', async () => {
++      webSocketApiService.createConnectionToken = jest.fn().mockResolvedValue(tokenFailed)
++      const service = new WebSocketsService(storageService, 'wss://test-websocket', webSocketApiService, internalEventBus)
++
++      const result = await service.startWebSocketConnection()
++      expect(result.isFailed()).toBe(true)
++      expect(webSocketApiService.createConnectionToken).toHaveBeenCalledTimes(1)
++
++      await jest.advanceTimersByTimeAsync(0)
++      expect(webSocketApiService.createConnectionToken).toHaveBeenCalledTimes(2)
++
++      await jest.advanceTimersByTimeAsync(999)
++      expect(webSocketApiService.createConnectionToken).toHaveBeenCalledTimes(2)
++      await jest.advanceTimersByTimeAsync(1)
++      expect(webSocketApiService.createConnectionToken).toHaveBeenCalledTimes(3)
++
++      service.closeWebSocketConnection()
++      await jest.advanceTimersByTimeAsync(120_000)
++      expect(webSocketApiService.createConnectionToken).toHaveBeenCalledTimes(3)
++    })
++
++    it('waits ten minutes after five failed attempts in a row when it has not connected lately', async () => {
++      webSocketApiService.createConnectionToken = jest.fn().mockResolvedValue(tokenFailed)
++      const service = new WebSocketsService(storageService, 'wss://test-websocket', webSocketApiService, internalEventBus)
++      jest.spyOn(console, 'warn').mockImplementation(() => undefined)
++
++      await service.startWebSocketConnection()
++      await jest.advanceTimersByTimeAsync(0)
++      await jest.advanceTimersByTimeAsync(1_000)
++      await jest.advanceTimersByTimeAsync(2_000)
++      await jest.advanceTimersByTimeAsync(5_000)
++      expect(webSocketApiService.createConnectionToken).toHaveBeenCalledTimes(5)
++
++      await jest.advanceTimersByTimeAsync(599_999)
++      expect(webSocketApiService.createConnectionToken).toHaveBeenCalledTimes(5)
++      await jest.advanceTimersByTimeAsync(1)
++      expect(webSocketApiService.createConnectionToken).toHaveBeenCalledTimes(6)
++
++      service.closeWebSocketConnection()
++    })
++
++    it('reconnects with growing delays when the socket closes unexpectedly, then tells listeners to catch up', async () => {
++      const service = await createConnectedService()
++      expect(FakeWebSocket.instances).toHaveLength(1)
++
++      FakeWebSocket.instances[0].open()
++      expect(internalEventBus.publish).not.toHaveBeenCalled()
++
++      FakeWebSocket.instances[0].fail()
++      await jest.advanceTimersByTimeAsync(0)
++      expect(FakeWebSocket.instances).toHaveLength(2)
++
++      FakeWebSocket.instances[1].fail()
++      await jest.advanceTimersByTimeAsync(999)
++      expect(FakeWebSocket.instances).toHaveLength(2)
++      await jest.advanceTimersByTimeAsync(1)
++      expect(FakeWebSocket.instances).toHaveLength(3)
++
++      FakeWebSocket.instances[2].open()
++      expect(service.isWebSocketConnectionOpen()).toBe(true)
++      expect(internalEventBus.publish).toHaveBeenCalledWith(
++        expect.objectContaining({ type: 'WebSocketConnectionReestablished' }),
++      )
++    })
++
++    it('does not reconnect when the app closed the connection itself', async () => {
++      const service = await createConnectedService()
++      FakeWebSocket.instances[0].open()
++
++      service.closeWebSocketConnection()
++      await jest.advanceTimersByTimeAsync(120_000)
++
++      expect(FakeWebSocket.instances).toHaveLength(1)
++    })
++
++    it('replaces an open socket on restart and ignores the late close event of the replaced one', async () => {
++      const service = await createConnectedService()
++      FakeWebSocket.instances[0].open()
++
++      jest.setSystemTime(Date.now() + 11_000)
++      ;(service as unknown as { restartWebSocketConnection: () => void }).restartWebSocketConnection()
++      await jest.advanceTimersByTimeAsync(0)
++      expect(FakeWebSocket.instances).toHaveLength(2)
++
++      FakeWebSocket.instances[1].open()
++      FakeWebSocket.instances[0].onclose?.({ code: 4000, target: FakeWebSocket.instances[0] })
++      expect(service.isWebSocketConnectionOpen()).toBe(true)
++
++      await jest.advanceTimersByTimeAsync(120_000)
++      expect(FakeWebSocket.instances).toHaveLength(2)
++    })
++  })
++})
+diff --git a/packages/services/src/Domain/Api/WebsocketsService.ts b/packages/services/src/Domain/Api/WebsocketsService.ts
+index ccfd023..b5f0ce4 100644
+--- a/packages/services/src/Domain/Api/WebsocketsService.ts
++++ b/packages/services/src/Domain/Api/WebsocketsService.ts
+@@ -13,2 +13,16 @@ export class WebSocketsService extends AbstractService<WebSocketsServiceEvent, D
+   private HEARTBEAT_DELAY = 360_000
++  /** Delays (ms) before reconnect attempts. The first attempt is immediate, the last delay repeats. */
++  private RECONNECT_DELAYS = [0, 1_000, 2_000, 5_000, 10_000, 20_000, 30_000]
++  /** After this many failed attempts in a row, and no successful connection in the last hour, wait LONG_RECONNECT_DELAY. */
++  private MAX_QUICK_FAILURES = 5
++  private LONG_RECONNECT_DELAY = 600_000
++  private NO_RECENT_SUCCESS_AFTER = 3_600_000
++  private RESTART_CONNECTION_CODE = 4000
++  private RESTART_MIN_INTERVAL = 10_000
++  private lastOpenedAt = 0
++  private reconnectTimeout?: ReturnType<typeof setTimeout>
++  private reconnectAttempts = 0
++  private shouldStayConnected = false
++  private mayHaveMissedNotifications = false
++  private isStartingConnection = false
+ 
+@@ -48,4 +62,26 @@ export class WebSocketsService extends AbstractService<WebSocketsServiceEvent, D
+ 
++    this.shouldStayConnected = true
++    this.clearReconnectTimeout()
++
++    if (
++      this.webSocket?.readyState === WebSocket.OPEN ||
++      this.webSocket?.readyState === WebSocket.CONNECTING ||
++      this.isStartingConnection
++    ) {
++      return Result.ok()
++    }
++
++    this.isStartingConnection = true
++    try {
++      return await this.openWebSocketConnection()
++    } finally {
++      this.isStartingConnection = false
++    }
++  }
++
++  private async openWebSocketConnection(): Promise<Result<void>> {
+     const webSocketConectionToken = await this.createWebSocketConnectionToken()
+     if (webSocketConectionToken === undefined) {
++      this.scheduleReconnect()
++
+       return Result.fail('Failed to create WebSocket connection token')
+@@ -53,2 +89,6 @@ export class WebSocketsService extends AbstractService<WebSocketsServiceEvent, D
+ 
++    if (!this.shouldStayConnected) {
++      return Result.ok()
++    }
++
+     try {
+@@ -57,3 +97,3 @@ export class WebSocketsService extends AbstractService<WebSocketsServiceEvent, D
+       this.webSocket.onclose = this.onWebSocketClose.bind(this)
+-      this.webSocket.onopen = this.beginWebSocketHeartbeat.bind(this)
++      this.webSocket.onopen = this.onWebSocketOpen.bind(this)
+ 
+@@ -61,2 +101,4 @@ export class WebSocketsService extends AbstractService<WebSocketsServiceEvent, D
+     } catch (error) {
++      this.scheduleReconnect()
++
+       return Result.fail(`Error starting WebSocket connection: ${(error as Error).message}`)
+@@ -65,2 +107,47 @@ export class WebSocketsService extends AbstractService<WebSocketsServiceEvent, D
+ 
++  /**
++   * Retries with growing delays, so that a failed token request or a failed connection does not leave
++   * the push channel dead until the app is restarted, and so that a server outage is not hammered.
++   */
++  private scheduleReconnect(): void {
++    if (!this.shouldStayConnected || this.reconnectTimeout) {
++      return
++    }
++
++    this.mayHaveMissedNotifications = true
++
++    let delay = this.RECONNECT_DELAYS[Math.min(this.reconnectAttempts, this.RECONNECT_DELAYS.length - 1)]
++    this.reconnectAttempts++
++
++    if (this.reconnectAttempts >= this.MAX_QUICK_FAILURES && Date.now() - this.lastOpenedAt > this.NO_RECENT_SUCCESS_AFTER) {
++      /** The server keeps refusing the connection and it never worked lately (for example a version gate): stop hammering it. */
++      delay = this.LONG_RECONNECT_DELAY
++      console.warn(`WebSocket: ${this.reconnectAttempts} failed connection attempts in a row, next try in ${delay / 1000} s`)
++    }
++
++    this.reconnectTimeout = setTimeout(() => {
++      this.reconnectTimeout = undefined
++      void this.startWebSocketConnection()
++    }, delay)
++  }
++
++  private clearReconnectTimeout(): void {
++    if (this.reconnectTimeout) {
++      clearTimeout(this.reconnectTimeout)
++    }
++    this.reconnectTimeout = undefined
++  }
++
++  private onWebSocketOpen(): void {
++    this.reconnectAttempts = 0
++    this.lastOpenedAt = Date.now()
++    this.beginWebSocketHeartbeat()
++
++    if (this.mayHaveMissedNotifications) {
++      /** Notifications sent while the connection was down are lost, so let listeners catch up. */
++      this.mayHaveMissedNotifications = false
++      void this.notifyEvent(WebSocketsServiceEvent.ConnectionReestablished)
++    }
++  }
++
+   isWebSocketConnectionOpen(): boolean {
+@@ -70,2 +157,4 @@ export class WebSocketsService extends AbstractService<WebSocketsServiceEvent, D
+   public closeWebSocketConnection(): void {
++    this.shouldStayConnected = false
++    this.clearReconnectTimeout()
+     this.webSocket?.close(this.CLOSE_CONNECTION_CODE, 'Closing application')
+@@ -73,3 +162,31 @@ export class WebSocketsService extends AbstractService<WebSocketsServiceEvent, D
+ 
++  /**
++   * For when the app comes back to the foreground: the old socket may be dead without anyone knowing (it still
++   * reports OPEN), so replace it. Does nothing when no connection is wanted, one is being opened, or one was
++   * opened a moment ago.
++   */
++  public restartWebSocketConnection(): void {
++    if (!this.shouldStayConnected || this.webSocket?.readyState === WebSocket.CONNECTING) {
++      return
++    }
++
++    if (this.isWebSocketConnectionOpen() && Date.now() - this.lastOpenedAt < this.RESTART_MIN_INTERVAL) {
++      return
++    }
++
++    const oldWebSocket = this.webSocket
++    this.webSocket = undefined
++    this.clearReconnectTimeout()
++    this.reconnectAttempts = 0
++    this.mayHaveMissedNotifications = true
++
++    oldWebSocket?.close(this.RESTART_CONNECTION_CODE, 'Restarting')
++
++    void this.startWebSocketConnection()
++  }
++
+   private beginWebSocketHeartbeat(): void {
++    if (this.webSocketHeartbeatInterval) {
++      clearInterval(this.webSocketHeartbeatInterval)
++    }
+     this.webSocketHeartbeatInterval = setInterval(this.websocketHeartbeat.bind(this), this.HEARTBEAT_DELAY)
+@@ -107,2 +224,7 @@ export class WebSocketsService extends AbstractService<WebSocketsServiceEvent, D
+   private onWebSocketClose(event: CloseEvent) {
++    if (event.target !== this.webSocket) {
++      /** A socket that was already replaced (see restartWebSocketConnection): nothing left to clean up. */
++      return
++    }
++
+     if (this.webSocketHeartbeatInterval) {
+@@ -119,4 +241,6 @@ export class WebSocketsService extends AbstractService<WebSocketsServiceEvent, D
+ 
++    this.mayHaveMissedNotifications = true
++
+     if (this.webSocket?.readyState === WebSocket.CLOSED) {
+-      void this.startWebSocketConnection()
++      this.scheduleReconnect()
+     }
+diff --git a/packages/snjs/lib/Application/Dependencies/DependencyEvents.ts b/packages/snjs/lib/Application/Dependencies/DependencyEvents.ts
+index 49e3e3a..69ca221 100644
+--- a/packages/snjs/lib/Application/Dependencies/DependencyEvents.ts
++++ b/packages/snjs/lib/Application/Dependencies/DependencyEvents.ts
+@@ -43,2 +43,3 @@ export function RegisterApplicationServicesEvents(container: Dependencies, event
+   events.addEventHandler(container.get(TYPES.SyncService), WebSocketsServiceEvent.ItemsChangedOnServer)
++  events.addEventHandler(container.get(TYPES.SyncService), WebSocketsServiceEvent.ConnectionReestablished)
+   events.addEventHandler(container.get(TYPES.UserService), AccountEvent.SignedInOrRegistered)
+diff --git a/packages/snjs/lib/Services/Sync/SyncService.ts b/packages/snjs/lib/Services/Sync/SyncService.ts
+index 7c060a2..4ffaf2b 100644
+--- a/packages/snjs/lib/Services/Sync/SyncService.ts
++++ b/packages/snjs/lib/Services/Sync/SyncService.ts
+@@ -1540,2 +1540,7 @@ export class SyncService
+         break
++      case WebSocketsServiceEvent.ConnectionReestablished:
++        /** Notifications sent while the websocket was down are lost, so catch up with one sync. */
++        this.wasNotifiedOfItemsChangeOnServer = true
++        this.scheduleSyncAfterServerNotification()
++        break
+       default:
+-- 
+2.49.0.windows.1
+

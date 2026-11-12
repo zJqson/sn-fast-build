@@ -1,0 +1,307 @@
+# ios-build.yml - REUSABLE workflow (called by ios.yml): builds a patched Standard Notes for iPhone ("SN Fast") into an UNSIGNED .ipa on a
+# GitHub macOS runner with the Xcode major given in `xcode`. The .ipa is signed later on the phone (Sideloadly, AltStore ...) with the owner's own
+# Apple ID: nobody else ever sees that password, and this workflow uses no secret of any kind.
+#
+# This is an unofficial personal build recipe. It is not affiliated with Standard Notes or Proton. Upstream (standardnotes/app) is AGPL-3.0, so are our patches.
+# The workflow CLONES upstream at the tag of config.ini at build time; no upstream source is stored in this repository.
+#
+# What one run publishes (everything with the run's own GITHUB_TOKEN, permissions: contents: write only):
+#   1. release  ios-<run_number> (pre-release): SN-Fast.ipa, SN-Fast.ipa.sha256, INFO.txt  (only when the build succeeded)
+#   2. branch   build-logs : run-<N>.log (full output) + LATEST.txt (outcome + the first 40 error lines); written on success AND failure
+#   3. the same outcome in this run's job summary
+# Read them without any login:  https://raw.githubusercontent.com/<owner>/<repo>/build-logs/LATEST.txt  and  https://github.com/<owner>/<repo>/releases
+#
+# Build steps are upstream's own (their mobile.release.prod.yml, ios job): yarn install --immutable, bundler / CocoaPods, yarn build:mobile, then
+# xcodebuild archive - with code signing switched off, our patches applied first and the Share extension removed afterwards (a free Apple ID would need
+# one more App ID for it).
+
+name: iOS IPA build (reusable)
+
+on:
+  workflow_call:
+    inputs:
+      runner:
+        description: "runs-on label (macos-15 = upstream's own choice; xcode-27 = the runner with Xcode 27)"
+        required: true
+        type: string
+      xcode:
+        description: "Xcode major to select (26 or 27)"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Unsigned IPA (Xcode ${{ inputs.xcode }} on ${{ inputs.runner }})
+    runs-on: ${{ inputs.runner }}
+    timeout-minutes: 90
+    permissions:
+      contents: write
+    defaults:
+      run:
+        shell: bash
+    env:
+      NODE_OPTIONS: --max-old-space-size=4096   # the macOS runner has about 7 GB of RAM in total (upstream's own iOS job uses the default heap)
+      YARN_ENABLE_TELEMETRY: "0"
+      YARN_ENABLE_PROGRESS_BARS: "0"
+      XCODE_MAJOR: ${{ inputs.xcode }}
+    steps:
+      - id: checkout
+        name: Check out this repo (our patches, config)
+        uses: actions/checkout@v4
+
+      - id: log_init
+        name: Start the build log
+        run: |
+          echo "BUILD_LOG=$RUNNER_TEMP/build.log" >> "$GITHUB_ENV"
+          { echo "ios build log of run $GITHUB_RUN_NUMBER (attempt $GITHUB_RUN_ATTEMPT), commit $GITHUB_SHA, Xcode $XCODE_MAJOR on ${{ inputs.runner }}"; date -u +"started %Y-%m-%dT%H:%M:%SZ"; } > "$RUNNER_TEMP/build.log"
+
+      - id: setup_xcode
+        name: Select Xcode (the marketplace action upstream uses; soft step, the next step checks)
+        continue-on-error: true
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: ${{ inputs.xcode }}
+
+      - id: xcode
+        name: Make sure Xcode ${{ inputs.xcode }} is the selected one and show versions
+        run: |
+          {
+            echo "=== Xcode $XCODE_MAJOR ($(date -u +%H:%M:%SZ)) ==="
+            ls -d /Applications/Xcode*.app || true
+            CUR="$(/usr/bin/xcodebuild -version | head -n 1 | sed 's/Xcode //')"
+            echo "selected now: Xcode $CUR"
+            case "$CUR" in
+              "$XCODE_MAJOR"|"$XCODE_MAJOR".*) echo "ok: the selected Xcode has the wanted major" ;;
+              *)
+                CAND="$(ls -d /Applications/Xcode_${XCODE_MAJOR}*.app 2>/dev/null | sort -V | tail -n 1 || true)"
+                if [ -z "$CAND" ]; then echo "ERROR: no Xcode $XCODE_MAJOR on this runner image"; exit 1; fi
+                echo "selecting $CAND"
+                sudo /usr/bin/xcode-select -switch "$CAND"
+                ;;
+            esac
+            xcrun simctl list > /dev/null
+            /usr/bin/xcodebuild -version
+            python3 --version; git --version; node --version || true; pod --version || true
+            df -h /
+          } 2>&1 | tee -a "$BUILD_LOG"
+
+      - id: prepare
+        name: Fetch upstream and apply our patches (stops loudly if one no longer applies)
+        run: |
+          {
+            echo "=== prepare ($(date -u +%H:%M:%SZ)) ==="
+            python3 build.py prepare --target ios --dest "$GITHUB_WORKSPACE/upstream"
+            echo "VER=$(python3 -c "import json;print(json.load(open('upstream/snfast-build-info.json'))['upstream_version'])")" >> "$GITHUB_ENV"
+            echo "SNJS=$(python3 -c "import json;print(json.load(open('upstream/snfast-build-info.json'))['snjs_version'])")" >> "$GITHUB_ENV"
+          } 2>&1 | tee -a "$BUILD_LOG"
+
+      - id: preset
+        name: Preset URLs from config.ini [mobile] (the hosted defaults)
+        run: |
+          {
+            echo "=== preset-mobile ($(date -u +%H:%M:%SZ)) ==="
+            PRESET_LINE="$(python3 build.py preset-mobile --dest "$GITHUB_WORKSPACE/upstream" | tail -n 1)"
+            echo "$PRESET_LINE"
+            echo "PRESET_LINE=$PRESET_LINE" >> "$GITHUB_ENV"
+          } 2>&1 | tee -a "$BUILD_LOG"
+
+      - id: vars
+        name: Settings from config.ini
+        run: |
+          {
+            echo "VERSION_NAME=${VER}-$(python3 build.py cfg version suffix)" >> "$GITHUB_ENV"
+            echo "BUNDLE_ID=$(python3 build.py cfg ios bundle_id)" >> "$GITHUB_ENV"
+            echo "DISPLAY_NAME=$(python3 build.py cfg ios display_name)" >> "$GITHUB_ENV"
+            echo "STRIP=$(python3 build.py cfg ios strip_extensions)" >> "$GITHUB_ENV"
+            echo "KEEP_RELEASES=$(python3 build.py cfg outputs keep_releases)" >> "$GITHUB_ENV"
+            echo "LOGS_BRANCH=$(python3 build.py cfg outputs logs_branch)" >> "$GITHUB_ENV"
+          } 2>&1 | tee -a "$BUILD_LOG"
+
+      - id: node
+        name: Node (version from upstream's .nvmrc)
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: upstream/.nvmrc
+
+      - id: ruby
+        name: "Ruby for CocoaPods (as upstream; soft step - the runner's own CocoaPods is the fallback)"
+        continue-on-error: true
+        uses: ruby/setup-ruby@v1
+        with:
+          working-directory: upstream/packages/mobile
+
+      - id: yarn
+        name: yarn install --immutable (upstream's committed .yarn/cache)
+        working-directory: upstream
+        run: |
+          {
+            echo "=== yarn install ($(date -u +%H:%M:%SZ)) ==="
+            yarn install --immutable
+          } 2>&1 | tee -a "$BUILD_LOG"
+
+      - id: bundler
+        name: bundle install (soft step, see ruby)
+        continue-on-error: true
+        working-directory: upstream/packages/mobile
+        run: |
+          {
+            echo "=== bundle install ($(date -u +%H:%M:%SZ)) ==="
+            bundle install
+          } 2>&1 | tee -a "$BUILD_LOG"
+
+      - id: bundle
+        name: Build the web app, install pods, bundle (yarn build:mobile)
+        working-directory: upstream
+        run: |
+          {
+            echo "=== yarn build:mobile ($(date -u +%H:%M:%SZ)) ==="
+            yarn build:mobile
+            echo "=== yarn build:mobile finished ($(date -u +%H:%M:%SZ)) ==="
+          } 2>&1 | tee -a "$BUILD_LOG"
+
+      - id: archive
+        name: xcodebuild archive, unsigned
+        working-directory: upstream/packages/mobile
+        timeout-minutes: 50
+        run: |
+          {
+            echo "=== xcodebuild archive ($(date -u +%H:%M:%SZ)) version $VERSION_NAME build $GITHUB_RUN_NUMBER ==="
+            xcodebuild -workspace ios/StandardNotes.xcworkspace -scheme StandardNotes -configuration Release \
+              -sdk iphoneos -destination "generic/platform=iOS" \
+              -archivePath "$RUNNER_TEMP/SNFast.xcarchive" \
+              CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO \
+              PROVISIONING_PROFILE_SPECIFIER="" DEVELOPMENT_TEAM="" \
+              MARKETING_VERSION="${VER}" CURRENT_PROJECT_VERSION="$GITHUB_RUN_NUMBER" \
+              archive
+            echo "=== xcodebuild finished ($(date -u +%H:%M:%SZ)) ==="
+          } 2>&1 | tee -a "$BUILD_LOG"
+
+      - id: package
+        name: Package the .ipa and check its structure
+        run: |
+          {
+            echo "=== package ($(date -u +%H:%M:%SZ)) ==="
+            APP="$(ls -d "$RUNNER_TEMP"/SNFast.xcarchive/Products/Applications/*.app | head -n 1)"
+            echo "app bundle: $APP"
+            rm -rf dist && mkdir -p dist/Payload
+            cp -R "$APP" dist/Payload/
+            if [ "$STRIP" = "yes" ] && [ -d dist/Payload/*.app/PlugIns ]; then
+              echo "removing the extensions (each would need its own App ID of a free Apple account):"; ls dist/Payload/*.app/PlugIns
+              rm -rf dist/Payload/*.app/PlugIns
+            fi
+            (cd dist && /usr/bin/zip -qry SN-Fast.ipa Payload)
+            ls -l dist
+            PLIST="$(ls dist/Payload/*.app/Info.plist)"
+            plutil -p "$PLIST" | grep -E 'CFBundleIdentifier|CFBundleDisplayName|CFBundleShortVersionString|CFBundleVersion|MinimumOSVersion|UIBackgroundModes' || true
+            GOT="$(plutil -extract CFBundleIdentifier raw -o - "$PLIST")"
+            NAME="$(plutil -extract CFBundleDisplayName raw -o - "$PLIST")"
+            MINOS="$(plutil -extract MinimumOSVersion raw -o - "$PLIST" 2>/dev/null || echo '?')"
+            echo "bundle id in the app: $GOT (must be $BUNDLE_ID); display name: $NAME (must be $DISPLAY_NAME); minimum iOS: $MINOS"
+            test "$GOT" = "$BUNDLE_ID"
+            test "$NAME" = "$DISPLAY_NAME"
+            codesign -dv dist/Payload/*.app 2>&1 || true   # expected: "code object is not signed at all"
+            echo "--- structure checks (our patches are really inside, the measuring hook is not):"
+            JS="$(find dist/Payload/*.app -path '*Web.bundle*' -name app.js | head -n 1)"
+            echo "web bundle script: $JS"
+            test -n "$JS"
+            for m in "Returned to foreground" "Safety Sync (no notification for a while)" "isWebSocketUrlOnHostOf" "guessWebSocketUrl" "WebSocketConnectionReestablished"; do
+              if grep -q -F -- "$m" "$JS"; then echo "ok: patch marker present: $m"; else echo "ERROR: patch marker MISSING: $m"; exit 1; fi
+            done
+            if grep -q -F -- "snfastApp" "$JS"; then echo "ERROR: the measuring hook is in the bundle"; exit 1; else echo "ok: no measuring hook"; fi
+            PAGE="$(find dist/Payload/*.app -path '*Web.bundle/src/index.html' | head -n 1)"
+            echo "start page: $PAGE"; grep -E 'window\.(defaultSyncServer|websocketUrl)' "$PAGE" || true
+            test -z "$(find dist/Payload/*.app -name '*.appex')" || { echo "ERROR: an app extension is still inside"; exit 1; }
+            mkdir -p out && cp dist/SN-Fast.ipa out/SN-Fast.ipa
+            (cd out && shasum -a 256 SN-Fast.ipa > SN-Fast.ipa.sha256)
+            {
+              echo "SN Fast for iPhone (UNSIGNED) - built by GitHub Actions run $GITHUB_RUN_NUMBER (attempt $GITHUB_RUN_ATTEMPT), Xcode $XCODE_MAJOR"
+              echo "repo commit     : $GITHUB_SHA"
+              echo "upstream tag    : $(python3 build.py cfg upstream tag)"
+              python3 -c "import json;d=json.load(open('upstream/snfast-build-info.json'));print('upstream commit :',d['upstream_commit']);print('upstream version:',d['upstream_version']);print('snjs version    :',d['snjs_version']);[print('patch           :',p['patch'],p['sha256'][:16]) for p in d['patches']]"
+              echo "bundle id / name: $BUNDLE_ID / $DISPLAY_NAME, version $VERSION_NAME (build $GITHUB_RUN_NUMBER), minimum iOS $MINOS"
+              echo "app version / header: Mobile-${VER} (plain on purpose: the hosted sync server refuses anything else)"
+              echo "$PRESET_LINE"
+              echo "ipa             : $(cat out/SN-Fast.ipa.sha256)  ($(wc -c < out/SN-Fast.ipa | tr -d ' ') bytes)"
+              echo "Not signed by anyone. Sign and install it on the phone with Sideloadly (or AltStore) using your own Apple ID."
+            } > out/INFO.txt
+            echo "ipa_info=SN-Fast.ipa $(wc -c < out/SN-Fast.ipa | tr -d ' ') bytes, sha256 $(cut -d' ' -f1 out/SN-Fast.ipa.sha256)" >> "$GITHUB_OUTPUT"
+          } 2>&1 | tee -a "$BUILD_LOG"
+
+      - id: probe
+        name: Version header probe (one request without any credential; soft)
+        continue-on-error: true
+        run: |
+          python3 build.py probe-version --platform Mobile --version "$VER" --snjs "$SNJS" 2>&1 | tee -a "$BUILD_LOG"
+
+      - id: release
+        name: Publish the .ipa as a pre-release
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}      # the run's own token; permissions: contents: write above
+          TAG: ios-${{ github.run_number }}
+        run: |
+          {
+            echo "=== release $TAG ($(date -u +%H:%M:%SZ)) ==="
+            printf '%s\n' "UNSIGNED iPhone build of commit $GITHUB_SHA (run $GITHUB_RUN_NUMBER)." "" \
+              "Sign and install it with Sideloadly or AltStore using your own Apple ID. It is not signed by anyone." \
+              "Unofficial personal build, not affiliated with Standard Notes or Proton. AGPL-3.0." \
+              "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" > "$RUNNER_TEMP/notes.md"
+            if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+              gh release upload "$TAG" out/SN-Fast.ipa out/SN-Fast.ipa.sha256 out/INFO.txt --repo "$GITHUB_REPOSITORY" --clobber
+            else
+              gh release create "$TAG" out/SN-Fast.ipa out/SN-Fast.ipa.sha256 out/INFO.txt --repo "$GITHUB_REPOSITORY" --prerelease --target "$GITHUB_SHA" \
+                --title "iOS build $GITHUB_RUN_NUMBER" --notes-file "$RUNNER_TEMP/notes.md"
+            fi
+            echo "url=$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/download/$TAG/SN-Fast.ipa" >> "$GITHUB_OUTPUT"
+          } 2>&1 | tee -a "$BUILD_LOG"
+
+      - id: prune_releases
+        name: Keep only the newest iOS releases
+        if: success()
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          OLD="$(gh release list --repo "$GITHUB_REPOSITORY" --limit 100 --json tagName --jq '.[].tagName' | grep '^ios-' | sort -t- -k2 -n -r | tail -n +$((KEEP_RELEASES + 1)) || true)"
+          for t in $OLD; do
+            echo "deleting old release $t"
+            gh release delete "$t" --repo "$GITHUB_REPOSITORY" --cleanup-tag --yes
+          done
+
+      - id: publish_log
+        name: Publish the build log (always)
+        if: always()
+        continue-on-error: true      # a log that cannot be pushed must not change the build's own result
+        env:
+          JOB_STATUS: ${{ job.status }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          RELEASE_URL: ${{ steps.release.outputs.url }}
+          IPA_INFO: ${{ steps.package.outputs.ipa_info }}
+          STEP_RESULTS: >-
+            checkout=${{ steps.checkout.conclusion }}
+            setup_xcode=${{ steps.setup_xcode.conclusion }}
+            xcode=${{ steps.xcode.conclusion }}
+            prepare=${{ steps.prepare.conclusion }}
+            node=${{ steps.node.conclusion }}
+            ruby=${{ steps.ruby.conclusion }}
+            yarn=${{ steps.yarn.conclusion }}
+            bundler=${{ steps.bundler.conclusion }}
+            bundle=${{ steps.bundle.conclusion }}
+            archive=${{ steps.archive.conclusion }}
+            package=${{ steps.package.conclusion }}
+            probe=${{ steps.probe.conclusion }}
+            release=${{ steps.release.conclusion }}
+        run: |
+          LOG="${BUILD_LOG:-$RUNNER_TEMP/build.log}"
+          if [ -f .github/scripts/buildlog.py ]; then
+            python3 .github/scripts/buildlog.py publish --log "$LOG" --branch "${LOGS_BRANCH:-build-logs}" \
+              --run-number "$GITHUB_RUN_NUMBER" --run-attempt "$GITHUB_RUN_ATTEMPT" \
+              --status "$(echo "$JOB_STATUS" | tr 'A-Z' 'a-z')" --sha "$GITHUB_SHA" --run-url "$RUN_URL" \
+              --steps "$STEP_RESULTS" --release-url "$RELEASE_URL" --ipa-info "$IPA_INFO" --keep 20
+          else
+            echo "buildlog.py is missing (the checkout failed?): nothing was published"
+            echo "Build log not published: the checkout step did not finish." >> "$GITHUB_STEP_SUMMARY"
+          fi

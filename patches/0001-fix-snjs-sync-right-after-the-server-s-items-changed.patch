@@ -1,0 +1,114 @@
+From b40ced33eddb722511dd92fb04afbc62c1b12833 Mon Sep 17 00:00:00 2001
+From: "SN Fast Sync (local)" <snfast@localhost.invalid>
+Date: Wed, 11 Nov 2026 04:09:32 -0700
+Subject: [PATCH 1/7] fix(snjs): sync right after the server's items-changed
+ notification
+
+When the server sends ITEMS_CHANGED_ON_SERVER over the websocket, SyncService only set a flag and waited for the next
+auto sync tick (setInterval, 30 s), so a change made on one device reached the others after 0-30 s (15 s on average)
+even though the push arrived at once. Now the notification schedules one sync after 150 ms through the same autoSync()
+path. Notifications arriving within that delay share the sync, a sync already in flight queues the next one as before,
+and when the per-minute sync limit (200) is reached the flag stays set so the 30 s timer remains the fallback.
+
+A websocket can also be dead without the app noticing (network change, phone asleep: it still reports OPEN), and
+until now an open websocket meant "no polling at all". So the 30 s tick now also syncs every 4th tick (2 minutes) when
+the websocket is open but nothing was notified: a safety net with one cheap request per 2 minutes.
+
+The notification is used up by the sync it triggers. If that sync fails (server busy, HTTP 429, no network) the change is still
+waiting on the server and no new notification will come, so the flag is set again and the next 30 s tick retries (before this,
+a failed notified sync was never retried: stock clients lost the update until the next edit).
+---
+ .../snjs/lib/Services/Sync/SyncService.ts     | 62 ++++++++++++++++++-
+ 1 file changed, 61 insertions(+), 1 deletion(-)
+
+diff --git a/packages/snjs/lib/Services/Sync/SyncService.ts b/packages/snjs/lib/Services/Sync/SyncService.ts
+index 497c53c..7c060a2 100644
+--- a/packages/snjs/lib/Services/Sync/SyncService.ts
++++ b/packages/snjs/lib/Services/Sync/SyncService.ts
+@@ -106,2 +106,9 @@ const TOO_MANY_REQUESTS_RESPONSE_STATUS = 429
+ const DEFAULT_AUTO_SYNC_INTERVAL = 30_000
++/**
++ * When the server tells us over the websocket that items changed, we sync after this short delay
++ * instead of waiting for the next auto sync tick. Pings arriving within the delay share one sync.
++ */
++const SERVER_NOTIFICATION_SYNC_DELAY = 150
++/** With an open websocket the auto sync tick (30 s) syncs only every this many ticks (2 minutes) unless notified. */
++const SAFETY_SYNC_EVERY_N_TICKS = 4
+ 
+@@ -159,2 +166,4 @@ export class SyncService
+   private wasNotifiedOfItemsChangeOnServer = false
++  private serverNotificationSyncTimeout?: ReturnType<typeof setTimeout>
++  private autoSyncTicksWithoutNotification = 0
+ 
+@@ -205,2 +214,6 @@ export class SyncService
+     ;(this.autoSyncInterval as unknown) = undefined
++    if (this.serverNotificationSyncTimeout) {
++      clearTimeout(this.serverNotificationSyncTimeout)
++    }
++    ;(this.serverNotificationSyncTimeout as unknown) = undefined
+     ;(this.sessionManager as unknown) = undefined
+@@ -371,2 +384,24 @@ export class SyncService
+ 
++  /**
++   * Called when the server notified us over the websocket that items changed. Instead of leaving the flag
++   * for the next auto sync tick (up to 30 seconds away), sync after a short delay through the same path.
++   * Only one sync is scheduled at a time, so a burst of notifications results in one sync. If the per-minute
++   * sync limit is reached, the flag stays set and the regular tick picks it up.
++   */
++  private scheduleSyncAfterServerNotification(): void {
++    if (this.serverNotificationSyncTimeout || this.dealloced) {
++      return
++    }
++
++    this.serverNotificationSyncTimeout = setTimeout(() => {
++      this.serverNotificationSyncTimeout = undefined
++
++      if (this.dealloced || this.syncFrequencyGuard.isSyncCallsThresholdReachedThisMinute()) {
++        return
++      }
++
++      this.autoSync()
++    }, SERVER_NOTIFICATION_SYNC_DELAY)
++  }
++
+   private autoSync(): void {
+@@ -375,2 +410,4 @@ export class SyncService
+ 
++      this.autoSyncTicksWithoutNotification = 0
++
+       void this.sync({ sourceDescription: 'Auto Sync' })
+@@ -384,4 +421,26 @@ export class SyncService
+       this.wasNotifiedOfItemsChangeOnServer = false
++      this.autoSyncTicksWithoutNotification = 0
++
++      void this.sync({ sourceDescription: 'WebSockets Event - Items Changed On Server' }).then(() => {
++        /**
++         * The notification is used up by this sync. If the sync failed (server busy, rate limited, no network) the
++         * change is still waiting on the server and no further notification will come: ask again on the next tick.
++         */
++        if (this.opStatus?.hasError()) {
++          this.wasNotifiedOfItemsChangeOnServer = true
++        }
++      })
++
++      return
++    }
++
++    /**
++     * A websocket can be dead without the app noticing (network change, phone asleep): it still reports OPEN but
++     * nothing arrives. So even with an open websocket, sync every few ticks as a safety net.
++     */
++    this.autoSyncTicksWithoutNotification++
++    if (this.autoSyncTicksWithoutNotification >= SAFETY_SYNC_EVERY_N_TICKS) {
++      this.autoSyncTicksWithoutNotification = 0
+ 
+-      void this.sync({ sourceDescription: 'WebSockets Event - Items Changed On Server' })
++      void this.sync({ sourceDescription: 'Safety Sync (no notification for a while)' })
+     }
+@@ -1479,2 +1538,3 @@ export class SyncService
+         this.wasNotifiedOfItemsChangeOnServer = true
++        this.scheduleSyncAfterServerNotification()
+         break
+-- 
+2.49.0.windows.1
+

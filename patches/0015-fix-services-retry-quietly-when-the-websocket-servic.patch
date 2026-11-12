@@ -1,0 +1,126 @@
+From 2d2b0af891706f2c65c6539e58094a5d0db1983c Mon Sep 17 00:00:00 2001
+From: SN Fast Sync <snfast@localhost.invalid>
+Date: Wed, 11 Nov 2026 07:13:22 -0700
+Subject: [PATCH] fix(services): retry quietly when the websocket service
+ itself is down (HTTP 5xx on the token request)
+
+Proton's websocket service answered the token request with HTTP 500 "no healthy upstream" on every try, and the app logged an
+error line for each retry. Now the first failed token request of a streak logs one warning, and after five failures in a row
+(and no connection in the last hour) the app waits 30 minutes between tries when the server itself failed (HTTP 5xx), 10 minutes
+for any other refusal, and logs the long wait once. A connection that opens resets all of it, so a server that works is unaffected.
+
+Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01WeT9h5e494m7W6EHMFsEMq
+---
+ .../src/Domain/Api/WebsocketsService.spec.ts  | 35 +++++++++++++++++--
+ .../src/Domain/Api/WebsocketsService.ts       | 30 +++++++++++++---
+ 2 files changed, 59 insertions(+), 6 deletions(-)
+
+diff --git a/packages/services/src/Domain/Api/WebsocketsService.spec.ts b/packages/services/src/Domain/Api/WebsocketsService.spec.ts
+index b9342bc..ce3320e 100644
+--- a/packages/services/src/Domain/Api/WebsocketsService.spec.ts
++++ b/packages/services/src/Domain/Api/WebsocketsService.spec.ts
+@@ -90,2 +90,3 @@ describe('webSocketsService', () => {
+     const tokenFailed = { status: 500, data: { error: { message: 'boom' } } }
++    const tokenRefused = { status: 429, data: { error: { message: 'slow down' } } }
+ 
+@@ -129,4 +130,4 @@ describe('webSocketsService', () => {
+ 
+-    it('waits ten minutes after five failed attempts in a row when it has not connected lately', async () => {
+-      webSocketApiService.createConnectionToken = jest.fn().mockResolvedValue(tokenFailed)
++    it('waits ten minutes after five refused attempts in a row when it has not connected lately', async () => {
++      webSocketApiService.createConnectionToken = jest.fn().mockResolvedValue(tokenRefused)
+       const service = new WebSocketsService(storageService, 'wss://test-websocket', webSocketApiService, internalEventBus)
+@@ -149,2 +150,32 @@ describe('webSocketsService', () => {
+ 
++    it('waits thirty minutes and logs only once when the server itself fails (HTTP 500) five times in a row', async () => {
++      webSocketApiService.createConnectionToken = jest.fn().mockResolvedValue(tokenFailed)
++      const service = new WebSocketsService(storageService, 'wss://test-websocket', webSocketApiService, internalEventBus)
++      const warn = jest.spyOn(console, 'warn').mockImplementation(() => undefined)
++      const error = jest.spyOn(console, 'error').mockImplementation(() => undefined)
++      warn.mockClear() /** a spy of an earlier test keeps its calls */
++      error.mockClear()
++
++      await service.startWebSocketConnection()
++      await jest.advanceTimersByTimeAsync(0)
++      await jest.advanceTimersByTimeAsync(1_000)
++      await jest.advanceTimersByTimeAsync(2_000)
++      await jest.advanceTimersByTimeAsync(5_000)
++      expect(webSocketApiService.createConnectionToken).toHaveBeenCalledTimes(5)
++
++      await jest.advanceTimersByTimeAsync(1_799_999)
++      expect(webSocketApiService.createConnectionToken).toHaveBeenCalledTimes(5)
++      await jest.advanceTimersByTimeAsync(1)
++      expect(webSocketApiService.createConnectionToken).toHaveBeenCalledTimes(6)
++
++      await jest.advanceTimersByTimeAsync(1_800_000)
++      expect(webSocketApiService.createConnectionToken).toHaveBeenCalledTimes(7)
++
++      /** one line for the first failed token request, one for the first long wait, nothing for the rest */
++      expect(warn).toHaveBeenCalledTimes(2)
++      expect(error).not.toHaveBeenCalled()
++
++      service.closeWebSocketConnection()
++    })
++
+     it('reconnects with growing delays when the socket closes unexpectedly, then tells listeners to catch up', async () => {
+diff --git a/packages/services/src/Domain/Api/WebsocketsService.ts b/packages/services/src/Domain/Api/WebsocketsService.ts
+index 5af8aa1..cf9c631 100644
+--- a/packages/services/src/Domain/Api/WebsocketsService.ts
++++ b/packages/services/src/Domain/Api/WebsocketsService.ts
+@@ -18,2 +18,4 @@ export class WebSocketsService extends AbstractService<WebSocketsServiceEvent, D
+   private LONG_RECONNECT_DELAY = 600_000
++  /** The same, when the token request itself fails on the server (HTTP 5xx: the websocket service is down): no point asking often. */
++  private LONG_RECONNECT_DELAY_SERVICE_DOWN = 1_800_000
+   private NO_RECENT_SUCCESS_AFTER = 3_600_000
+@@ -27,2 +29,5 @@ export class WebSocketsService extends AbstractService<WebSocketsServiceEvent, D
+   private isStartingConnection = false
++  private lastTokenFailureWasServerError = false
++  private tokenFailureLogged = false
++  private longWaitLogged = false
+ 
+@@ -140,4 +145,7 @@ export class WebSocketsService extends AbstractService<WebSocketsServiceEvent, D
+       /** The server keeps refusing the connection and it never worked lately (for example a version gate): stop hammering it. */
+-      delay = this.LONG_RECONNECT_DELAY
+-      console.warn(`WebSocket: ${this.reconnectAttempts} failed connection attempts in a row, next try in ${delay / 1000} s`)
++      delay = this.lastTokenFailureWasServerError ? this.LONG_RECONNECT_DELAY_SERVICE_DOWN : this.LONG_RECONNECT_DELAY
++      if (!this.longWaitLogged) {
++        this.longWaitLogged = true
++        console.warn(`WebSocket: ${this.reconnectAttempts} failed connection attempts in a row, next try in ${delay / 1000} s (quiet from now on)`)
++      }
+     }
+@@ -159,2 +167,4 @@ export class WebSocketsService extends AbstractService<WebSocketsServiceEvent, D
+     this.reconnectAttempts = 0
++    this.tokenFailureLogged = false
++    this.longWaitLogged = false
+     this.lastOpenedAt = Date.now()
+@@ -269,3 +279,3 @@ export class WebSocketsService extends AbstractService<WebSocketsServiceEvent, D
+       if (isErrorResponse(response)) {
+-        console.error(response.data.error)
++        this.noteTokenFailure(`HTTP ${response.status}`, response.status >= 500)
+ 
+@@ -274,5 +284,7 @@ export class WebSocketsService extends AbstractService<WebSocketsServiceEvent, D
+ 
++      this.lastTokenFailureWasServerError = false
++
+       return response.data.token
+     } catch (error) {
+-      console.error('Caught error:', (error as Error).message)
++      this.noteTokenFailure((error as Error).message, false)
+ 
+@@ -282,2 +294,12 @@ export class WebSocketsService extends AbstractService<WebSocketsServiceEvent, D
+ 
++  /** Logs the first token failure of a streak only: a websocket service that is down must not fill the log on every retry. */
++  private noteTokenFailure(reason: string, serverError: boolean): void {
++    this.lastTokenFailureWasServerError = serverError
++
++    if (!this.tokenFailureLogged) {
++      this.tokenFailureLogged = true
++      console.warn(`WebSocket: the connection token request failed (${reason}); retrying with growing delays, quietly`)
++    }
++  }
++
+   override deinit(): void {
+-- 
+2.49.0.windows.1
+
