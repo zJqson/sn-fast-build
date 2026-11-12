@@ -1,0 +1,11 @@
+run 4: RUNNING (a snapshot of the log while the job is still going) - f1bc729 - 2026-11-12T01:15:51Z
+
+Run:      https://github.com/zJqson/sn-fast-build/actions/runs/43132739171 (attempt 1)
+Commit:   f1bc729a12b26415f7519ca6eb1bf73466f18276
+Status:   RUNNING
+Steps:    (none)
+Release:  (none)
+IPA:      (none)
+Log:      run-4.log (351 lines)
+
+No error lines found in the build output. (Look at the end of the log.)
